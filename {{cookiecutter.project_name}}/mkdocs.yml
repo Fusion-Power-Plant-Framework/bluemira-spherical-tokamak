@@ -1,0 +1,71 @@
+site_name: {{cookiecutter.project_name}} Documentation
+site_description: {{cookiecutter.project_description}}
+# site_url: <set:docs-site-url>
+repo_name: {{cookiecutter.gh_org_name}}/{{cookiecutter.project_name}}
+# repo_url: <set:repo-url>
+watch:
+  - {{cookiecutter.project_name}}
+
+plugins:
+  - search
+  - autorefs
+  - gen-files:
+      scripts:
+        - scripts/gen_api_ref.py
+  - literate-nav:
+      nav_file: overview.md
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: google
+
+theme:
+  name: material
+  palette:
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      primary: orange
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      primary: black
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+
+  features:
+    - navigation.tabs
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.sections
+    - navigation.path
+    - navigation.top
+    - navigation.tracking
+    - content.code.copy
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+      use_pygments: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - admonition
+
+nav:
+  - index.md
+  - Examples: examples/
+  - API Reference: reference/

@@ -1,0 +1,9 @@
+{
+  "project_name": "template_project",
+  "project_description": "A template for Bluemira projects.",
+  "author_name": "The Bluemira Team",
+  "author_email": "",
+  "gh_org_name": "Fusion-power-plant-framework",
+  "copyright_yr": "2024",
+  "ci_schedule": "5 7,12 * * 1-5"
+}

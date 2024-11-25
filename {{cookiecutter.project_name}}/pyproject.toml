@@ -1,0 +1,155 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "{{cookiecutter.project_name}}"
+dynamic = ["version"]
+description = '{{cookiecutter.project_description}}'
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+keywords = []
+authors = [
+  { name = "{{cookiecutter.author_name}}", email = "{{cookiecutter.author_email}}" },
+]
+classifiers = [
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.10",
+]
+
+dependencies = ["bluemira", "numpy", "matplotlib"]
+
+[project.optional-dependencies]
+dev = ["pre-commit"]
+test = [
+  "pytest",
+  "coverage[toml]",
+  "pytest-html",
+  "pytest-metadata",
+  "pytest-json-report",
+]
+docs = [
+  "mkdocs",
+  "mkdocs-material",
+  "mkdocstrings[python]",
+  "mkdocs-gen-files",
+  "mkdocs-section-index",
+  "mkdocs-literate-nav",
+]
+lint = ["ruff", "mypy"]
+
+[project.urls]
+Documentation = "https://github.com/{{cookiecutter.gh_org_name}}/{{cookiecutter.project_name}}#readme"
+Issues = "https://github.com/{{cookiecutter.gh_org_name}}/{{cookiecutter.project_name}}/issues"
+Source = "https://github.com/{{cookiecutter.gh_org_name}}/{{cookiecutter.project_name}}"
+
+[tool.hatch.version]
+source = "vcs"
+[tool.hatch.build.hooks.vcs]
+version-file = "{{cookiecutter.project_name}}/_version.py"
+
+# env: default
+[tool.hatch.envs.default]
+features = ["dev", "test", "docs", "lint"]
+
+# env: docs
+[tool.hatch.envs.docs]
+features = ["docs"]
+[tool.hatch.envs.docs.scripts]
+build = "mkdocs build"
+serve = "mkdocs serve"
+deploy = "mkdocs gh-deploy"
+
+# env: lint
+[tool.hatch.envs.lint]
+detached     = true                           # Don't inherit from default (does not download project dependencies)
+dependencies = ["ruff", "mypy", "pre-commit"]
+[tool.hatch.envs.lint.scripts]
+typing = "mypy --install-types --non-interactive {args:{{cookiecutter.project_name}} tests}"
+style  = ["ruff {args:check .}"]
+fmt    = ["pre-commit run --all-files --hook-stage manual"]
+all    = ["style", "typing"]
+
+# env: test
+[tool.hatch.envs.test]
+features = ["test"]
+[[tool.hatch.envs.test.matrix]]
+python = ["3.10", "3.11", "3.12"]
+[tool.hatch.envs.test.scripts]
+tests      = "pytest {args:tests}"
+tests-cov  = "pytest --cov {{cookiecutter.project_name}}  --cov-report html:htmlcov_{{cookiecutter.project_name}} --cov-report xml {args:tests}"
+tests-cov-private  = "pytest --private --cov {{cookiecutter.project_name}} --cov-report html:htmlcov --cov-report xml {args:tests}"
+
+# tool: ruff
+[tool.ruff]
+line-length = 89
+preview = true
+
+[tool.ruff.lint]
+exclude = [
+  ".git",
+  "__pycache__",
+  "documentation",
+  ".env",
+  ".idea",
+  ".pytest_cache",
+  "htmlcov",
+]
+select = ["ALL"]
+ignore = [
+  "ANN101", # Allow no type annotation for self in method
+  "ANN102", # Allow no type annotation for cls in classmethod
+  "ANN204", # Allow no type annotation for __init__ return
+  "D205", # Allow no blank lines after docstring
+  "B027", # Allow non-abstract empty methods in abstract base classes
+  "S105", # Ignore checks for possible passwords
+  "S106",
+  "S107",
+  "C901", # Ignore complexity
+  "PLR0911",
+  "PLR0912",
+  "PLR0913",
+  "PLR0915",
+  "COM812",
+  "ISC001",
+  "D107",
+]
+unfixable = [
+  "F401", # Don't touch unused imports
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["{{cookiecutter.project_name}}"]
+
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "all"
+
+[tool.ruff.lint.mccabe]
+max-complexity = 20
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+# Tests can use magic values, assertions, and relative imports
+"tests/**/*" = ["PLR2004", "S101", "TID252"]
+"__init__.py" = ["F401", "F403"]
+"studies/**/*" = ["INP001", "CPY001"]
+
+[tool.ruff.lint.flake8-copyright]
+notice-rgx = "(?i)# SPDX-FileCopyrightText:\\s\\d{4}(-(\\d{4}|present))*"
+
+[tool.coverage.run]
+source_pkgs = ["{{cookiecutter.project_name}}", "tests"]
+branch = true
+parallel = true
+omit = ["{{cookiecutter.project_name}}/_version.py"]
+
+[tool.coverage.paths]
+base = ["{{cookiecutter.project_name}}", "*/{{cookiecutter.project_name}}"]
+tests = ["tests", "*/{{cookiecutter.project_name}}/tests"]
+
+[tool.coverage.report]
+"exclude_also" = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
+omit = ["{{cookiecutter.project_name}}/_version.py"]
