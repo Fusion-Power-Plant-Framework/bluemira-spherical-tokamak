@@ -1,0 +1,41 @@
+ 
+ **************************************************************************************************************
+ ************************************************** PROCESS ***************************************************
+ ************************************** Power Reactor Optimisation Code ***************************************
+ **************************************************************************************************************
+ 
+   Program :
+   Version : 3.1.0   Release Date :: 2024-03-21
+   Tag No. : v3.1.0-197-g498e75b
+    Branch : main
+   Git log : 3410 more namespace standards for physics and engineering variables ([hash]3416)
+ Date/time :  9 Dec 2024 16:40:33 +00:00(hh:mm) UTC
+      User : oliver
+  Computer : oliver-funk-ukaea
+ Directory : /home/oliver/development/bluemira-spherical-tokamak/studies/first
+     Input : /home/oliver/development/bluemira-spherical-tokamak/studies/first/data/PROCESS/IN.DAT
+ Run title : Run Title (change this line using input variable 'runtitle')
+  Run type : Reactor concept design: Steady-state tokamak model, (c) CCFE
+ 
+ **************************************************************************************************************
+ 
+   Equality constraints : 00
+ Inequality constraints : 00
+      Total constraints : 00
+    Iteration variables : 00
+         Max iterations : 200
+       Figure of merit  : +07  -- minimise capital cost
+  Convergence parameter : 1.00E-06
+ 
+ **************************************************************************************************************
+ 
+ (Please include this header in any models, presentations and papers based on these results)
+ 
+ **************************************************************************************************************
+ 
+ Quantities listed in standard row format are labelled as follows in columns 112-114:
+ ITV : Active iteration variable (in any output blocks)
+ OP  : Calculated output quantity
+ Unlabelled quantities in standard row format are generally inputs
+ Note that calculated quantities may be trivially rescaled from inputs, or equal to bounds which are input.
+ 

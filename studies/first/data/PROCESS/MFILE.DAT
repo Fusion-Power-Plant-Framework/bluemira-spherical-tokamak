@@ -1,0 +1,13 @@
+ # PROCESS #
+ # Power Reactor Optimisation Code #
+ # PROCESS #
+ # Power Reactor Optimisation Code #
+ PROCESS_version_number__________________________________________________ (procver)_____________________     "3.1.0   R"
+ Date_of_run_____________________________________________________________ (date)________________________     "09/12/2024"
+ Time_of_run_____________________________________________________________ (time)________________________     "16:40"
+ User____________________________________________________________________ (username)____________________     "oliver"  
+ PROCESS_run_title_______________________________________________________ (runtitle)____________________     "Run Title (change this line using input variable 'runtitle')                                       
+ PROCESS_tag_number______________________________________________________ (tagno)_______________________     "v3.1.0-197-g498e75b"                                                                               
+ PROCESS_git_branch_name_________________________________________________ (branch_name)_________________     "main"                                                                                              
+ PROCESS_last_commit_message_____________________________________________ (commsg)______________________     "3410 more namespace standards for physics and engineering variables ([hash]3416)"                  
+ Input_filename__________________________________________________________ (fileprefix)__________________     "/home/oliver/development/bluemira-spherical-tokamak/studies/first/data/PROCESS/IN.DAT                                                                                                                                                                                                                                                                                                                           "
