@@ -11,6 +11,7 @@ def radial_build(params: ParameterFrame, build_config: dict) -> ParameterFrame:
         {
             "run_dir": build_config["run_dir"],
             "read_dir": build_config["read_dir"],
+            "template_in_dat": build_config["input_in_dat_path"],
         },
     )
     new_params = solver.execute(run_mode)
