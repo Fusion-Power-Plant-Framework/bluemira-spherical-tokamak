@@ -14,10 +14,27 @@ def radial_build(params: ParameterFrame, build_config: dict) -> ParameterFrame:
             "template_in_dat": build_config["input_in_dat_path"],
         },
     )
+    # the params we are interested in obtained from PROCESS
+    # they must be defined bluemira side
+    # in order to be read
+    solver.modify_mappings({
+        "n_TF": {"recv": True, "send": False},
+        "R_0": {"recv": True, "send": False},
+        "A": {"recv": True, "send": False},
+        "I_p": {"recv": True, "send": False},
+        "l_i": {"recv": True, "send": False},
+        "B_0": {"recv": True, "send": False},
+        "beta_p": {"recv": True, "send": False},
+        "delta": {"recv": True, "send": False},
+        "delta_95": {"recv": True, "send": False},
+        "kappa": {"recv": True, "send": False},
+        "kappa_95": {"recv": True, "send": False},
+        "q_95": {"recv": True, "send": False},
+    })
     new_params = solver.execute(run_mode)
 
     if plot:
-        plot_radial_build(solver.read_directory)
+        plot_radial_build(solver.run_directory)
 
     params.update_from_frame(new_params)
     return params

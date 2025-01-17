@@ -8,13 +8,15 @@
 from pathlib import Path
 from typing import Union
 
+from bluemira.base.designer import run_designer
 from bluemira.base.parameter_frame import EmptyFrame
 from bluemira.base.reactor import Reactor
 from bluemira.base.reactor_config import ReactorConfig
+from bluemira.builders.plasma import Plasma
 
-from bluemira_st.plasma.builder import PlasmaBuilder
-from bluemira_st.plasma.desinger import PlasmaDesigner
-from bluemira_st.plasma.manager import Plasma
+from bluemira_st.build_routines import build_plasma, build_reference_equilibrium
+from bluemira_st.equlibria.designer import DummyFixedEquilibriumDesigner
+from bluemira_st.params import BluemiraSTParams
 from bluemira_st.radial_build.run_process import radial_build
 from bluemira_st.tf_coil.builder import TFCoilBuilder
 from bluemira_st.tf_coil.designer import TFCoilDesigner
@@ -43,33 +45,44 @@ class MyReactor(Reactor):
     plasma: Plasma
     tf_coil: TFCoil
 
+    # Models
+    # equilibria: EquilibriumManager
+
 
 def main(build_config: Union[str, Path, dict]) -> MyReactor:  # noqa: FA100
     """Main reactor function."""
-    reactor_config = ReactorConfig(build_config, EmptyFrame)
+    reactor_config = ReactorConfig(build_config, BluemiraSTParams)
 
     radial_build(
         reactor_config.params_for("radial_build").global_params,
         reactor_config.config_for("radial_build"),
     )
 
-    # %% [markdown]
-    #
-    # We create our plasma
-
-    # %%
-    plasma_designer = PlasmaDesigner(
-        reactor_config.params_for("Plasma", "designer"),
-        reactor_config.config_for("Plasma", "designer"),
+    lcfs_coords, profiles = run_designer(
+        DummyFixedEquilibriumDesigner,
+        reactor_config.params_for("Dummy fixed boundary equilibrium"),
+        reactor_config.config_for("Dummy fixed boundary equilibrium"),
     )
-    plasma_parameterisation = plasma_designer.execute()
 
-    plasma_builder = PlasmaBuilder(
-        plasma_parameterisation.create_shape(),
+    # reactor.equilibria = EquilibriumManager()
+
+    reference_eq = build_reference_equilibrium(
+        reactor_config.params_for("Free boundary equilibrium"),
+        reactor_config.config_for("Free boundary equilibrium"),
+        lcfs_coords,
+        profiles,
+    )
+
+    reactor = MyReactor(
+        "Bluemira Spherical Tokamak Example",
+        n_sectors=reactor_config.global_params.n_TF.value,
+    )
+
+    reactor.plasma = build_plasma(
+        reactor_config.params_for("Plasma"),
         reactor_config.config_for("Plasma"),
+        reference_eq,
     )
-    plasma = Plasma(plasma_builder.build())
-
     # %% [markdown]
     #
     # We create our TF coil
@@ -93,7 +106,6 @@ def main(build_config: Union[str, Path, dict]) -> MyReactor:  # noqa: FA100
     # Finally we add the components to the reactor and show the CAD
 
     # %%
-    reactor = MyReactor("Simple Example", n_sectors=1)
 
     reactor.plasma = plasma
     reactor.tf_coil = tf_coil

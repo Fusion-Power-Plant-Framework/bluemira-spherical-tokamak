@@ -114,6 +114,13 @@ ignore = [
   "COM812",
   "ISC001",
   "D107",
+  "D200",
+  "D212",
+  "ERA001",
+  "TRY003",
+  "EM102",
+  "N815",
+  "PLR0914",
 ]
 unfixable = [
   "F401", # Don't touch unused imports

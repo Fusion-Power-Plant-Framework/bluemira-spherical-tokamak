@@ -1,0 +1,80 @@
+{
+  "n_TF": {
+    "value": 0,
+    "unit": "dimensionless",
+    "source": "PROCESS",
+    "long_name": "Number of TF coils"
+  },
+  "R_0": {
+    "value": 0,
+    "unit": "meter",
+    "source": "PROCESS",
+    "long_name": "Major radius"
+  },
+  "A": {
+    "value": 0,
+    "unit": "dimensionless",
+    "source": "PROCESS",
+    "long_name": "Plasma aspect ratio"
+  },
+  "I_p": {
+    "value": 0,
+    "unit": "megaampere",
+    "source": "PROCESS",
+    "long_name": "Plasma current"
+  },
+  "B_0": {
+    "value": 0,
+    "unit": "tesla",
+    "source": "PROCESS",
+    "long_name": "Toroidal field at R_0"
+  },
+  "l_i": {
+    "value": 0,
+    "unit": "dimensionless",
+    "source": "PROCESS",
+    "long_name": "Normalised internal plasma inductance"
+  },
+  "beta_p": {
+    "value": 0,
+    "unit": "dimensionless",
+    "source": "PROCESS",
+    "long_name": "Ratio of plasma pressure to poloidal magnetic pressure"
+  },
+  "delta": {
+    "value": 0,
+    "unit": "dimensionless",
+    "source": "PROCESS",
+    "long_name": "Last closed surface plasma triangularity"
+  },
+  "delta_95": {
+    "value": 0,
+    "unit": "dimensionless",
+    "source": "PROCESS",
+    "long_name": "95th percentile plasma triangularity"
+  },
+  "kappa": {
+    "value": 0,
+    "unit": "dimensionless",
+    "source": "PROCESS",
+    "long_name": "Last closed surface plasma elongation"
+  },
+  "kappa_95": {
+    "value": 0,
+    "unit": "dimensionless",
+    "source": "PROCESS",
+    "long_name": "95th percentile plasma elongation"
+  },
+  "q_95": {
+    "value": 0,
+    "unit": "dimensionless",
+    "source": "PROCESS",
+    "long_name": "Plasma safety factor at the 95th percentile flux surface"
+  },
+  "shaf_shift": {
+    "value": 0,
+    "unit": "meter",
+    "source": "equilibria",
+    "long_name": "Shafranov shift of plasma (geometric=>magnetic)"
+  }
+}

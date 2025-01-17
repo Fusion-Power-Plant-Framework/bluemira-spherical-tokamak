@@ -1,10 +1,10 @@
-*************************************************************************   
-*****  _____    _____     ____     _____   ______    _____    _____ *****   
-***** |  __ \  |  __ \   / __ \   / ____| |  ____|  / ____|  / ____|*****   
-***** | |__) | | |__) | | |  | | | |      | |__    | (___   | (___  *****   
-***** |  ___/  |  _  /  | |  | | | |      |  __|    \___ \   \___ \ *****   
-***** | |      | | \ \  | |__| | | |____  | |____   ____) |  ____) |*****   
-***** |_|      |_|  \_\  \____/   \_____| |______| |_____/  |_____/ *****   
+*************************************************************************
+*****  _____    _____     ____     _____   ______    _____    _____ *****
+***** |  __ \  |  __ \   / __ \   / ____| |  ____|  / ____|  / ____|*****
+***** | |__) | | |__) | | |  | | | |      | |__    | (___   | (___  *****
+***** |  ___/  |  _  /  | |  | | | |      |  __|    \___ \   \___ \ *****
+***** | |      | | \ \  | |__| | | |____  | |____   ____) |  ____) |*****
+***** |_|      |_|  \_\  \____/   \_____| |______| |_____/  |_____/ *****
 *****                                                               *****
 *****                                                  ___          *****
 *****       ___                                       /   \         *****
@@ -34,14 +34,14 @@ maxcal = 2000
 
 runtitle = ST Regression
 * DESCRIPTION:   Short descriptive title for the run
-* JUSTIFICATION: 
+* JUSTIFICATION:
 *________________________________________________________________________*
 *--------------------------Numerics Variables---------------------------*
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾*
 
 epsvmc = 1.0E-11
 * DESCRIPTION:   Error tolerance for VMCON
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 *epsfcn = 0.001
 * DESCRIPTION:   HYBRD/VMCON derivative step length
@@ -52,7 +52,7 @@ ioptimz = 1
 * JUSTIFICATION: Optimised run
 
 minmax = -5
-* DESCRIPTION:   Switch for Figure-of-Merit 
+* DESCRIPTION:   Switch for Figure-of-Merit
 * JUSTIFICATION: Selected optimisation
 
 *________________________________________________________________________*
@@ -78,7 +78,7 @@ icc = 2
 
 *icc = 4
 * DESCRIPTION:   Global power balance for electrons
-* JUSTIFICATION: Not recommended for use 
+* JUSTIFICATION: Not recommended for use
 * VARIABLES:     iradloss,ignite,pinjemw, Rest calculated in-situ
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Performance ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -88,12 +88,12 @@ icc = 2
 * Toroidal Field *
 *----------------*
 
-*ixc = 2  
+*ixc = 2
 bt = 3.0
-*boundl(2) = 2.0 
+*boundl(2) = 2.0
 *boundu(2) = 5.0
 * DESCRIPTION:   Toroidal field on axis (T)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 *-------------*
 * Fusion Power*
@@ -111,9 +111,9 @@ ffuspow = 1.0
 * DESCRIPTION:   f-value for Maximum Fusion Power
 * JUSTIFICATION: Used with icc=9 to enforce Fusion Power limit
 
-powfmax = 2500.0 
+powfmax = 2500.0
 * DESCRIPTION:   Maximum fusion power (MW) (icc=9)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 *-------------------*
 * Net-electric Power*
@@ -124,14 +124,14 @@ powfmax = 2500.0
 * JUSTIFICATION: Required to generate 100MW
 * VARIABLES:     pnetelmw (net electric power) calculated in-situ
 
-*pnetelin = 
+*pnetelin =
 * DESCRIPTION:   Required net electric power lower limit (MW) (icc=16)
 * JUSTIFICATION: Not used in this run
 
 * ixc = 25
-* fpnetel = 1.0 
-* boundl(25) = 
-* boundu(25) = 
+* fpnetel = 1.0
+* boundl(25) =
+* boundu(25) =
 * DESCRIPTION:   f-value for net electric power (constraint equation 16)
 * JUSTIFICATION:
 
@@ -140,12 +140,12 @@ powfmax = 2500.0
 *---------*
 
 *icc = 28
-* DESCRIPTION:   Constraint equation for fusion gain (big Q) lower limit 
-* JUSTIFICATION: Turned off, dont care about Q lower limit  
+* DESCRIPTION:   Constraint equation for fusion gain (big Q) lower limit
+* JUSTIFICATION: Turned off, dont care about Q lower limit
 * VARIABLES:     ignite,  bigq calculated in-situ
 
-*bigqmin = 
-* DESCRIPTION:   Minimum fusion gain Q 
+*bigqmin =
+* DESCRIPTION:   Minimum fusion gain Q
 * JUSTIFICATION: Turned off, dont care about lower Q value
 
 
@@ -158,19 +158,19 @@ powfmax = 2500.0
 
 *ixc = 1
 aspect = 1.8
-*boundl(1) = 
-*boundu(1) = 
+*boundl(1) =
+*boundu(1) =
 * DESCRIPTION:   Aspect ratio
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 *icc = 21
-* DESCRIPTION:   Constraint equation for plasma minor radius lower limit 
+* DESCRIPTION:   Constraint equation for plasma minor radius lower limit
 * JUSTIFICATION: Turned off, dont care about lower limit
 * VARIABLES:     aplasmin (minimum minor radius (m)), rminor calculated in-situ
 
-*aplasmin = 0 
+*aplasmin = 0
 * DESCRIPTION:   Minimum minor radius (m) (icc=21)
 * JUSTIFICATION: Not used, using a defined minor radius
 
@@ -189,26 +189,26 @@ ishape = 0
 * =8 use input kappa, triang to calculate 95% values based on fit to FIESTA (ST)
 * =9 set kappa to the natural elongation value, triang input
 * =10 set kappa to maximum stable value at a given aspect ratio (2.6<A<3.6)), triang input
-* =11 set kappa Menard 2016 aspect-ratio-dependent scaling, triang input 
+* =11 set kappa Menard 2016 aspect-ratio-dependent scaling, triang input
 * JUSTIFICATION: Not set, assuming default value
 
 kappa = 2.8
 * DESCRIPTION:   Plasma Separatrix Elongation
-* JUSTIFICATION:  
+* JUSTIFICATION:
 
-*kappa95 = 
+*kappa95 =
 * DESCRIPTION:   Plasma 95% elongation
-* JUSTIFICATION: Not set, calculated as ishape=0 
+* JUSTIFICATION: Not set, calculated as ishape=0
 
-triang = 0.5 
+triang = 0.5
 * DESCRIPTION:   Plasma Separatrix Triangularity
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-*triang95 = 
+*triang95 =
 * DESCRIPTION:   Plasma 95% triangularity
 * JUSTIFICATION: Not set, calculated as ishape=0
 
-*fkzohm = 
+*fkzohm =
 * DESCRIPTION:   Zohm elongation scaling multiplier (ishape 2,3)
 * JUSTIFICATION: Not scaling plasma shape. Used when ishape=2,3
 
@@ -223,11 +223,11 @@ triang = 0.5
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 *icc = 23
-* DESCRIPTION:   Constraint equation for conducting shell radius / rminor upper limit (FW) 
+* DESCRIPTION:   Constraint equation for conducting shell radius / rminor upper limit (FW)
 * JUSTIFICATION: Turned off, dont care about shell radius ratio limit for vertical stability
 * VARIABLES:     cwrmax calculated in-situ
 
-*cwrmax = 
+*cwrmax =
 * DESCRIPTION:   Max conducting shell to rminor radius
 * JUSTIFICATION: Not using icc = 23
 
@@ -239,7 +239,7 @@ icc = 5
 * JUSTIFICATION: Used to enforce Greenwald limit
 * VARIABLES:     dnelimt & dnla calculated in-situ
 
-idensl = 7
+i_density_limit = 7
 * DESCRIPTION:   Switch for Density Limit to Enforce (icc=5) (7: Greenwald Limit)
 * JUSTIFICATION: Enforce Greenwald limit
 
@@ -253,10 +253,10 @@ boundu(6) = 5.0E+20
 ixc = 9
 fdene = 1.0
 boundl(9) = 0.1
-boundu(9) = 1.0 
+boundu(9) = 1.0
 * DESCRIPTION:   f-value for density limit
 * JUSTIFICATION: Used with icc=5 to enforce density limit
-               
+
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -270,7 +270,7 @@ boundu(109) = 1.0
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Temperature ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-ixc = 4 
+ixc = 4
 te = 15.0
 boundl(4) = 5.0
 boundu(4) = 25.0
@@ -281,7 +281,7 @@ tratio = 1.0
 * DESCRIPTION:   Ion Temperature / Electron Temperature
 * JUSTIFICATION: Default value
 
-*ti =   
+*ti =
 * DESCRIPTION:   volume averaged ion temperature (keV). N.B. calculated from te if tratio > 0.0
 * JUSTIFICATION: Calculated in-situ as tratio >0
 
@@ -291,10 +291,10 @@ tratio = 1.0
 
 *icc = 6
 * DESCRIPTION:   Equation for epsilon beta-poloidal upper limit
-* JUSTIFICATION: Turned off, not in use 
-* VARIABLES:     eps,fbeta Rest calculated in-situ
+* JUSTIFICATION: Turned off, not in use
+* VARIABLES:     eps,fbeta_poloidal_eps Rest calculated in-situ
 
-*epbetmax
+*beta_poloidal_eps_max
 * DESCRIPTION:   Max epsilon*beta value
 * JUSTIFICATION: Turned off, not in use. icc=6.
 
@@ -305,7 +305,7 @@ icc = 24
 * JUSTIFICATION: Limit for plasma stability
 * VARIABLES:     beta calculated in-situ
 
-*betalim
+*beta_max
 * DESCRIPTION:   Plasma beta upper limit
 * JUSTIFICATION: Turned off, not in use. icc=24. Allow to be calculated in-situ
 
@@ -313,11 +313,11 @@ ixc = 5
 beta = 0.2
 boundl(5) = 0.01
 boundu(5) = 1.0
-* DESCRIPTION:   Total Plasma Beta, 
-* JUSTIFICATION: Beta is limited by dnbeta
+* DESCRIPTION:   Total Plasma Beta,
+* JUSTIFICATION: Beta is limited by beta_norm_max
 
 ixc = 36
-fbetatry = 0.75
+fbeta_max = 0.75
 boundl(36) = 0.01
 boundu(36) = 1.0
 * DESCRIPTION:   f-value for Beta Limit
@@ -325,7 +325,7 @@ boundu(36) = 1.0
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-iculbl = 3
+i_beta_component = 3
 * DESCRIPTION:   Switch for Beta Limit Scaling (icc=24) (3: Apply Limit to Toroidal)
 * JUSTIFICATION: Total beta is used to agree with literature limit
 * REFERENCE:     Ono & Kaita (2015), Physics of Plasmas, 22, 040501
@@ -334,17 +334,17 @@ iculbl = 3
 * = 2 apply limit to thermal + neutral beam beta
 * = 3 apply limit to toroidal beta
 
-dnbeta = 5.0 
+beta_norm_max = 5.0
 * DESCRIPTION:   (Troyon-like) coefficient for beta scaling
-* JUSTIFICATION: 
+* JUSTIFICATION:
 * REFERENCE:     Ono & Kaita (2015), Physics of Plasmas, 22, 040501
-*                
+*
 
-*gtscale = 
+*gtscale =
 * DESCRIPTION:   Flag to scale beta coefficient with aspect, iprofile=0 only
-* = 0 do not scale dnbeta with eps
-* = 1 scale dnbeta with aspect, original scaling
-* = 2 scale dnbeta with aspect, Menard scaling
+* = 0 do not scale beta_norm_max with eps
+* = 1 scale beta_norm_max with aspect, original scaling
+* = 2 scale beta_norm_max with aspect, Menard scaling
 * JUSTIFICATION: Working at fixed normalized beta, default = 0
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -352,9 +352,9 @@ dnbeta = 5.0
 *icc = 84
 * DESCRIPTION:   Constraint equation for lower limit of beta
 * JUSTIFICATION: Turned off, do not require a beta lower limit
-* VARIABLES:     betalim_lower (Lower limit for beta). beta,betaft calculated in-situ
+* VARIABLES:     beta_min (Lower limit for beta). beta,betaft calculated in-situ
 
-*betalim_lower = 
+*beta_min =
 * DESCRIPTION:   Plasma beta lower limit
 * JUSTIFICATION: Turned off, not in use, Used with icc=84 to enforce beta limit
 
@@ -363,15 +363,15 @@ dnbeta = 5.0
 *icc = 48
 * DESCRIPTION:   Constraint equation for poloidal beta upper limit
 * JUSTIFICATION: Turned off, do not care about poloidal beta
-* VARIABLES:     betpmx, fbetap. betap calculated in-situ
+* VARIABLES:     beta_poloidal_max, fbeta_poloidal. beta_poloidal calculated in-situ
 
-*betpmx = 
+*beta_poloidal_max =
 * DESCRIPTION:   Maximum poloidal beta (`constraint equation 48`) (default = 0.19)
 * JUSTIFICATION: Not set, not using icc = 48
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*ifalphap = 
+*i_beta_fast_alpha =
 * DESCRIPTION:   Switch for fast alpha pressure calculation
 * JUSTIFICATION: Not worried about alpha pressure, default =1, (modified fit)
 
@@ -379,15 +379,15 @@ dnbeta = 5.0
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 ixc = 18
-q = 6.0 
+q = 6.0
 boundl(18) = 3.0
 boundu(18) = 20.0
 * DESCRIPTION:   Safety factor at 95% flux surface
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 q0 = 2.0
 * DESCRIPTION:   Safety factor on axis
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 * icc = 45
 * DESCRIPTION:   Constraint equation for edge safety factor lower limit (TART) (ishape = 1)
@@ -397,11 +397,11 @@ q0 = 2.0
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ H-mode & Confinement ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-*ignite = 
+*ignite =
 * DESCRIPTION:   Switch for ignited plasma assumption
 * JUSTIFICATION: Non ignited plasma, default = Not ignited
 
-*isc = 
+*isc =
 * DESCRIPTION:   Switch for confinement scaling law (default=34, IPB98(y,2))
 * JUSTIFICATION: Not set, assuming default value
 
@@ -410,7 +410,7 @@ hfact = 1.00
 boundl(10) = 0.8
 boundu(10) = 1.2
 * DESCRIPTION:   H-factor on energy confinement time; radiation corrected
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -419,7 +419,7 @@ icc = 15
 * JUSTIFICATION: Required to be in H-mode
 * VARIABLES:     plhthresh,pdivt calculated in-situ
 
-ixc = 103 
+ixc = 103
 flhthresh = 1.0
 *boundl(21) = 0.01
 boundu(21) = 10.0
@@ -428,21 +428,21 @@ boundu(21) = 10.0
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*taumax = 
+*taumax =
 * DESCRIPTION:   Maximum allowed energy confinement time (s)
-* JUSTIFICATION: Not setting a limit on confinement time. 
+* JUSTIFICATION: Not setting a limit on confinement time.
 
-*tauee_in = 
+*tauee_in =
 * DESCRIPTION:   Input electron energy confinement time (sec) (isc=49 only)'
 * JUSTIFICATION: Not set, not ussing isc = 49.
 
-*iinvqd = 
+*iinvqd =
 * DESCRIPTION:   Switch for inverse quadrature in L-mode scaling laws 5 and 9
 * JUSTIFICATION: Not used, L mode plasma
 
-*ilhthresh = 
+*ilhthresh =
 * DESCRIPTION:   Switch for L-H power threshold to enforce
-* JUSTIFICATION: Not set yet, default = 19. 
+* JUSTIFICATION: Not set yet, default = 19.
 
 *tauratio =
 * DESCRIPTION:   Ratio of He and pellet particle confinement times (default = 1.0)
@@ -462,7 +462,7 @@ boundu(110) = 1.0
 * DESCRIPTION:   f-value for lower limit on taup/taueff the ratio of alpha particle to energy confinement times
 * JUSTIFICATION: Calculate He fraction consistent with tau ratio
 
-taulimit = 5.0 
+taulimit = 5.0
 * DESCRIPTION:   Ratio of Alpha Particle to Energy Confinement times (icc=62)
 * JUSTIFICATION: Default based on JET
 
@@ -482,36 +482,36 @@ ipedestal= 1
 * VARIABLES:     Variables calculated in-situ
 
 *---------*
-* Density *          
+* Density *
 *---------*
 
-rhopedn = 0.95  
+rhopedn = 0.95
 * DESCRIPTION:   r/a of Density Pedestal (ipedestal==1)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-alphan = 0.9 
+alphan = 0.9
 * DESCRIPTION:   Density Profile Index
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 ixc = 145
 fgwped = 0.1
 boundl(145) = 0.1
-boundu(145) = 1.0 
+boundu(145) = 1.0
 * DESCRIPTION:   Fraction of Greenwald Density to Set as Pedestal-Top Density
 * JUSTIFICATION: testing...
 
 ixc = 152
-fgwsep = 0.1 
+fgwsep = 0.1
 boundl(152) = 0.001
 boundu(152) = 0.1
 * DESCRIPTION:   Fraction of Greenwald Density to Set as Separatrix Density
 * JUSTIFICATION: Assumed, compare with SCENE profile
 
-*neped =  
+*neped =
 * DESCRIPTION:   Electron density of pedestal [m-3] (ipedestal=1)(default = 4.0E19)
 * JUSTIFICATION: Not set, used as a fraction of greenwald instead
 
-*nesep =  
+*nesep =
 * DESCRIPTION:   electron density at separatrix [m-3] (ipedestal=1)(default = 3.0E19)
 * JUSTIFICATION: Not set, assumed default
 
@@ -535,42 +535,42 @@ boundu(154) = 0.99
 * JUSTIFICATION: Turned off, not using model
 * VARIABLES:     Calculated in-situ
 
-*fnesep = 
+*fnesep =
 * DESCRIPTION:   f-value for Eich critical separatrix density
 * JUSTIFICATION: Not using icc=76
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 *-------------*
-* Temperature *          
+* Temperature *
 *-------------*
 
 rhopedt = 0.925
 * DESCRIPTION:   r/a of Temperature Pedestal (ipedestal==1)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 alphat = 1.4
 * DESCRIPTION:   Temperature Profile Index
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-tbeta = 2.0 
+tbeta = 2.0
 * DESCRIPTION:   Temperature Profile Index Beta
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 teped = 4.5
 * DESCRIPTION:   Electron Temperature of Pedestal top (keV)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-tesep = 0.125 
+tesep = 0.125
 * DESCRIPTION:   Electron Temperature at Separatrix (keV)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-*lhat =  
+*lhat =
 * DESCRIPTION:   Connection length factor L|| = lhat qstar R for Reinke criterion
-* JUSTIFICATION: Not set, not using Reinke model. 
+* JUSTIFICATION: Not set, not using Reinke model.
 
 *---------*
-* Current *          
+* Current *
 *---------*
 
 alphaj = 0.1
@@ -581,25 +581,25 @@ alphaj = 0.1
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Radiation,Fuelling & Impurities ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-coreradius = 0.75 
+coreradius = 0.75
 * DESCRIPTION:   Normalised Radius Defining the 'Core' Region
 * JUSTIFICATION:
 * REFERENCE:     Lux et al. (2016), Plasma Phys. Control. Fusion, 58, 075001
 
-coreradiationfraction = 0.7 
+coreradiationfraction = 0.7
 * DESCRIPTION:   Fraction of Radiation from Core Region Lost
-* JUSTIFICATION: 
+* JUSTIFICATION:
 * REFERENCE:     Lux et al. (2016), Plasma Phys. Control. Fusion, 58, 075001
 
 *rad_fraction_sol =
 * DESCRIPTION:   SoL radiation fraction (default = 0.8)
 * JUSTIFICATION: Not set, using default
 
-ssync = 0.6 
+ssync = 0.6
 * DESCRIPTION:   Plasma synchrotron radiation wall reflectivity factor
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-*iradloss = 
+*iradloss =
 * DESCRIPTION:   Switch for radiation loss term inclusion in power balance (default = 1)
 * =0 total power lost is scaling power plus radiation
 * =1 total power lost is scaling power plus core radiation only
@@ -609,7 +609,7 @@ ssync = 0.6
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-icc = 17 
+icc = 17
 * DESCRIPTION:   Radiation Fraction Upper Limit
 * JUSTIFICATION: Limit for plasma stability
 * VARIABLES:     Rest calculated in-situ
@@ -622,27 +622,27 @@ boundu(28) = 1.0
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*protium =  
+*protium =
 * DESCRIPTION:   Seeded protium density / electron density (default = 0.0)
 * JUSTIFICATION: Not used, no protium seeding.
 
-*f_deuterium = 
+*f_deuterium =
 * DESCRIPTION:   Deuterium fuel fraction
 * JUSTIFICATION: Using default = 0.5
 
-*f_tritium = 
+*f_tritium =
 * DESCRIPTION:   Tritium fuel fraction
 * JUSTIFICATION: Using default = 0.5
 
-*f_helium3 = 
+*f_helium3 =
 * DESCRIPTION:   Helium-3 fuel fraction
 * JUSTIFICATION: Using default = 0.0
 
-*f_alpha_plasma = 
+*f_alpha_plasma =
 * DESCRIPTION:   Fraction of alpha power deposited to plasma
 * JUSTIFICATION: Using default = 0.95
 
-*burnup_in = 
+*burnup_in =
 * DESCRIPTION:   User input plasma fuel burnup fraction
 * JUSTIFICATION: Turned off, allow to be calculated in-situ
 
@@ -651,7 +651,7 @@ fimp(13) = 0.0005
 *boundl(135) = 0.000495
 *boundu(135) = 0.000505
 * DESCRIPTION:   Xenon Impurity Concentration
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 *fimp(1)  = 1.0     *Hydrogen (fraction calculated by code)
 *fimp(2)  = 0.1     *Helium (fraction calculated by code)
@@ -668,7 +668,7 @@ fimp(12) = 0.0      *Krypton
 *fimp(13) = 0.0   *Xenon
 fimp(14) = 5e-05    *Tungsten
 * DESCRIPTION:   Density Fractions Relative to Electron Density
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -677,7 +677,7 @@ fimp(14) = 5e-05    *Tungsten
 * JUSTIFICATION: Turned off, dont care about maximum effective charge
 * VARIABLES:     zeffmax (maximum value for Zeff), zeff calculated in-situ
 
-*zeffmax = 
+*zeffmax =
 * DESCRIPTION:   Maximum value for Zeff (`constraint equation 64`)
 * JUSTIFICATION: Not set, not using icc = 64
 
@@ -685,7 +685,7 @@ fimp(14) = 5e-05    *Tungsten
 *-------------------------------- *Divertor* ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------*
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾*
 
-ftar = 0.5 
+ftar = 0.5
 * DESCRIPTION:   Fraction of power to the lower divertor
 * JUSTIFICATION: All power to lower divertor as Single-Null
 
@@ -693,7 +693,7 @@ i_single_null = 0
 * DESCRIPTION:   Switch for Divertor Configuration (0: Double-null, 1: Single-Null)
 * JUSTIFICATION: Design choice, STs generally always double-null
 
-*i_hldiv = 
+*i_hldiv =
 * DESCRIPTION:   switch for user input hldiv: (default = 0)
 * = 0: divtart model turned off and user inputs hldiv
 * = 1: divtart model calculates hldiv
@@ -703,21 +703,21 @@ i_single_null = 0
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Protection Constraints ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-*icc = 18 
+*icc = 18
 * DESCRIPTION:   Equation for divertor heat load upper limit
 * JUSTIFICATION: Turned off, Psep/R (icc=56) used instead
 * VARIABLES:     hldiv calculated in-situ
 
-*hldiv = 
+*hldiv =
 * DESCRIPTION:   Divertor heat load (MW/m2)
 * JUSTIFICATION: Turned off, not used
 
 *ixc = 27
-*fhldiv = 
+*fhldiv =
 * DESCRIPTION:   f-value for divertor heat load
 * JUSTIFICATION: Used with icc=18 to enforce max divertor heat load, not used
 
-*hldivlim = 
+*hldivlim =
 * DESCRIPTION:   Heat load limit (MW/m2)
 * JUSTIFICATION: Turned off, not used
 
@@ -728,7 +728,7 @@ i_single_null = 0
 * JUSTIFICATION: Turned off, not needing a minimum pdivt
 * VARIABLES:     pdivtlim (Minimum power crossing separatrix pdivt [MW]). pdivt calculated in-situ
 
-*pdivtlim = 
+*pdivtlim =
 * DESCRIPTION:   Minimum pdivt [MW] (`constraint equation 80`)
 * JUSTIFICATION: Not set, not using icc = 80
 
@@ -737,7 +737,7 @@ i_single_null = 0
 *icc = 68
 * DESCRIPTION:   Upper limit on  Psep scaling (PsepB/qAR)
 * JUSTIFICATION: Turned off, just using Psep/R constraint
-* VARIABLES:     psepbqarmax (maximum permitted value of ratio of Psep*Bt/qAR (MWT/m)). Rest calculated in-situ 
+* VARIABLES:     psepbqarmax (maximum permitted value of ratio of Psep*Bt/qAR (MWT/m)). Rest calculated in-situ
 
 *psepbqarmaX
 * DESCRIPTION:   maximum ratio of Psep*Bt/qAR (MWT/m) (`constraint equation 68`)
@@ -750,9 +750,9 @@ icc = 56
 * JUSTIFICATION: Divertor protection
 * VARIABLES:     rmajor. pdivt calculated in situ
 
-pseprmax = 40.0 
+pseprmax = 40.0
 * DESCRIPTION:   Maximum ratio of Psep/R (MW/m) (icc=56)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 ixc = 97
 fpsepr = 1.0
@@ -764,39 +764,39 @@ boundu(97) = 1.0
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Divertor Configuration ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-*divclfr = 
+*divclfr =
 * DESCRIPTION:   Divertor coolant fraction (default = 0.3)
 * JUSTIFICATION: Not yet set
 
-*divdens = 
+*divdens =
 * DESCRIPTION:   Divertor structure density (kg/m3) (default = 1.0D4)
 * JUSTIFICATION: Not yet set
 
-*divplt = 
+*divplt =
 * DESCRIPTION:   Divertor plate thickness (m) (default = 0.035)
 * JUSTIFICATION: Not yet set
 
-*fdiva = 
+*fdiva =
 * DESCRIPTION:   Divertor area fudge factor (for ITER, Sept 1990) (default = 1.11)
 * JUSTIFICATION: Not yet set
 
-*plleni = 
+*plleni =
 * DESCRIPTION:   Length of inboard divertor plate (m) (default =  1.0)
 * JUSTIFICATION: Not yet set
 
-*plleno = 
+*plleno =
 * DESCRIPTION:   Length of outboard divertor plate (m) (default =  1.0)
 * JUSTIFICATION: Not yet set
 
-*plsepi = 
+*plsepi =
 * DESCRIPTION:   Poloidal length, x-point to inboard strike point (m) (default =  1.0)
 * JUSTIFICATION: Not yet set
 
-*plsepo = 
+*plsepo =
 * DESCRIPTION:   Poloidal length, x-point to outboard strike point (m) (default =  1.5)
 * JUSTIFICATION: Not yet set
 
-*plsepo = 
+*plsepo =
 * DESCRIPTION:   Poloidal length, x-point to outboard strike point (m) (default =  1.5)
 * JUSTIFICATION: Not yet set
 
@@ -804,11 +804,11 @@ boundu(97) = 1.0
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 *icc = 22
-* DESCRIPTION:   Constraint equation for divertor collision/connection length ratio upper limit 
+* DESCRIPTION:   Constraint equation for divertor collision/connection length ratio upper limit
 * JUSTIFICATION: Turned off, dont care about connection length
 * VARIABLES:     rlenmax  (maximum value for length ratio (rlclolcn)), rlclolcn calculated in-situ
 
-*rlenmax = 
+*rlenmax =
 * DESCRIPTION:   Maximum value for length ratio (rlclolcn) (`constraintg eqn 22`)
 * JUSTIFICATION: Turned off, not using icc =22
 
@@ -821,81 +821,81 @@ boundu(97) = 1.0
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*anginc = 
+*anginc =
 * DESCRIPTION:   Angle of incidence of field line on plate (rad) (default = 0.262)
 * JUSTIFICATION: Not yet set
 
-*beta_div = 
+*beta_div =
 * DESCRIPTION:   Field line angle wrt divertor target plate (degrees) (default = 1.0)
 * JUSTIFICATION: Not yet set
 
-*betai = 
+*betai =
 * DESCRIPTION:   Poloidal plane angle between inner divertor leg and plate (rad) (default = 1.0)
 * JUSTIFICATION: Not yet set
 
-*betao = 
+*betao =
 * DESCRIPTION:   Poloidal plane angle between outer divertor leg and plate (rad) (default = 1.0)
 * JUSTIFICATION: Not yet set
 
-*anginc = 
+*anginc =
 * DESCRIPTION:   Angle of incidence of field line on plate (rad) (default = 0.262)
 * JUSTIFICATION: Not yet set
 
-*c1div- c6div = 
+*c1div- c6div =
 * DESCRIPTION:   Divertor model fitting coefficients
 * JUSTIFICATION: Leaving as default
 
-*delld = 
+*delld =
 * DESCRIPTION:   Coeff for power distribution along main plasma (default = 1.0)
 * JUSTIFICATION: Leaving as default
 
-*divdum = 
+*divdum =
 * DESCRIPTION:   switch for divertor Zeff model: (default = 0)
 * =0 calc
 * =1 input
 * JUSTIFICATION: Not yet set
 
-*zeffdiv = 
+*zeffdiv =
 * DESCRIPTION:   Zeff in the divertor region (if `divdum/=0`) (default =  1.0)
 * JUSTIFICATION: Not yet set
 
-*fdfs = 
+*fdfs =
 * DESCRIPTION:   Radial gradient ratio (default = 10.0)
 * JUSTIFICATION: Not yet set
 
-*fififi = 
+*fififi =
 * DESCRIPTION:   Coefficient for gamdiv (default = 4.0D-3)
 * JUSTIFICATION: Not yet set
 
-*flux_exp = 
+*flux_exp =
 * DESCRIPTION:   The plasma flux expansion in the divertor (default 2; Wade 2020)
 * JUSTIFICATION: Not yet set
 
-*frrp = 
+*frrp =
 * DESCRIPTION:   Fraction of radiated power to plate (default = 0.4)
 * JUSTIFICATION: Not yet set
 
-*ksic = 
+*ksic =
 * DESCRIPTION:   Power fraction for outboard double-null scrape-off plasma (default = 0.8)
 * JUSTIFICATION: Not yet set
 
-*omegan = 
+*omegan =
 * DESCRIPTION:   Pressure ratio (nT)_plasma / (nT)_scrape-off (default = 1.0)
 * JUSTIFICATION: Not yet set
 
-*prn1 = 
+*prn1 =
 * DESCRIPTION:   n-scrape-off / n-average plasma; (input for `ipedestal=0`, = nesep/dene if `ipedestal==1`) (default =  0.285)
 * JUSTIFICATION: Not yet set
 
-*tdiv = 
+*tdiv =
 * DESCRIPTION:   Plasma temperature at divertor (eV) (default =  2.0)
 * JUSTIFICATION: Not yet set
 
-*xparain = 
+*xparain =
 * DESCRIPTION:   Parallel heat transport coefficient (m2/s) (default =  2.1D3)
 * JUSTIFICATION: Not yet set
 
-*xpertin = 
+*xpertin =
 * DESCRIPTION:   perpendicular heat transport coefficient (m2/s) (default =  2.0)
 * JUSTIFICATION: Not yet set
 
@@ -906,20 +906,20 @@ boundu(97) = 1.0
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ General settings ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-n_tf = 12 
-* DESCRIPTION:   Number of TF Coils 
-* JUSTIFICATION: 
+n_tf = 12
+* DESCRIPTION:   Number of TF Coils
+* JUSTIFICATION:
 
 i_tf_shape = 2
 * DESCRIPTION:   Switch for TF coil toroidal shape (2: Picture frame coils)
 * JUSTIFICATION: S. Kahn : Even it might be the best shape for top OOP and bending
-*                stresses without sliding joints, we will start with rectangular 
+*                stresses without sliding joints, we will start with rectangular
 *                shape for now.
-*                Shapes closer to a princeton-D might be chosen if no sliding  
-*                joints can be made with SC material 
+*                Shapes closer to a princeton-D might be chosen if no sliding
+*                joints can be made with SC material
 
-ripmax = 1.0 
-* DESCRIPTION:   Maximum Allowable Toroidal Field Ripple Amplitude at Plasma Edge (%) 
+ripmax = 1.0
+* DESCRIPTION:   Maximum Allowable Toroidal Field Ripple Amplitude at Plasma Edge (%)
 * JUSTIFICATION: Default
 
 *tf_in_cs switch is found in the radial build section*
@@ -927,15 +927,15 @@ ripmax = 1.0
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Conductor Type ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-i_tf_sup = 1 
-* DESCRIPTION:   Switch for TF Coil Conductor Model 
+i_tf_sup = 1
+* DESCRIPTION:   Switch for TF Coil Conductor Model
 * = 0 copper
 * = 1 superconductor
 * = 2 Cryogenic aluminium
 * JUSTIFICATION: Design choice
 
 i_tf_sc_mat = 9
-* DESCRIPTION:   Switch for TF Coil superconductor type 
+* DESCRIPTION:   Switch for TF Coil superconductor type
 * =1 ITER Nb3Sn critical surface model with standard
 *    ITER parameters
 * =2 Bi-2212 high temperature superconductor (range of
@@ -947,17 +947,17 @@ i_tf_sc_mat = 9
 * =7 Durham Ginzburg-Landau critical surface model for Nb-Ti
 * =8 Durham Ginzburg-Landau critical surface model for REBCO
 * =9 Hazelton experimental data + Zhai conceptual model for REBCO
-* JUSTIFICATION: HTS design choice 
+* JUSTIFICATION: HTS design choice
 
-*tcritsc =  
+*tcritsc =
 * DESCRIPTION:   Critical temperature (K) for superconductor at zero field and strain (i_tf_sc_mat=4, =tc0m`)
 * JUSTIFICATION: Not used as not i_tf_sc_mat=4
 
-*dcond = 
+*dcond =
 * DESCRIPTION: Density of superconductor type given by i_tf_sc_mat/isumatoh/isumatpf (kg/m3)
 * JUSTIFICATION: Not set, assuming default
 
-*quench_model =  
+*quench_model =
 * DESCRIPTION:   switch for TF coil quench model (Only applies to REBCO magnet at present) (default = exponential):
 * ='exponential' exponential quench with constant discharge resistor
 * ='linear' quench with constant voltage
@@ -967,47 +967,47 @@ i_tf_sc_mat = 9
 * REBCO HTS SETTINGS *
 *--------------------*
 
-*tape_width =  
+*tape_width =
 * DESCRIPTION:   Mean width of tape (m) (default = 4.0E-3)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-*tape_thickness =  
+*tape_thickness =
 * DESCRIPTION:   Thickness of tape, inc. all layers (hts, copper, substrate, etc.) (m) (default = 6.5E-5)
-* JUSTIFICATION:  
+* JUSTIFICATION:
 
-*hastelloy_thickness =  
+*hastelloy_thickness =
 * DESCRIPTION:   Thickness of Hastelloy layer in HTS tape (m) (default = 50.0E-6)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 *ixc = 138
 *rebco_thickness = 1.0E-6
-*boundl(138) = 
-*boundu(138) =  
+*boundl(138) =
+*boundu(138) =
 * DESCRIPTION:   Thickness of REBCO layer in tape (m) (iteration variable 138) (default = 1.0E-6)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 *ixc = 139
-*copper_thick = 
-*boundl(139) = 
-*boundu(139) =  
+*copper_thick =
+*boundl(139) =
+*boundu(139) =
 * DESCRIPTION:   Thickness of copper layer in tape (m) (iteration variable 139) (default = 100.0E-6)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 *ixc = 158
-*croco_thick = 
-*boundl(158) = 
-*boundu(158) =  
+*croco_thick =
+*boundl(158) =
+*boundu(158) =
 * DESCRIPTION:   Thickness of CroCo copper tube (m) (iteration variable 158)(default = 2.5E-3)
-* JUSTIFICATION:  
+* JUSTIFICATION:
 
-*copper_rrr = 
+*copper_rrr =
 * DESCRIPTION:   Residual resistivity ratio copper in TF superconducting cable (default =  100E0)
-* JUSTIFICATION:  
+* JUSTIFICATION:
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Current & Voltage Limits ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-icc = 33 
+icc = 33
 * DESCRIPTION:   TF superconductor operating current / critical current density
 * JUSTIFICATION: A quench must be avoided
 * VARIABLES:     jwptf & jwdgcrt (critical current) calculated in-situ
@@ -1028,15 +1028,15 @@ boundu(50) = 1.0
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*icc = 34 
+*icc = 34
 * DESCRIPTION:   Constraint equation for TF coil dump voltage upper limit (SCTF)
 * JUSTIFICATION: Turned off, do not care about dump voltage
 * VARIABLES:     vtfskv calculated in-situ
 
 *ixc = 52
-*vdalw =  
-*boundl(52) = 
-*boundu(52) = 
+*vdalw =
+*boundl(52) =
+*boundu(52) =
 * DESCRIPTION:   Max voltage across TF coil during quench (kV) (icc=34)
 * JUSTIFICATION: Not yet set. Not using icc = 34
 
@@ -1047,14 +1047,14 @@ boundu(50) = 1.0
 * JUSTIFICATION: Turned off, not concerned with copper current density
 * VARIABLES:     copperA_m2_max.copperA_m2  calculated in-situ
 
-*coppera_m2_max =  
+*coppera_m2_max =
 * DESCRIPTION:   Maximum TF coil current / copper area (A/m2)
 * JUSTIFICATION: Not yet defined, assuming (default =  100E0)
 
 *ixc = 143
-*f_coppera_m2 = 
-*boundl(143) = 
-*boundu(143) =  
+*f_coppera_m2 =
+*boundl(143) =
+*boundu(143) =
 * DESCRIPTION:   f-value for constraint 75: TF coil current / copper area < copperA_m2_max (iteration variable 143)
 * JUSTIFICATION: Not used.
 
@@ -1065,7 +1065,7 @@ boundu(50) = 1.0
 * JUSTIFICATION: Turned off, dont care about limit
 * VARIABLES:     mvalim,tflegmw,tfcpmw calculated in-situ
 
-*mvalim =  
+*mvalim =
 * DESCRIPTION:   Maximum MVA limit (`constraint equation 19`) (default = 40.0)
 * JUSTIFICATION: Not set, not using icc = 19
 
@@ -1076,27 +1076,27 @@ boundu(50) = 1.0
 * tfcth is set up in the radial build section and should generally never be iterated with dr_tf_wp *
 
 *-------------------*
-* Casing dimensions * 
+* Casing dimensions *
 *-------------------*
 
-i_tf_case_geom = 0 
+i_tf_case_geom = 0
 * DESCRIPTION:   Front casing geometry (0: Circular geometry)
 * JUSTIFICATION: ITER coil plasma side case geomety
 
-*dcase = 
+*dcase =
 * DESCRIPTION:   Density of coil case (kg/m3)
 * JUSTIFICATION: Not set, assuming default
 
 ixc = 57
 thkcas = 0.4
-boundl(57) = 0.01 
-boundu(57) = 0.5 
+boundl(57) = 0.01
+boundu(57) = 0.5
 * DESCRIPTION:   Inboard TF Coil Case Outer (Nose case) thickness (m)
 * JUSTIFICATION: Set bucking cylinder size
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*casthi = 0.0 
+*casthi = 0.0
 * DESCRIPTION:   TF coil case inner thickness (m)
 * JUSTIFICATION: Not used, using casths_fraction instead
 
@@ -1104,7 +1104,7 @@ boundu(57) = 0.5
 
 casthi_fraction = 1.0E-12
 * DESCRIPTION:   Inboard TF coil case plasma side thickness as a fraction of tfcth (total coil thickness)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1112,11 +1112,11 @@ casthi_fraction = 1.0E-12
 casths_fraction = 0.65
 * DESCRIPTION:   Minimal fraction of the TF coil maximum toroidal thickness taken by the side case
 * Fraction of total thickness of coil at start of winding pack
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 * Use one or the other *
 
-*casths = 0.05 
+*casths = 0.05
 * DESCRIPTION:   TF coil case sidewall thickness (m)
 * JUSTIFICATION: Not used, using casths_fraction instead
 
@@ -1127,7 +1127,7 @@ casths_fraction = 0.65
 *-------------------------*
 
 i_tf_wp_geom = 2
-* DESCRIPTION:   Switch for TF WP geometry selection 
+* DESCRIPTION:   Switch for TF WP geometry selection
 * =0: rectangle, can only use i_tf_turns_integer = 1 with this shape
 * =1: double rectangle
 * =2: trapezoid
@@ -1136,17 +1136,17 @@ i_tf_wp_geom = 2
 ixc = 140
 dr_tf_wp = 0.6
 boundl(140) = 0.4
-boundu(140) = 0.8 
+boundu(140) = 0.8
 * DESCRIPTION:   Inboard TF winding pack thickness including turn insulation (m)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-*tinstf = 
+*tinstf =
 * DESCRIPTION:   Ground Insulation Thickness Surrounding Winding Pack (m)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-*tfinsgap = 
+*tfinsgap =
 * DESCRIPTION:   WP insertion gap
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 *-------------------*
 * WP turn structure *
@@ -1154,13 +1154,13 @@ boundu(140) = 0.8
 
 * Specifying number of turns with n_layer *
 
-*n_tf_turn = 
-* DESCRIPTION:   Number of turns per TF coil 
+*n_tf_turn =
+* DESCRIPTION:   Number of turns per TF coil
 * JUSTIFICATION: Allowing to be calculated
 
 i_tf_turns_integer = 0
 * DESCRIPTION:   Switch for TF coil integer/non-integer turns (0 : non-integer turns)
-* JUSTIFICATION:  
+* JUSTIFICATION:
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1169,11 +1169,11 @@ i_tf_turns_integer = 0
 * JUSTIFICATION: Turned off, not concerned with number of TF turns
 * VARIABLES:     t_turn_tf_max. t_turn_tf calculated in-situ
 
-*t_turn_tf = 
+*t_turn_tf =
 * DESCRIPTION:   TF coil turn edge length including turn insulation [m]
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-*t_turn_tf_max = 
+*t_turn_tf_max =
 * DESCRIPTION: TF coils WP turn squared dimension upper limit (m)
 * JUSTIFICATION: Turned off, not concerned with number of TF turns
 
@@ -1187,19 +1187,19 @@ i_tf_turns_integer = 0
 * VARIABLES:     cpttf_max (Allowable TF coil current per turn [A/turn]). cpttf calculated in-situ
 
 *ixc = 60
-*cpttf =  
-*boundl(60) = 
-*boundu(60) = 
+*cpttf =
+*boundl(60) =
+*boundu(60) =
 * DESCRIPTION:   TF coil leg current per turn (A) (icc=77)
 * JUSTIFICATION: Not used, not constraining leg current
 
-*cpttf_max =  
+*cpttf_max =
 * DESCRIPTION:   Maximum allowable TF coil leg current per turn (A) (icc=77)
 * JUSTIFICATION: Not used, not constraining leg current
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*t_cable_tf = 
+*t_cable_tf =
 * DESCRIPTION:   TF coil superconducting cable squared/rounded dimensions [m]
 * If the turn is not a square (i_tf_turns_integer = 1) a squared cable of
 * equivelent size is use to calculated this quantity
@@ -1211,7 +1211,7 @@ i_tf_turns_integer = 0
 
 *n_pancake = 4
 * DESCRIPTION:   Number of pancakes in TF coil (i_tf_turns_integer=1)
-* JUSTIFICATION: Not set, as i_tf_turns_integer = 0 
+* JUSTIFICATION: Not set, as i_tf_turns_integer = 0
 
 * Setting the winding pack turn numbers in each plane when using a rectangular winding pack
 
@@ -1221,49 +1221,49 @@ i_tf_turns_integer = 0
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*thicndut =  
+*thicndut =
 * DESCRIPTION:   Conduit turn insulation thickness (m)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 *                This depends at least on the maximum dump voltage and prpbably
 *                on the CS magnet maximum current
 
 
-*dcondins = 
+*dcondins =
 * DESCRIPTION: Density of TF coil insulation (kg/m3)
 * JUSTIFICATION: Not set, assuming default
 
 *ixc = 58
-*thwcndut = 
-*boundl(58) = 
-*boundu(58) = 
+*thwcndut =
+*boundl(58) =
+*boundu(58) =
 * DESCRIPTION:   WP Turn steel conduit/jacket structure minimal thickness
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-*dhecoil = 
+*dhecoil =
 * DESCRIPTION:   Diameter of central helium channel in TF winding (m)
-* JUSTIFICATION: 
-*                
+* JUSTIFICATION:
+*
 
-*layer_ins = 
+*layer_ins =
 * DESCRIPTION:   Additional insulation thickness between layers (m)
 * JUSTIFICATION: Not yet set.
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*vftf = 
+*vftf =
 * DESCRIPTION:   Void fraction of TF coil cable excluding the cooling pipe
 * JUSTIFICATION: There is no coolant space in the MIT VIPER cable design other
 *                than the central cooling pipe. So vftf should then be 0.
 *                However about 5% of the space is used by HTS tape soldering
-* REFERENCE:     Zachary S Hartwig et al 2020 Supercond. Sci. Technol. 
+* REFERENCE:     Zachary S Hartwig et al 2020 Supercond. Sci. Technol.
 *                in press https://doi.org/10.1088/1361-6668/abb8c0
 
-*fcutfsu = 
+*fcutfsu =
 * DESCRIPTION:   Fraction of copper in TF cable space
-* JUSTIFICATION: The HTS scaling is not defined separating SC material from 
+* JUSTIFICATION: The HTS scaling is not defined separating SC material from
 *                Copper at the HTS strands level. Therefore this Cu fraction
 *                DOES NOT inclide the strand copper.
-* REFERENCE:     Zachary S Hartwig et al 2020 Supercond. Sci. Technol. 
+* REFERENCE:     Zachary S Hartwig et al 2020 Supercond. Sci. Technol.
 *                in press https://doi.org/10.1088/1361-6668/abb8c0
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Sliding Joints ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1273,19 +1273,19 @@ i_cp_joints = 0
 * DESCRIPTION:   Presence of TF sliding joints
 * JUSTIFICATION: No sliding joints on the TF design
 
-*th_joint_contact = 
+*th_joint_contact =
 * DESCRIPTION:   TF sliding joints contact pad width [m]
 * JUSTIFICATION: No sliding joints on the TF design
 
-*n_tf_joints_contact = 
+*n_tf_joints_contact =
 * DESCRIPTION:   Number of contacts per sliding joint turn
 * JUSTIFICATION: No sliding joints on the TF design
 
-*n_tf_joints = 
+*n_tf_joints =
 * DESCRIPTION:   Number of joints per turn
 * JUSTIFICATION: No sliding joints on the TF design
 
-* rho_tf_joints  = 
+* rho_tf_joints  =
 * DESCRIPTION:   TF joints surfacic resistivity [ohm.m]. Feldmetal joints assumed.
 * JUSTIFICATION: Not yet set, assuming default.
 
@@ -1311,15 +1311,15 @@ eyoung_res_tf_buck = 205.0E9   * Pa
 
 f_vforce_inboard = 0.5
 * DESCRIPTION:   Fraction of the vertical tension taken by the inboard mid-plane
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-*str_tf_con_res = 
+*str_tf_con_res =
 * DESCRIPTION:   Residual manufacturing strain in TF superconductor material
 * JUSTIFICATION: Not set, assuming default
 
-*i_str_wp = 
+*i_str_wp =
 * DESCRIPTION:   Switch for the behavior of the TF strain used to compute
-* the strain-dependent critical surface: 
+* the strain-dependent critical surface:
 * =0  str_tf_con_res is used
 * =1  str_wp is used
 * JUSTIFICATION: Not set, assuming default
@@ -1344,7 +1344,7 @@ i_tf_stress_model = 0
 *= 0 : Generalized plane strain formulation, Issues #977 and #991, O(n^3)
 *= 1 : Old plane stress model (only for SC)
 *= 2 : Axisymmetric extended plane strain, Issues #1414 and #998, O(n)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1353,9 +1353,9 @@ icc = 31
 * JUSTIFICATION: The support structure must hold
 * VARIABLES:     sig_tf_case calculated in-situ
 
-sig_tf_case_max = 850.0E6 
+sig_tf_case_max = 850.0E6
 * DESCRIPTION:   Allowable Tresca stress in TF coil structural material (Pa) (icc=31)
-* JUSTIFICATION: Stress limit increased as required to match TF coil design finite 
+* JUSTIFICATION: Stress limit increased as required to match TF coil design finite
 *                element modelling shows PROCESS maybe conservative in stress calculations
 
 ixc = 48
@@ -1372,9 +1372,9 @@ icc = 32
 * JUSTIFICATION: Stress limits must hold
 * VARIABLES:     sig_tf_wp calculated in-situ
 
-sig_tf_wp_max = 700.0E6 
+sig_tf_wp_max = 700.0E6
 * DESCRIPTION:   Allowable Tresca stress in TF coil winding pack (Pa) (icc=32)
-* JUSTIFICATION: Stress limit increased as required to match TF coil design finite 
+* JUSTIFICATION: Stress limit increased as required to match TF coil design finite
 *                element modelling shows PROCESS maybe conservative in stress calculations
 
 ixc = 49
@@ -1395,7 +1395,7 @@ boundu(49) = 1.0
 *     `eyoung_cond_axial`
 * =2  Elastic properties are set to reasonable defaults taking into
 *     account the superconducting material `i_tf_sc_mat`
-* JUSTIFICATION: Not yet set, assuming default, 
+* JUSTIFICATION: Not yet set, assuming default,
 
 *i_tf_cond_eyoung_trans =
 * DESCRIPTION:   Switch for the behavior of the elastic properties of the TF coil conductor in the transverse direction.
@@ -1413,27 +1413,27 @@ boundu(49) = 1.0
 * JUSTIFICATION: Turned off, dont care about quenching scenario
 * VARIABLES:     max_vv_stress (Maximum permitted stress of the VV (Pa)), vv_stress_quench calculated in-situ
 
-*max_vv_stress =  
+*max_vv_stress =
 * DESCRIPTION:   The allowable peak maximum shear stress in the vacuum vessel due to quench and fast discharge of the TF coils [Pa] (icc = 65)
 * (default = 143.0D6)
 * JUSTIFICATION: Not yet set, assuming default
 
-* theta1_coil  = 
+* theta1_coil  =
 * DESCRIPTION:   The angle of the outboard arc forming the TF coil current center line (deg) (default = 45 degrees)
 * JUSTIFICATION: Not yet set, assuming default.
 
-* theta1_vv  = 
+* theta1_vv  =
 * DESCRIPTION:   The angle of the outboard arc forming the VV current center line (deg) (default = 1 degrees)
 * JUSTIFICATION: Not yet set, assuming default.
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 *icc = 25
-* DESCRIPTION:   Constraint equation for peak toroidal field upper limit 
+* DESCRIPTION:   Constraint equation for peak toroidal field upper limit
 * JUSTIFICATION: Turned off, dont care toridal field limit
 * VARIABLES:     bmaxtf calculated in-situ
 
-* bmxlim  = 
+* bmxlim  =
 * DESCRIPTION:   Maximum peak toroidal field (T) (`constraint equation 25`) (default = 12)
 * JUSTIFICATION: Not yet set, assuming default.
 
@@ -1444,29 +1444,29 @@ boundu(49) = 1.0
 * JUSTIFICATION: Turned off, not concerned with TF coil vertical strain
 * VARIABLES:     str_wp_max (Allowable maximum TF coil vertical strain). str_wpcrypmw calculated in-situ
 
-*str_wp_max = 
+*str_wp_max =
 * DESCRIPTION: Maximum allowed absolute value of the strain in the TF coil
-* MAY BE REDUNDANT SO MAY REMOVE  
+* MAY BE REDUNDANT SO MAY REMOVE
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Cooling ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 * Also includes some cooling for the centre post*
 
-*eff_tf_cryo = 
+*eff_tf_cryo =
 * DESCRIPTION:   TF coil cryo-plant efficiency
 * JUSTIFICATION: Not yet set, assuming default
 
-tmpcry = 20.0 
+tmpcry = 20.0
 * DESCRIPTION:   Coil temperature for cryogenic plant power calculation (K)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-tftmp = 20.0 
+tftmp = 20.0
 * DESCRIPTION:   Peak helium coolant temperature in TF coils and PF coils [K]
 * JUSTIFICATION: TF coil joints much easier at 20 K.
 *                We set the temperature at 19.9K for run convergence issues
 
-*etapump =  
+*etapump =
 * DESCRIPTION:   Centrepost coolant pump efficiency (default = 0.8)
 * i_tf_sup == 0:  # Water cooled
 * -> etapump = 0.8e0
@@ -1475,20 +1475,20 @@ tftmp = 20.0
 * JUSTIFICATION: Not yet defined. Assuming defaults
 
 *ixc = 23
-*fcoolcp = 
-*boundl(23) = 
-*boundu(23) = 
+*fcoolcp =
+*boundl(23) =
+*boundu(23) =
 * DESCRIPTION:   Coolant fraction of TF centrepost (itart=1) or the whole magnet (itart=0) (default = 0.3)
 * JUSTIFICATION: Not set, using default
 
 *ixc = 70
-*vcool = 10.0 
+*vcool = 10.0
 *boundl(70) = 9.0
 *boundu(70) = 10.0
 * DESCRIPTION:   Max Centrepost Coolant Flow Speed (m/s)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-*fcoolleg = 
+*fcoolleg =
 * DESCRIPTION:   Coolant fraction of TF outboard leg (itart=1 only) (default = 0.2)
 * JUSTIFICATION: Not set, using default
 
@@ -1499,7 +1499,7 @@ tftmp = 20.0
 * JUSTIFICATION: Turned off, do not care about minimum temperature margin
 * VARIABLES:     tmargtf calculated in-situ
 
-*tmargmin_tf = 
+*tmargmin_tf =
 * DESCRIPTION:   Minimum allowable temperature margin : TF coils (K) (icc = 36)
 * JUSTIFICATION: Turned off, do not care about winding pack current density
 
@@ -1517,10 +1517,10 @@ tftmp = 20.0
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 *ixc = 56
-*tdmptf = 
-*boundl(56) = 
-*boundu(56) = 
-* DESCRIPTION:   Fast discharge time for TF coil in event of quench (s) 
+*tdmptf =
+*boundl(56) =
+*boundu(56) =
+* DESCRIPTION:   Fast discharge time for TF coil in event of quench (s)
 *For REBCO model, meaning depends on quench_model:
 *  - exponential quench : e-folding time (s)`
 *  - linear quench : discharge time (s)
@@ -1533,22 +1533,22 @@ tftmp = 20.0
 * JUSTIFICATION: Turned off, do not care about TF coil heating.
 * VARIABLES:     ptfnucmax(maximum nuclear heating in TF coil (MW/m3)),ptfnucpm3 calculated in situ
 
-*ptfnucmax = 
+*ptfnucmax =
 * DESCRIPTION:   Maximum nuclear heating in TF coil (MW/m3) (`constraint equation 54`) (default = 1.0D-3)
 * JUSTIFICATION: Not set, not using icc = 54
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*tmaxpro = 
+*tmaxpro =
 * DESCRIPTION:   Maximum temp rise during a quench for protection (K) (default = 150K)
 * only for i_tf_sc_mat = 1-5
 * JUSTIFICATION: Not set, assuming default
 
-* frhocp = 1.2 
+* frhocp = 1.2
 * DESCRIPTION:   Centrepost resistivity enhancement factor
 * JUSTIFICATION: Enhanced for lattice damage, value deduced from MCNP neutron flux by G. Voss
 
-* frholeg  = 
+* frholeg  =
 * DESCRIPTION:   TART outboard leg resistivity enhancement factor
 * JUSTIFICATION: Not yet set, assuming default.
 
@@ -1560,24 +1560,24 @@ tftmp = 20.0
 * VARIABLES:     itart, ptempalw(max peak CP temperature). tcpmax calculated in-situ
 
 * ptempalw = 30.
-* DESCRIPTION:   Maximum Peak Centrepost Temperature (K) (icc=44) 
+* DESCRIPTION:   Maximum Peak Centrepost Temperature (K) (icc=44)
 * JUSTIFICATION: Unknown, seems high compared to constrained average
 
 *ixc = 68
 *fptemp = 0.46
-*boundl(68) = 
-*boundu(68) = 
+*boundl(68) =
+*boundu(68) =
 * DESCRIPTION:   f-value for Peak Centrepost Temperature
 * JUSTIFICATION: Used with icc=44 to enforce centrepost temperature limit
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* rcool = 3.0E-3 
-* DESCRIPTION:   Average Radius of Coolant Channel for CP (m) 
+* rcool = 3.0E-3
+* DESCRIPTION:   Average Radius of Coolant Channel for CP (m)
 * JUSTIFICATION: Assumed
 
-* tcoolin = 20.0 
-* DESCRIPTION:   Centrepost Coolant Inlet Temperature (K) 
+* tcoolin = 20.0
+* DESCRIPTION:   Centrepost Coolant Inlet Temperature (K)
 * JUSTIFICATION: Choosen to be optimal after a scan ranging from 15 to 30 K (G. Voss and S. Kahn)
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1592,7 +1592,7 @@ tftmp = 20.0
 *boundl(20) = 20.0
 *boundu(20) = 25.0
 * DESCRIPTION:   Average temperature of centrepost
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1601,20 +1601,20 @@ tftmp = 20.0
 * JUSTIFICATION: Turned off, do not care about TF coil fluence.
 * VARIABLES:     nflutfmax(max fast neutron fluence on TF coil (n/m2)),nflutf calculated in situ
 
-* nflutfmax = 
+* nflutfmax =
 * DESCRIPTION:   max fast neutron fluence on TF coil (n/m2) (`blktmodel>0`) (`constraint equation 53`)
 * Also used for demontable magnets (itart = 1) and superconducting coils (i_tf_sup = 1)
-* To set the CP lifetime (`constraint equation 85`) 
+* To set the CP lifetime (`constraint equation 85`)
 * JUSTIFICATION: Not set, not using icc = 53
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Power Supplies ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-* rhotfbus = 
-* DESCRIPTION:   TF coil bus (feeders) resistivity (ohm-m) 
+* rhotfbus =
+* DESCRIPTION:   TF coil bus (feeders) resistivity (ohm-m)
 * JUSTIFICATION: Unknown, assuming default
 
-* jbus =  
-* DESCRIPTION:   Bussing Current Density (A/m2) 
+* jbus =
+* DESCRIPTION:   Bussing Current Density (A/m2)
 * JUSTIFICATION: Unknown
 
 *___________________________________________________________________________________________________________________________________________________________________________________________________________________*
@@ -1622,16 +1622,16 @@ tftmp = 20.0
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾*
 
 iohcl = 0
-* DESCRIPTION:   Switch for (0: no CS inductive current on start up 
+* DESCRIPTION:   Switch for (0: no CS inductive current on start up
 *                1: Yes there is a CS inductive current on start up)
-* JUSTIFICATION: Want no inductive current at flat-top when steady state running. 
+* JUSTIFICATION: Want no inductive current at flat-top when steady state running.
 *                Inductive current is only used on start up.
 
-itartpf  = 1 
+itartpf  = 1
 * DESCRIPTION:   Switch for Spherical Tokamak PF models (1: Use regular model)
 * JUSTIFICATION: Use the regular model instead rather than Peng & Strickler (1986)
 
-ipfres = 0 
+ipfres = 0
 * DESCRIPTION:   Switch for PF coil type  (default = 0)
 * =0 superconducting PF coils                              DOES THIS SET THE PF AND CS?
 * =1 resistive PF coils
@@ -1645,19 +1645,19 @@ ipfres = 0
 * Conductor Type *
 *----------------*
 
-*isumatoh =  
+*isumatoh =
 * DESCRIPTION:   Central Solenoid superconductor material
 * JUSTIFICATION: Not set, resistive CS
 
-*fcuohsu =  
+*fcuohsu =
 * DESCRIPTION:   Copper fraction of strand in central solenoid
 * JUSTIFICATION: Not yet set.
 
-*oh_steel_frac =  
+*oh_steel_frac =
 * DESCRIPTION:   Central solenoid steel fraction
 * JUSTIFICATION: Not used. Using default
 
-*vfohc =  
+*vfohc =
 * DESCRIPTION:   Void fraction of central solenoid conductor for coolant
 * JUSTIFICATION: Not yet set.
 
@@ -1665,7 +1665,7 @@ ipfres = 0
 * Geometry *
 *----------*
 
-*ohhghf =  
+*ohhghf =
 * DESCRIPTION:   Central solenoid height / TF coil internal height (default = 0.71)
 * JUSTIFICATION: Not yet set.
 
@@ -1673,15 +1673,15 @@ ipfres = 0
 * Stress *
 *--------*
 
-*i_cs_stress =  
+*i_cs_stress =
 * DESCRIPTION:   Switch for CS stress calculation
 * JUSTIFICATION: Not used. Using default
 
-*alstroh =  
+*alstroh =
 * DESCRIPTION:   Allowable hoop stress in Central Solenoid structural material (Pa) (icc=72)
 * JUSTIFICATION: Not used. Using default
 
-*str_cs_con_res = 
+*str_cs_con_res =
 * DESCRIPTION:   Residual manufacturing strain in CS superconductor material
 * JUSTIFICATION: Not set, assuming default
 
@@ -1701,18 +1701,18 @@ ipfres = 0
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*fseppc =  
+*fseppc =
 * DESCRIPTION:   CS separation force held by CS pre-comp structure
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-*sigallpc = 
+*sigallpc =
 * DESCRIPTION:   Allowable stress in CS pre-comp structure (Pa)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 *ixc = 123
-*foh_stress =  
-*boundl(123) = 
-*boundu(123) = 
+*foh_stress =
+*boundl(123) =
+*boundu(123) =
 * DESCRIPTION:   F-value for CS coil Tresca yield criterion
 * JUSTIFICATION: Not scaling CS force
 
@@ -1727,7 +1727,7 @@ ipfres = 0
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*nfxfh =  
+*nfxfh =
 * DESCRIPTION:   Number of filaments the top and bottom of the central solenoid should be broken
 *into during scaling (5 - 10 is good)
 * JUSTIFICATION: Not yet set.
@@ -1739,12 +1739,12 @@ ipfres = 0
 * JUSTIFICATION: Turned off, dont care about maximum CS field
 * VARIABLES:     bmaxcs_lim (Central solenoid max field limit [T]). bmaxoh0,bmaxoh calculated in-situ
 
-*bmaxcs_lim = 
+*bmaxcs_lim =
 * DESCRIPTION:   Maximum allowed peak field on central solenoid (icc = 79)
 * JUSTIFICATION: Not using icc=79
 
 *ixc = 149
-*fbmaxcs = 
+*fbmaxcs =
 *boundl(149)
 *boundu(149)
 * DESCRIPTION:   F-value for max peak CS field (icc = 79)
@@ -1753,22 +1753,22 @@ ipfres = 0
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 *icc = 26
-* DESCRIPTION:   Constraint equation for CS current density upper limit at EOF 
-* JUSTIFICATION: Turned off, dont care about CS current density limit 
+* DESCRIPTION:   Constraint equation for CS current density upper limit at EOF
+* JUSTIFICATION: Turned off, dont care about CS current density limit
 * VARIABLES:     coheof calculated in-situ
 
 *ixc = 37
-*coheof = 
-*boundl(37) = 
-*boundu(37) = 
+*coheof =
+*boundl(37) =
+*boundu(37) =
 * DESCRIPTION:   Central solenoid overall current density at end of flat-top (A/m2) (icc = 26)
 * JUSTIFICATION: Not using icc = 26
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 *icc = 27
-* DESCRIPTION:   Constraint equation for CS current density upper limit at BOP 
-* JUSTIFICATION: Turned off, dont care about CS current density limit 
+* DESCRIPTION:   Constraint equation for CS current density upper limit at BOP
+* JUSTIFICATION: Turned off, dont care about CS current density limit
 * VARIABLES:     cohbop calculated in-situ
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1779,27 +1779,27 @@ ipfres = 0
 * VARIABLES:     copperaoh_m2_max (maximum coil current / copper area [A/m2]). copperaoh_m2 calculated in-situ
 
 
-*copperaoh_m2 =  
+*copperaoh_m2 =
 * DESCRIPTION:   CS coil current / copper area (A/m2) (`sweep variable 61`)
 * JUSTIFICATION: Not using icc = 89
 
-*copperaoh_m2_max =  
+*copperaoh_m2_max =
 * DESCRIPTION:   Maximum CS coil current / copper area (A/m2)
 * JUSTIFICATION: Not using icc = 89
 
 *ixc = 166
-*f_copperaoh_m2 =  
-*boundl(166) = 
-*boundu(166) = 
+*f_copperaoh_m2 =
+*boundl(166) =
+*boundu(166) =
 * DESCRIPTION:   f-value for constraint 88: CS coil current / copper area < copperA_m2_max
 * JUSTIFICATION: Not using icc = 89
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 *ixc = 41
-*fcohbop = 
-*boundl(41) = 
-*boundu(41) = 
+*fcohbop =
+*boundl(41) =
+*boundu(41) =
 * DESCRIPTION:   Ratio of central solenoid overall current density at beginning of pulse / end of flat-top
 * JUSTIFICATION: Not used.
 
@@ -1807,10 +1807,10 @@ ipfres = 0
 
 *icc = 60
 * DESCRIPTION:   Constraint equation for Central Solenoid s/c temperature margin lower limit
-* JUSTIFICATION: Turned off, do not care about temp lower limit 
+* JUSTIFICATION: Turned off, do not care about temp lower limit
 * VARIABLES:     avail_min (Minimum availability), cfactr calculated in-situ
 
-*tmargmin_cs = 
+*tmargmin_cs =
 * DESCRIPTION:   Minimum allowable temp margin: CS (K) (icc = 60)
 * JUSTIFICATION: Turned off, do not care about winding pack current density
 
@@ -1828,7 +1828,7 @@ ipfres = 0
 * Conductor Type *
 *----------------*
 
-isumatpf = 9 
+isumatpf = 9
 * DESCRIPTION:   Switch for Superconductor Material in PF Coils (9: REBCO)
 *  =1 ITER Nb3Sn critical surface model with standard
 *     ITER parameters
@@ -1843,15 +1843,15 @@ isumatpf = 9
 *  =9 Hazelton experimental data + Zhai conceptual model for REBCO
 * JUSTIFICATION: Design choice, superconducting PF coils
 
-*pfclres =  
-* DESCRIPTION:  PF coil resistivity (if ipfres=1) (Ohm-m) 
+*pfclres =
+* DESCRIPTION:  PF coil resistivity (if ipfres=1) (Ohm-m)
 * JUSTIFICATION: Not used, superconducting PF coil
 
-*vf =  
+*vf =
 * DESCRIPTION:   Winding pack void fraction of PF coil i for coolant (default = 0.3)
 * JUSTIFICATION: Not yet set
 
-*fcupfsu =  
+*fcupfsu =
 * DESCRIPTION:   Cu fraction of PF cable conductor
 * JUSTIFICATION: Not yet set.
 
@@ -1860,17 +1860,17 @@ isumatpf = 9
 *--------*
 
 
-*str_pf_con_res = 
+*str_pf_con_res =
 * DESCRIPTION:   Residual manufacturing strain in PF superconductor material
 * JUSTIFICATION: Not set, assuming default
 
-*sigpfcalw =  
+*sigpfcalw =
 * DESCRIPTION: maximum permissible tensile stress (MPa) in steel coil cases for superconducting
 * PF coils (ipfres=0) (default = 500)
 * JUSTIFICATION: Not yet set
 
-*sigpfcf =  
-* DESCRIPTION: fraction of JxB hoop force supported by steel case for superconducting PF 
+*sigpfcf =
+* DESCRIPTION: fraction of JxB hoop force supported by steel case for superconducting PF
 *coils (`ipfres=0`) (default = 0.66)
 * JUSTIFICATION: Not yet set
 
@@ -1889,7 +1889,7 @@ isumatpf = 9
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*i_pf_current = 
+*i_pf_current =
 * DESCRIPTION:   Switch for controlling the current of the PF coils:  (default = 1)
 *  =0 Input via the variables curpfb, curpff, curpfs
 *  =1 SVD targets zero field across midplane (flux swing
@@ -1897,12 +1897,12 @@ isumatpf = 9
 *  center (equilibrium coils)
 * JUSTIFICATION: Not yet set, assuming default
 
-*ccl0_ma =  
+*ccl0_ma =
 * DESCRIPTION:  PF group current array, flux-swing cancellation current (MA)
 * Input if i_pf_current=0, computed otherwise
 * JUSTIFICATION: Not used, no i+pf_current
 
-*ccls_ma =  
+*ccls_ma =
 * DESCRIPTION:  PF group current array, equilibrium current (MA)
 *Input if i_pf_current=0, computed otherwise
 * JUSTIFICATION: Not used, no i_pf_current.
@@ -1931,17 +1931,17 @@ i_sup_pf_shape = 1
 *  winding surface
 * JUSTIFICATION: Not used, no ipfloc = 3 coils
 
-*routr =  
+*routr =
 * DESCRIPTION:  Radial distance (m) from outboard TF coil leg to centre of ipfloc=3 PF coils
-* (default = 1.5) 
+* (default = 1.5)
 * JUSTIFICATION: Not used, no ipfloc = 3 coils
 
-*rpf1 =  
+*rpf1 =
 * DESCRIPTION:  offset (m) of radial position of ipfloc=1 PF coils from being directly above
 * the central solenoid
 * JUSTIFICATION: Not used, no ipfloc = 1 coils
 
-*rpf2 =  
+*rpf2 =
 * DESCRIPTION:  offset (m) of radial position of ipfloc=2 PF coils from being at
 *rmajor (offset = rpf2*triang*rminor)
 * JUSTIFICATION: Not used, no ipfloc = 2 coils
@@ -1974,16 +1974,16 @@ icc = 11
 * JUSTIFICATION: Consistency equations should always be on
 * VARIABLES:     rmajor, Rest calculated in-situ
 
-tf_in_cs = 0 
+tf_in_cs = 0
 * DESCRIPTION:  Switch for placing TF coils inside of the CS
 * JUSTIFICATION: TF placed in CS as design choice
 
 *ixc = 3
 rmajor = 4.5
-*boundl(3) = 
-*boundu(3) = 
+*boundl(3) =
+*boundu(3) =
 * DESCRIPTION:   Plasma major radius
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Inboard Radial Build~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
@@ -1999,26 +1999,26 @@ bore = 0.3
 boundl(29) = 0.1
 boundu(29) = 0.8
 * DESCRIPTION:   Bore radius (m)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 ixc = 16
 ohcth = 0.25
 boundl(16) = 0.03
 boundu(16) = 0.5
 * DESCRIPTION:   Central Solenoid Thickness (m)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 iprecomp = 0
 * DESCRIPTION:   Switch for Existence of CS Pre-Compression Structure (0: No)
 * JUSTIFICATION: Design choice
 
-*fcspc =  
+*fcspc =
 * DESCRIPTION:   Fraction of space occupied by CS pre-comp structure
 * JUSTIFICATION: Not used. No CS pre-compression
 
-gapoh = 0.0 
+gapoh = 0.0
 * DESCRIPTION:   Gap Between Central Solenoid and TF Coil (m)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 *---------*
 * TF coil *
@@ -2026,24 +2026,24 @@ gapoh = 0.0
 
 *ixc = 13
 *tfcth = 0.69
-*boundl(13) = 0.69 
+*boundl(13) = 0.69
 *boundu(13) = 0.695
 * DESCRIPTION:   TF coil thickness (m)
 * JUSTIFICATION: Turned off, alculated in-situ. NOT RECOMMENDED FOR USE
 
 tftsgap = 0.01
 * DESCRIPTION:   Minimum Metal-to-Metal Gap Between TF Coil and Thermal Shield (m)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-thshield_ib = 0.05   
+thshield_ib = 0.05
 * DESCRIPTION:   TF-VV Thermal Shield Thickness (m)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-gapds = 0.01 
+gapds = 0.01
 * DESCRIPTION:   Gap Between inboard Vacuum Vessel and Thermal Shield (m)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-d_vv_in = 0.2 
+d_vv_in = 0.2
 * DESCRIPTION:   Vacuum Vessel Thickness (m)
 * JUSTIFICATION: Removed to avoid temporary problems with cryo plant
 
@@ -2051,10 +2051,10 @@ ixc = 93
 shldith = 0.4
 boundl(93) = 0.01
 boundu(93) = 1.0
-* DESCRIPTION:   Inboard Shield Thickness (m) 
+* DESCRIPTION:   Inboard Shield Thickness (m)
 * JUSTIFICATION: Adjusted for above [(shldith + d_vv_in)~0.6 from KTaylor, neutronics]
 
-vvblgap = 0.01 
+vvblgap = 0.01
 * DESCRIPTION:   Gap Between Vacuum Vessel and Blanket (m)
 * JUSTIFICATION: No inboard vacuum vessel or blanket
 
@@ -2063,8 +2063,8 @@ vvblgap = 0.01
 * Blanket *
 *---------*
 
-blnkith = 0.0 
-* DESCRIPTION:   Inboard Blanket Thickness (m) 
+blnkith = 0.0
+* DESCRIPTION:   Inboard Blanket Thickness (m)
 * JUSTIFICATION: Design choice, no inboard blanket
 
 *blbmith =
@@ -2079,7 +2079,7 @@ blnkith = 0.0
 * DESCRIPTION:   Inboard blanket breeding unit thickness (m) (blktmodel>0)
 * JUSTIFICATION: Design choice, no inboard blanket
 
-*iscrp = 
+*iscrp =
 * DESCRIPTION:   Switch for scrapeoff width (default = 1)
 * =0 use 10% of rminor
 * =1 use input (scrapli and scraplo)
@@ -2090,7 +2090,7 @@ scrapli = 0.1
 *boundl(73) = 0.1
 *boundu(73) = 1.0
 * DESCRIPTION:   Gap Between Plasma Seaparatrix and FW Inboard Side (m)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Outboard Radial Build ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
@@ -2098,10 +2098,10 @@ scrapli = 0.1
 
 *ixc = 74
 scraplo = 0.1
-*boundl(74) = 
-*boundu(74) = 
+*boundl(74) =
+*boundu(74) =
 * DESCRIPTION:   Gap Between Plasma and First Wall Outboard Side (m)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 *---------*
 * Blanket *
@@ -2124,28 +2124,28 @@ blnkoth = 1.0
 * JUSTIFICATION: Possibly from Jonathan Shimwell
 
 *ixc = 94
-shldoth = 0.3 
+shldoth = 0.3
 *boundl(94) = 0.3
 *boundu(94) = 1.0
 * DESCRIPTION:   Outboard Shield Thickness (m)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-thshield_ob = 0.07    
+thshield_ob = 0.07
 * DESCRIPTION:   TF-VV Thermal Shield Thickness (m)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 d_vv_out = 0.3
 * DESCRIPTION:   Outboard vaccum vessel thickness
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 gapomin = 0.0
 * DESCRIPTION:   Minimum Gap Between Outboard Vacuum Vessel and TF Coil (m)
 * JUSTIFICATION: Gap is set by the ripple, no need to set minimum
 
 *ixc = 75
-tfootfi = 1.0 
-*boundl(75) = 
-*boundu(75) = 
+tfootfi = 1.0
+*boundl(75) =
+*boundu(75) =
 * DESCRIPTION:   TF coil outboard leg / inboard leg radial thickness
 * ratio (i_tf_sup=0 only) `iteration variable 75)
 * JUSTIFICATION: Assumed to be the same as inboard
@@ -2154,15 +2154,15 @@ tfootfi = 1.0
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 vgap_xpoint_divertor = 0.75
 * DESCRIPTION:   Vertical Gap Between x-point and Divertor (m)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-*vgaptop = 
+*vgaptop =
 * DESCRIPTION:   Top vert gap between plasma and first wall (m)
 * JUSTIFICATION: Not yet set
 
 divfix = 1.0
 * DESCRIPTION:   Divertor Structure Vertical Thickness (m)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 shldtth = 0.3
 * DESCRIPTION:   Top shield thickness (m)
@@ -2170,19 +2170,19 @@ shldtth = 0.3
 
 shldlth = 0.6
 * DESCRIPTION:   Lower (under divertor) Shield Thickness (m)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-*blnktth = 
+*blnktth =
 * DESCRIPTION:   top blanket thickness (m)
 * JUSTIFICATION: No longer an input variable
 
-thshield_vb = 0.075    
+thshield_vb = 0.075
 * DESCRIPTION:   TF-VV Thermal Shield Thickness (m)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 vgap_vv_thermalshield = 2.0
 * DESCRIPTION:   Vertical Gap Between Vacuum Vessel and TF coil (m)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 d_vv_top = 0.3
 * DESCRIPTION:   top vaccum vessel thickness(m)
@@ -2190,44 +2190,44 @@ d_vv_top = 0.3
 
 d_vv_bot = 0.3
 * DESCRIPTION:   Bottom (and top for double null) vaccum vessel thickness
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 i_r_cp_top = 2
-* DESCRIPTION:   Switch selecting the TF CP is parametrization 
+* DESCRIPTION:   Switch selecting the TF CP is parametrization
 * =  0 : r_cp_top is set by the plasma shape
 * =  1 : r_cp_top is a user input
 * =  2 : r_cp_top is set using the CP top and midplane CP radius ratio
 * JUSTIFICATION: The TF CP top radius is a iteration variable
 
-*drtop =  
+*drtop =
 * DESCRIPTION:   Centrepost taper maximum radius adjustment (m)
 * JUSTIFICATION: Not yet defined.
 
-*dztop =  
+*dztop =
 * DESCRIPTION:   Centrepost taper height adjustment (m)
 * JUSTIFICATION: Not yet defined.
 
-*r_cp_top =  
-* DESCRIPTION:   Top CP outer radius (ST only) (m) 
+*r_cp_top =
+* DESCRIPTION:   Top CP outer radius (ST only) (m)
 * JUSTIFICATION: Calculated in-situ
 
 *f_r_cp = 1.426
-* DESCRIPTION:   Fraction between the top and the midplane CP TF outer radius 
-* JUSTIFICATION: 
+* DESCRIPTION:   Fraction between the top and the midplane CP TF outer radius
+* JUSTIFICATION:
 
 *----------*
 * Cryostat *
 *----------*
 
-*clhsf =  
+*clhsf =
 * DESCRIPTION:   Cryostat lid height scaling factor (m)
 * JUSTIFICATION: Not scaling cryostat height.
 
-*ddwex = 
+*ddwex =
 * DESCRIPTION:   Cryostat wall thickness (m)
 * JUSTIFICATION: Not scaling cryostat height.
 
-*rpf2dewar = 
+*rpf2dewar =
 * DESCRIPTION:   radial distance between outer edge of largest (`ipfloc=3`) PF coil (or stellarator
 * modular coil) and cryostat [m])
 * JUSTIFICATION: Not scaling cryostat distance.
@@ -2258,19 +2258,19 @@ ipump = 0
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*htpmw_blkt =  
+*htpmw_blkt =
 * DESCRIPTION:   Blanket coolant mechanical pumping power (MW)
 * JUSTIFICATION: Not used as, primary_pumping is not = 0
 
-*htpmw_div = 
+*htpmw_div =
 * DESCRIPTION:   Divertor coolant mechanical pumping power (MW)
 * JUSTIFICATION: Not used as, primary_pumping is not = 0
 
-*htpmw_fw = 
+*htpmw_fw =
 * DESCRIPTION:   First wall coolant mechanical pumping power (MW)
 * JUSTIFICATION: Not used as, primary_pumping is not = 0
 
-*htpmw_shld = 
+*htpmw_shld =
 * DESCRIPTION:   Shield and vacuum vessel coolant mechanical pumping power (MW)
 * JUSTIFICATION: Not used as, primary_pumping is not = 0
 
@@ -2294,15 +2294,15 @@ ipump = 0
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*emult = 
+*emult =
 * DESCRIPTION:   Energy multiplication in blanket and shield
 * JUSTIFICATION: Not yet set
 
 fw_armour_thickness = 0.003
 * DESCRIPTION:   First wall armour thickness [m] (default = 0.005)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-*fvoldw = 
+*fvoldw =
 * DESCRIPTION:   Area coverage factor for vacuum vessel volume (default = 1.74)
 * JUSTIFICATION: Not scaling VV volume
 
@@ -2310,60 +2310,60 @@ etaiso = 0.9
 * DESCRIPTION:   Isentropic efficiency of FW and blanket coolant pumps (default = 0.85)
 * JUSTIFICATION: Not set as not used
 
-*fdiv = 
+*fdiv =
 * DESCRIPTION:   Solid angle fraction taken by one divertor
 * JUSTIFICATION: Not yet set
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ First Wall ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-*afw = 
+*afw =
 * DESCRIPTION:   Radius of first wall cooling channels [m] (default = 0.006)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-*fw_wall = 
+*fw_wall =
 * DESCRIPTION:   Wall thickness of first wall coolant channels [m] (default = 0.003)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-*pitch = 
+*pitch =
 * DESCRIPTION:   Pitch of first wall cooling channels [m] (default = 0.02)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-*fwinlet = 
+*fwinlet =
 * DESCRIPTION:   Inlet temperature of first wall coolant [K] (default = 573.0)
 * JUSTIFICATION: Not yet set.
 
-*fwoutlet = 
+*fwoutlet =
 * DESCRIPTION:   Outlet temperature of first wall coolant (K) (default = 823.0)
 * JUSTIFICATION: Not yet set.
 
-*fwpressure = 
+*fwpressure =
 * DESCRIPTION:   First wall coolant pressure [Pa] (`secondary_cycle>1`) (default = 15.5D6)
 * JUSTIFICATION: Not yet set.
 
-fwcoolant = helium 
+fwcoolant = helium
 * DESCRIPTION:   switch for first wall coolant (can be different from blanket coolant) (default = helium):
 * 'helium'
 * 'water'
 * JUSTIFICATION: Not yet set.
 
-*roughness = 
+*roughness =
 * DESCRIPTION:   First wall channel roughness epsilon [m] (default = 1.0D-6)
 * JUSTIFICATION: Not yet set.
 
 *ixc = 114
-*fw_channel_length = 
-*boundl(114) = 
-*boundu(114) = 
+*fw_channel_length =
+*boundl(114) =
+*boundu(114) =
 * DESCRIPTION:   Length of a single first wall channel (all in parallel) [m] (default = 4.0)
-* (`iteration variable 114`, useful for `constraint equation 39`) 
-* JUSTIFICATION: 
+* (`iteration variable 114`, useful for `constraint equation 39`)
+* JUSTIFICATION:
 
-*fwclfr = 
+*fwclfr =
 * DESCRIPTION:   First wall coolant fraction (calculated if `lpulse=1` or `ipowerflow=1`)
 * JUSTIFICATION: Not using ipowerflow = 1
 
-*fhcd = 
+*fhcd =
 * DESCRIPTION:   Area fraction covered by heating/current drive apparatus plus diagnostics
 * JUSTIFICATION: Not yet set
 
@@ -2381,7 +2381,7 @@ iblanket = 1
 *                  please use primary_pumping = 0 or 1.
 * JUSTIFICATION: Assuming DCLL blanket
 
-*iblanket_thickness = 
+*iblanket_thickness =
 * DESCRIPTION:  Blanket thickness switch (Do not set blnkith, blnkoth, fwith or fwoth when `iblanket=3`):
 *=1 thin    0.53 m inboard, 0.91 m outboard
 *=2 medium  0.64 m inboard, 1.11 m outboard
@@ -2395,39 +2395,39 @@ iblnkith = 0
 * Needs to be set when using DCLL
 * JUSTIFICATION: Not yet set.
 
-*ims = 
+*ims =
 * DESCRIPTION:   Switch for Multi Module Segment (MMS) or Single Modle Segment (SMS) (default = 0)
 * =0    MMS
 * =1    SMS
 * JUSTIFICATION: Not yet set.
 
-*nblktmodpo = 
+*nblktmodpo =
 * DESCRIPTION:   Number of outboard blanket modules in poloidal direction (`secondary_cycle>1`)(default = 8)
 * JUSTIFICATION: Not set as not used
 
-*nblktmodto = 
+*nblktmodto =
 * DESCRIPTION:   Number of outboard blanket modules in toroidal direction (`secondary_cycle>1`)(default =48)
 * JUSTIFICATION: Not set as not used
 
-*nblktmodpi = 
+*nblktmodpi =
 * DESCRIPTION:   Number of inboard blanket modules in poloidal direction (`secondary_cycle>1`)(default = 7)
 * JUSTIFICATION: Not set as not used
 
-*nblktmodti = 
+*nblktmodti =
 * DESCRIPTION:   Number of inboard blanket modules in toroidal direction (`secondary_cycle>1`)(default = 32)
 * JUSTIFICATION: Not set as not used
 
-*inlet_temp = 
+*inlet_temp =
 * DESCRIPTION:   Inlet temperature of blanket coolant  [K] (`secondary_cycle>1`)
 * JUSTIFICATION: Not set as not used
 
-*outlet_temp = 
+*outlet_temp =
 * DESCRIPTION:   Outlet temperature of blanket coolant [K] (`secondary_cycle>1`)
 * input if `coolwh=1` (helium)
 * calculated if `coolwh=2` (water)
 * JUSTIFICATION: Not set as not used
 
-*blpressure = 
+*blpressure =
 * DESCRIPTION:   Blanket coolant pressure [Pa] (`secondary_cycle>1`) (default = 15.5D6)
 * JUSTIFICATION: Not yet set
 
@@ -2438,7 +2438,7 @@ iblnkith = 0
 * JUSTIFICATION: Turned off, do not care about minimum TBR.
 * VARIABLES:     tbrmin minimum tritium breeding ratio (If iblanket=1, tbrmin=minimum 5-year time-averaged tritium breeding ratio),  tbr calculated in situ
 
-*tbrmin = 
+*tbrmin =
 * DESCRIPTION:   Minimum tritium breeding ratio (`constraint equation 52`) (default = 1.1)
 * JUSTIFICATION: Not using icc = 52
 
@@ -2449,7 +2449,7 @@ iblnkith = 0
 * JUSTIFICATION: Turned off, do not care He concentration.
 * VARIABLES:     iblanket,vvhealw (allowed maximum helium concentration in vacuum vessel at end of plant life (appm) (iblanket =2)),  vvhemax calculated in situ
 
-*vvhealw = 
+*vvhealw =
 * DESCRIPTION:   Allowed maximum helium concentration in vacuum vessel at end of plant life (appm)
 *(`iblanket =2`) (`constraint equation 55`)
 * JUSTIFICATION: Not using icc = 55
@@ -2460,58 +2460,58 @@ inuclear = 0
 * DESCRIPTION:   Switch for nuclear heating in the coils (default = 0)
 * =0 Frances Fox model (default)
 * =1 Fixed by user (qnuc)
-* JUSTIFICATION: Not yet set. 
+* JUSTIFICATION: Not yet set.
 
-*qnuc = 
+*qnuc =
 * DESCRIPTION:   nuclear heating in the coils (W)
-* JUSTIFICATION: Not yet set. 
+* JUSTIFICATION: Not yet set.
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 *-----------*
 * CCFE HCPB *   * Set iblanket = 1 *
 *-----------*
 
-*breeder_multiplier = 
+*breeder_multiplier =
 * DESCRIPTION: combined breeder/multipler fraction of blanket by volume
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-*breeder_f = 
+*breeder_f =
 * DESCRIPTION: Volume of Li4SiO4 / (Volume of Be12Ti + Li4SiO4)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-*li6enrich = 
+*li6enrich =
 * DESCRIPTION:   Lithium-6 enrichment of breeding material (%) (HCPB)
-* JUSTIFICATION: Not using HCPB model 
+* JUSTIFICATION: Not using HCPB model
 
-*vfcblkt = 
+*vfcblkt =
 * DESCRIPTION: He coolant fraction of blanket by volume (`iblanket= 1,3` (CCFE HCPB))
 * JUSTIFICATION: Not set as not using HCPB
 
-*vfpblkt = 
+*vfpblkt =
 * DESCRIPTION: He purge gas fraction of blanket by volume (`iblanket= 1,3` (CCFE HCPB))
 * JUSTIFICATION: Not set as not using HCPB
 
-*vfshld = 
+*vfshld =
 * DESCRIPTION:   Coolant void fraction in shield (HCPB only)
 * JUSTIFICATION: Not set as not using iblanket =1/3
 
-*vfblkt = 
+*vfblkt =
 * DESCRIPTION:   Coolant void fraction in blanket (iblanket = 1), (default = 0.25)
 * JUSTIFICATION: Not yet set
 
-*t_in_bb = 
+*t_in_bb =
 * DESCRIPTION:   Temperature in FW and blanket coolant at blanket entrance (`primary_pumping=3`) [K] (Default value in code 573.13D0)
 * JUSTIFICATION: Design Spec
 
-*t_out_bb = 
+*t_out_bb =
 * DESCRIPTION:   Temperature in FW and blanket coolant at blanket exit (`primary_pumping=3`) [K] (Default value in code 773.13D0)
 * JUSTIFICATION: Design Spec
 
-*dp_he = 
+*dp_he =
 * DESCRIPTION:   Pressure drop in FW and blanket coolant including heat exchanger and pipes (`primary_pumping=3`) [Pa] (Default value in code 5.5D5)
 * JUSTIFICATION: Design Spec
 
-*p_he = 
+*p_he =
 * DESCRIPTION:   Pressure in FW and blanket coolant at pump exit (Default value in code 8D6)
 * JUSTIFICATION: Not yet set
 
@@ -2519,41 +2519,41 @@ inuclear = 0
 * KIT HCPB *   * Set iblanket = 2 *
 *----------*
 
-*hcdportsize = 
+*hcdportsize =
 * DESCRIPTION:   switch for size of heating/current drive ports (`iblanket=2` (KIT HCPB)):
 * =1 'small'
 * =2 'large'
-* JUSTIFICATION: Not using iblanket = 2 
+* JUSTIFICATION: Not using iblanket = 2
 
-*fblbe = 
+*fblbe =
 * DESCRIPTION:   Beryllium fraction of blanket by volume (if `iblanket=2`, is Be fraction of breeding zone)
 * JUSTIFICATION: Not set. Not using iblanket = 2
 
-*fblhebmi = 
+*fblhebmi =
 * DESCRIPTION:   Helium fraction of inboard blanket box manifold by volume (`iblanket=2` (KIT HCPB))
 * JUSTIFICATION: Not set. Not using iblanket = 2
 
-*fblhebmi = 
+*fblhebmi =
 * DESCRIPTION:   Helium fraction of inboard blanket box manifold by volume (`iblanket=2` (KIT HCPB))
 * JUSTIFICATION: Not set. Not using iblanket = 2
 
-*fblhebmo = 
+*fblhebmo =
 * DESCRIPTION:   Helium fraction of outboard blanket box manifold by volume (`iblanket=2` (KIT HCPB))
 * JUSTIFICATION: Not set. Not using iblanket = 2
 
-*fblhebpi = 
+*fblhebpi =
 * DESCRIPTION:   Helium fraction of inboard blanket back plate by volume (`iblanket=2` (KIT HCPB))
 * JUSTIFICATION: Not set. Not using iblanket = 2
 
-*fblhebpo = 
+*fblhebpo =
 * DESCRIPTION:   Helium fraction of outboard blanket back plate by volume (`iblanket=2` (KIT HCPB))
 * JUSTIFICATION: Not set. Not using iblanket = 2
 
-*fblbreed = 
+*fblbreed =
 * DESCRIPTION:   Breeder fraction of blanket breeding zone by volume (`iblanket=2` (KIT HCPB))
 * JUSTIFICATION: Not used as iblanket is not 2
 
-*fblss = 
+*fblss =
 * DESCRIPTION:   KIT blanket model: steel fraction of breeding zone
 * JUSTIFICATION: Not using kit blanket, not set
 
@@ -2561,22 +2561,22 @@ inuclear = 0
 * DCLL *   * Set iblanket = 5 *
 *------*
 
-*i_bb_liq = 
+*i_bb_liq =
 * DESCRIPTION: Switch for Liquid Metal Breeder Material
 *  =0   PbLi
-*  =1   Li 
+*  =1   Li
 * JUSTIFICATION: Not yet set assuming default = 0
 
-*icooldual = 
+*icooldual =
 * DESCRIPTION: Switch to specify whether breeding blanket is single-cooled or dual-coolant.
 * =0    Single coolant used for FW and Blanket (H2O or He). Solid Breeder.
 * =1    Single coolant used for FW and Blanket (H2O or He). Liquid metal breeder
 *        circulted for tritium extraction.
 * =2    Dual coolant: primary coolant (H2O or He) for FW and blanket structure;
-*       secondary coolant is self-cooled liquid metal breeder. 
+*       secondary coolant is self-cooled liquid metal breeder.
 * JUSTIFICATION: Not yet set assuming default = 0
 
-*ifci = 
+*ifci =
 * DESCRIPTION:Switch for Flow Channel Insert (FCI) type if liquid metal breeder blanket.
 * =0    Thin conducting walls, default electrical conductivity (bz_channel_conduct_liq) is Eurofer
 * =1    Insulating Material, assumed perfect electrical insulator, default density (den_ceramic) is for SiC
@@ -2584,11 +2584,11 @@ inuclear = 0
 * default density (den_ceramic) is for SiC
 * JUSTIFICATION: Not yet set assuming default = 0
 
-*bz_channel_conduct_liq = 
+*bz_channel_conduct_liq =
 * DESCRIPTION:   Liquid metal coolant/breeder thin conductor or FCI wall conductance [A V^-1 m^-1] (default = 8.33D5)
 * JUSTIFICATION: Not yet set
 
-*inlet_temp_liq = 
+*inlet_temp_liq =
 * DESCRIPTION:   Inlet temperature for blanket liquid metal [K]
 * JUSTIFICATION: Not set as not used
 
@@ -2598,30 +2598,30 @@ outlet_temp_liq = 873.0
 * DESCRIPTION:   Outlet temperature for blanket liquid metal [K]
 * JUSTIFICATION: Not set as not used
 
-*f_nuc_pow_bz_struct = 
+*f_nuc_pow_bz_struct =
 * DESCRIPTION:   For a dual-coolant blanket, fraction of BZ power cooled by primary coolant (default = 0.34)
 * JUSTIFICATION: Not yet set
 
-*blpressure_liq = 
+*blpressure_liq =
 * DESCRIPTION:   blanket liquid metal breeder/coolant pressure [Pa] (default = 1.7D6)
 * JUSTIFICATION: Not yet set
 
-*n_liq_recirc = 
+*n_liq_recirc =
 * DESCRIPTION:   Number of liquid metal breeder recirculations per day, for use with icooldual=1 (default = 10)
 * JUSTIFICATION: Not yet set
 
-*pnuc_fw_ratio_dcll = 
+*pnuc_fw_ratio_dcll =
 * DESCRIPTION:   For a dual-coolant blanket, ratio of FW/Blanket nuclear power as fraction of total (default = 0.14)
 * JUSTIFICATION: Not yet set
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Shield ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-*fvolsi = 
+*fvolsi =
 * DESCRIPTION:   Area coverage factor for inboard shield volume (default = 1.0)
 * JUSTIFICATION: Not scalling shield volume
 
-*fvolso = 
+*fvolso =
 * DESCRIPTION:   Area coverage factor for outboard shield volume (default = 1.0)
 * JUSTIFICATION: Not scalling shield volume
 
@@ -2632,10 +2632,10 @@ peakfactrad = 1.0
 * DESCRIPTION:   Radiation wall load peacking factor
 * JUSTIFICATION: We consider an average wall load value as a limit
 
-*peaking_factor = 
+*peaking_factor =
 * DESCRIPTION:   peaking factor for first wall heat loads. (Applied separately to  (default = 1.0)
-*inboard and outboard loads. Applies to both neutron and surface loads. Only used to calculate peak 
-*temperature - not the coolant flow rate.) 
+*inboard and outboard loads. Applies to both neutron and surface loads. Only used to calculate peak
+*temperature - not the coolant flow rate.)
 * JUSTIFICATION: Not yet set.
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2654,11 +2654,11 @@ peakfactrad = 1.0
 *ixc = 14
 *fwalld = 0.99
 *boundl(14) = 0.99
-*boundu(14) = 1.0 
+*boundu(14) = 1.0
 * DESCRIPTION:   f-value for maximum neutron wall load
-* JUSTIFICATION: Used with icc=8 to enforce wall load limit               
+* JUSTIFICATION: Used with icc=8 to enforce wall load limit
 
-*walalw = 
+*walalw =
 * DESCRIPTION:   Allowable neutron wall-load (MW/m2)
 * JUSTIFICATION: Used with icc=8 to enforce wall load limit
 
@@ -2667,11 +2667,11 @@ peakfactrad = 1.0
 icc = 67
 * DESCRIPTION:   Upper limit on radiation wall load
 * JUSTIFICATION: To avoid melting the first wall
-* VARIABLES:     peakradwallload calculated in-situ 
+* VARIABLES:     peakradwallload calculated in-situ
 
 maxradwallload = 1.2
-* DESCRIPTION:   Peak radiation wall load (MW/m^2) 
-* JUSTIFICATION: 
+* DESCRIPTION:   Peak radiation wall load (MW/m^2)
+* JUSTIFICATION:
 
 ixc = 116
 fradwall = 1.0
@@ -2680,7 +2680,7 @@ boundu(116) = 1.0
 * DESCRIPTION:   f-value for upper limit on radiation wall load
 * JUSTIFICATION: just a 0.001 to 1. variation. The peaking factor actually sets the limit
 
-*ffwal = 
+*ffwal =
 * DESCRIPTION:   Wall load fiddle factor
 * JUSTIFICATION: Not scaling wall load. Used when iwalld=1
 
@@ -2691,7 +2691,7 @@ boundu(116) = 1.0
 * JUSTIFICATION: Turned off, do not care about FW temperature
 * VARIABLES:     tpeak (K) calculated in-situ
 
-*tfwmatmax = 
+*tfwmatmax =
 * DESCRIPTION:   Maximum temperature of first wall material [K] (`secondary_cycle>1`)(default = 823)
 * JUSTIFICATION: Not set as not used
 
@@ -2708,17 +2708,17 @@ irfcd = 1
 
 *icc = 40
 * DESCRIPTION:   Constraint equation for auxiliary power lower limit
-* JUSTIFICATION: Turned off, do not care about auxiliary power lower limit 
+* JUSTIFICATION: Turned off, do not care about auxiliary power lower limit
 * VARIABLES:     pinjmw (MW) calculated in-situ
 
-*auxmin =  
+*auxmin =
 * DESCRIPTION:   Minimum required auxiliary power (MW)
 * JUSTIFICATION: Turned off, not using icc = 40
 
 *ixc = 64
-*fauxmn =  
-*boundl(64) = 
-*boundu(64) = 
+*fauxmn =
+*boundl(64) =
+*boundu(64) =
 * DESCRIPTION:   f-value for minimum auxiliary power (`constraint equation 40`, `iteration variable 64`)
 * JUSTIFICATION: Turned off, not using icc = 40
 
@@ -2728,9 +2728,9 @@ irfcd = 1
 * JUSTIFICATION: Turned off, do not care about maximum current drive gamma
 * VARIABLES:     gamcd(1.0e20 A/W-m2) calculated in-situ
 
-*gammax =  
+*gammax =
 * DESCRIPTION:   Maximum current drive gamma (icc = 37)
-* JUSTIFICATION: Turned off, not using icc = 37 
+* JUSTIFICATION: Turned off, not using icc = 37
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Primary H&CD System ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
@@ -2765,18 +2765,18 @@ boundu(46) = 1.5
 * DESCRIPTION:   f-value for injected power variation range
 * JUSTIFICATION: Setup to allow the injected power to vary
 
-pinjalw = 150.0 
+pinjalw = 150.0
 * DESCRIPTION:   Maximum Allowable Value for Injected Power (MW) (icc=30)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 *ixc = 11
-*pheat = 
-*boundl(11) = 
-*boundu(11) = 
+*pheat =
+*boundl(11) =
+*boundu(11) =
 * DESCRIPTION:   Heating power not used for C.D. (MW)
-* JUSTIFICATION: Not used, ECRH will always drive current 
+* JUSTIFICATION: Not used, ECRH will always drive current
 
 feffcd = 1.0
 * DESCRIPTION:   Current Drive Efficiency Fudge Factor
@@ -2785,34 +2785,34 @@ feffcd = 1.0
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Secondary H&CD System ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-*iefrffix = 
+*iefrffix =
 * DESCRIPTION:   Switch for 2nd current drive efficiency model
 * JUSTIFICATION: Not used, ECRH only
 
-*pinjfixmw = 
+*pinjfixmw =
 * DESCRIPTION:   Secondary auxiliary injection power (MW)
 * JUSTIFICATION: Not used, ECRH only
 
-*pheatfix = 
+*pheatfix =
 * DESCRIPTION:   Secondary fixed heating power not used for C.D. (MW)
 * JUSTIFICATION: Not used, ECRH only.
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Neutral Beam Injection ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-*beam_energy = 
+*beam_energy =
 * DESCRIPTION:   Neutral beam energy (keV)
 * JUSTIFICATION: Not used as no NBI used
 
-*tbeamin = 
+*tbeamin =
 * DESCRIPTION:   Number of NB decay lengths to plasma centre
 * JUSTIFICATION: Not used as no NBI used
 
-*etanbi = 
+*etanbi =
 * DESCRIPTION:   NBI wall plug to injector efficiency
 * JUSTIFICATION: Not used as no NBI used
 
-*beamwd = 
+*beamwd =
 * DESCRIPTION:   Width of neutral beam duct where it passes between the TF coils
 * JUSTIFICATION: Not used as no NBI used
 
@@ -2851,11 +2851,11 @@ feffcd = 1.0
 * VARIABLES:     ignite,dnbeam Rest calculated in-situ
 
 *ixc = 7
-*rnbeam = 
-*boundl(7) = 
-*boundu(7) =  
+*rnbeam =
+*boundl(7) =
+*boundu(7) =
 * DESCRIPTION:   Hot beam density / ne
-* JUSTIFICATION: Not used as no NBI used    
+* JUSTIFICATION: Not used as no NBI used
 
 *icc = 14
 * DESCRIPTION:   Constraint equation to fix number of NBI decay lengths to plasma centre (NBI)
@@ -2871,10 +2871,10 @@ feffcd = 1.0
 
 *icc = 59
 * DESCRIPTION:   Constraint equation for neutral beam shine-through fraction upper limit
-* JUSTIFICATION: Turned off, not using NBI 
+* JUSTIFICATION: Turned off, not using NBI
 * VARIABLES:     nbshinefmax (maximum neutral beam shine-through fraction). nbshinef calculated in situ
 
-*nbshinefmax = 
+*nbshinefmax =
 * DESCRIPTION:   Maximum neutral beam shine-through fraction (`constraint equation 59`) (default = 1.0D-3)
 * JUSTIFICATION: Not set, as not using icc = 59
 
@@ -2882,18 +2882,18 @@ feffcd = 1.0
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 harnum = 2
-* DESCRIPTION:   Cyclotron harmonic frequency number 
-* JUSTIFICATION: Not set assuming default ==2 
+* DESCRIPTION:   Cyclotron harmonic frequency number
+* JUSTIFICATION: Not set assuming default ==2
 
 wave_mode = 0
-* DESCRIPTION:   EM cutoff wave mode (X or O) 
+* DESCRIPTION:   EM cutoff wave mode (X or O)
 * JUSTIFICATION: Not set assuming default ==0 (O-mode)
 
 *--------------*
 * Lower hybrid *
 *--------------*
 
-*etalh = 
+*etalh =
 * DESCRIPTION:   LH wall plug to plasma efficiency (default = 0.3)
 * JUSTIFICATION: Not used as no LH used
 
@@ -2903,11 +2903,11 @@ wave_mode = 0
 
 etaech = 0.45
 * DESCRIPTION:   ECRH Wall Plug to Injector Efficiency
-* JUSTIFICATION:   
+* JUSTIFICATION:
 
 *gamma_ecrh =
 * DESCRIPTION:   User Input ECRH Gamma
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 * rho_ecrh = 0.4
 * DESCRIPTION:   Normalised minor radius at which electron cyclotron current drive is maximum
@@ -2932,13 +2932,13 @@ etaech = 0.45
 bootstrap_current_fraction_max = 0.9
 * DESCRIPTION:   Maximum Fraction of Plasma Current from Bootstrap
 * JUSTIFICATION: upper limit set for plasma stability
-*                
+*
 
 i_bootstrap_current = 4
 * DESCRIPTION:   Switch for Bootstrap Current Scaling (4: Sauter scaling)
 * JUSTIFICATION: Wilson model was previously used for STs
 
-*cboot = 
+*cboot =
 * DESCRIPTION:   Bootstrap current fraction multiplier (i_bootstrap_current=1)
 * JUSTIFICATION: Not used, not scaling bootstrap current
 
@@ -2953,9 +2953,9 @@ i_bootstrap_current = 4
 * JUSTIFICATION: Not used.
 
 *ixc = 44
-*fvsbrnni = 
-*boundl(44) = 
-*boundu(44) = 
+*fvsbrnni =
+*boundl(44) =
+*boundu(44) =
 * DESCRIPTION:   Non-inductive volt-sec burn fraction, fraction of the plasma current produced by non-inductive means
 * JUSTIFICATION: Not scaling plasma current induction. default = 1.0
 
@@ -2966,20 +2966,20 @@ i_plasma_current = 9
 
 i_diamagnetic_current = 2
 * DESCRIPTION:   Switch for Diamagnetic Current Scaling (2: SCENE Fit)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-i_pfirsch_schluter_current = 1 
+i_pfirsch_schluter_current = 1
 * DESCRIPTION:   Switch for Pfirsch-Schlüter Current Scaling (1: SCENE Fit)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 iprofile = 0
-* DESCRIPTION:   Switch for Current Profile Consistency (0: Use Input Values for alphaj rli dnbeta)
-* =0 use input values for alphaj, rli, dnbeta (but see gtscale option)
+* DESCRIPTION:   Switch for Current Profile Consistency (0: Use Input Values for alphaj rli beta_norm_max)
+* =0 use input values for alphaj, rli, beta_norm_max (but see gtscale option)
 * =1 make these consistent with input q, q_0 values (recommend `i_plasma_current=4` with this option)
 * JUSTIFICATION: These consistency equations don't hold for STs
-* REFERENCE:     
+* REFERENCE:
 
 rli = 0.3
 * DESCRIPTION:   Plasma Normalised Internal Inductance
@@ -2995,7 +2995,7 @@ rli = 0.3
 icc = 46
 * DESCRIPTION:   Ip/Irod upper limit (TART)
 * JUSTIFICATION: Limit for plasma stability so turned on
-*        Rem SK: Should this limit be modified to take the effect of the 
+*        Rem SK: Should this limit be modified to take the effect of the
 *                neutronic shield into account ?
 * VARIABLES:     Variables calculated in-situ
 
@@ -3008,8 +3008,8 @@ fipir = 0.58
 *----------------------Heat transport / Power settings-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------*
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾*
 
-secondary_cycle = 2 
-* DESCRIPTION:   Switch for power conversion cycle (2: User Input Thermal-Electric Efficiency) 
+secondary_cycle = 2
+* DESCRIPTION:   Switch for power conversion cycle (2: User Input Thermal-Electric Efficiency)
 *  =0 Set efficiency for chosen blanket, from detailed models (divertor heat not used)
 *  =1 Set efficiency for chosen blanket, from detailed models (divertor heat used)
 *  =2 user input thermal-electric efficiency (etath)
@@ -3017,7 +3017,7 @@ secondary_cycle = 2
 *  =4 supercritical CO2 cycle
 * JUSTIFICATION: Chosen to use input efficiency due to uncertainty in other models
 
-*secondary_cycle_liq = 2 
+*secondary_cycle_liq = 2
 * DESCRIPTION:   Switch for power conversion cycle for the liquid breeder component of the blanket
 *  =2 user input thermal-electric efficiency (etath)
 *  =4 supercritical CO2 cycle
@@ -3025,19 +3025,19 @@ secondary_cycle = 2
 
 etath = 0.40
 * DESCRIPTION:   Thermal-to-Electric Conversion Efficiency
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-*etatf = 
+*etatf =
 * DESCRIPTION:   AC to resistive power conversion for TF coils (default = 0.9)
 * JUSTIFICATION: Not yet set
 
-*fmgdmw = 
+*fmgdmw =
 * DESCRIPTION:   Power to mgf (motor-generator flywheel) units (MW) (ignored if `iscenr=2`)
 * JUSTIFICATION: Not yet set
 
-ipowerflow = 0 
+ipowerflow = 0
 * DESCRIPTION:   Switch for Power Flow Model (0: Pre-2014 Version)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 iprimshld = 1
 * DESCRIPTION:   Switch for shield thermal power destiny:
@@ -3052,36 +3052,36 @@ iprimshld = 1
 * JUSTIFICATION: Turned off, not concerned with cryogenic plant power
 * VARIABLES:     crypmw_max (Max cryo plant power [MW]). crypmw calculated in-situ
 
-*crypmw_max = 
+*crypmw_max =
 * DESCRIPTION: Maximum cryogenic plant power (MW)
 * JUSTIFICATION: Turned off, not using icc=85
 
 *ixc = 164
-*f_crypmw = 
-*boundl(164) = 
-*boundu(164) = 
+*f_crypmw =
+*boundl(164) =
+*boundu(164) =
 * DESCRIPTION: f-value for maximum cryogenic plant power
 * JUSTIFICATION: Turned off, not using icc=85
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*baseel = 
+*baseel =
 * DESCRIPTION:   Base plant electric load (W) (default = 5E6)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 etahtp = 0.87
 * DESCRIPTION:   Electrical efficiency of primary coolant pumps (default = 0.95)
 * JUSTIFICATION: Not yet set
 
-*pwpm2 = 
+*pwpm2 =
 * DESCRIPTION:   Base AC power requirement (W/m2)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-*trithtmw = 
+*trithtmw =
 * DESCRIPTION:   Power required for tritium processing (MW) (default = 15MW)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-*2vachtmw = 
+*2vachtmw =
 * DESCRIPTION:   Vacuum pump power (MW) (default = 0.5MW)
 * JUSTIFICATION: Not yet set
 
@@ -3091,32 +3091,32 @@ etahtp = 0.87
 
 * MAJORITY OF COST VARIABLES LEFT OUT DUE TO REMOVAL OF COST MODULES *
 
-output_costs = 1 
-* DESCRIPTION:   Switch for Costs Output (1: Write Cost-Related Outputs to File) 
+output_costs = 1
+* DESCRIPTION:   Switch for Costs Output (1: Write Cost-Related Outputs to File)
 * JUSTIFICATION: Want to see costs
 
-cost_model = 0 
-* DESCRIPTION:   Switch for Cost Model 
-* JUSTIFICATION: 
+cost_model = 0
+* DESCRIPTION:   Switch for Cost Model
+* JUSTIFICATION:
 
-*abktflnc = 
+*abktflnc =
 * DESCRIPTION:   Allowable FW/Blanket Neutron Fluence (MW-yr/m2)
 * JUSTIFICATION: Set to enforce a blanket lifetime (`bktlife`) of 5 years
 
-*adivflnc = 
+*adivflnc =
 * DESCRIPTION:   Allowable Divertor Heat Fluence (MW-yr/m2)
 * JUSTIFICATION: Set to enforce a divertor lifetime (`divlife`) of 5 years
 *                NOTE: not currently functional, issue to be raised
 
-*cpstflnc = 
+*cpstflnc =
 * DESCRIPTION:   Allowable ST Centrepost Neutron Fluence (MW-yr/m2)
 * JUSTIFICATION: Unknown
 
-*fcontng =  
+*fcontng =
 * DESCRIPTION:   Project Contingency Factor
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-*fkind =  
+*fkind =
 * DESCRIPTION:   Multiplier for Nth of a Kind Costs
 * JUSTIFICATION: First-of-a-kind reactor
 
@@ -3124,13 +3124,13 @@ i_bldgs_size = 0
 * DESCRIPTION:   Switch between building size estimates (0: Previous work)
 * JUSTIFICATION: New model selectable; maintains backwards compatibility
 
-ifueltyp = 0  
+ifueltyp = 0
 * DESCRIPTION:   Switch (0: Treat Blanket, Divertor, FW and CD Equipment as Capital Cost)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
-lsa = 2 
+lsa = 2
 * DESCRIPTION:   Level of Safety Assurance Switch (2: In-Between)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 *________________________________________________________________________*
 *---------------------------------Vacuum---------------------------------*
@@ -3138,13 +3138,13 @@ lsa = 2
 
 * Calculates pumping rates and required pumps*
 
-*vacuum_model = 
+*vacuum_model =
 * DESCRIPTION:   Switch for vacuum pumping model:
 * ='old' for old detailed ETR model
 * ='simple' for simple steady-state model with comparison to ITER cryopumps
 * JUSTIFICATION: Not yet set.
 
-*ntype = 
+*ntype =
 * DESCRIPTION:   Switch for vacuum pump type:
 * =0 - for turbomolecular pump (magnetic bearing) with speed of 2.0 m3/s
 *    (1.95 for N2, 1.8 for He, 1.8 for DT)
@@ -3152,60 +3152,60 @@ lsa = 2
 *  (9.0 for N2, 5.0 for He and 25.0 for DT)
 * JUSTIFICATION: Not yet set.
 
-*pbase = 
+*pbase =
 * DESCRIPTION:   Base pressure during dwell before gas pre-fill (Pa):
 * JUSTIFICATION: Not yet set.
 
-*prdiv = 
+*prdiv =
 * DESCRIPTION:   Divertor chamber pressure during burn (Pa):
 * JUSTIFICATION: Not yet set.
 
-*pumptp = 
+*pumptp =
 * DESCRIPTION:   Pump throughput (molecules/s) (default is ITER value) (default = 1.2155e+22) :
 * JUSTIFICATION: Not yet set.
 
-*rat = 
+*rat =
 * DESCRIPTION:   Plasma chamber wall outgassing rate (Pa-m/s) (default = 1.3D-8) :
 * JUSTIFICATION: Not yet set.
 
-*tn = 
+*tn =
 * DESCRIPTION:   Neutral gas temperature in chamber (K) (default = 300) :
 * JUSTIFICATION: Not yet set.
 
-*dwell_pump = 
+*dwell_pump =
 * DESCRIPTION:   Switch for dwell pumping options:
 * =0 pumping only during t_between_pulse
 * =1 pumping only during t_precharge
 * =2 pumping during t_between_pulse + t_precharge
 * JUSTIFICATION: Not yet set.
 
-*pumpareafraction = 
+*pumpareafraction =
 * DESCRIPTION:   Area of one pumping port as a fraction of plasma surface area (default = 0.0203) :
 * JUSTIFICATION: Not yet set.
 
-*pumpspeedmax = 
+*pumpspeedmax =
 * DESCRIPTION:   Maximum pumping speed per unit area for deuterium & tritium, molecular flow (default = 27.3) :
 * JUSTIFICATION: Not yet set.
 
-*initialpressure = 
+*initialpressure =
 * DESCRIPTION:   Initial neutral pressure at the beginning of the dwell phase (Pa) (default = 1.0) :
 * JUSTIFICATION: Not yet set.
 
-*pumpspeedfactor = 
+*pumpspeedfactor =
 * DESCRIPTION:   Effective pumping speed reduction factor due to duct impedance (default = 0.167) :
 * JUSTIFICATION: Not yet set.
 
-*outgasindex = 
+*outgasindex =
 * DESCRIPTION:   Outgassing decay index (default = 1.0) :
 * JUSTIFICATION: Not yet set.
 
-*outgasfactor = 
+*outgasfactor =
 * DESCRIPTION:   outgassing prefactor kw: outgassing rate at 1 s per unit area (Pa m s-1) (default = 0.0235) :
 * JUSTIFICATION: Not yet set.
 
 *icc = 63
 * DESCRIPTION:   Upper limit on niterpump (vacuum_model = simple)
-* JUSTIFICATION: Turned off, not using simple pumping 
+* JUSTIFICATION: Turned off, not using simple pumping
 * VARIABLES:     tfno(TF coil number), niterpump calculated in-situ
 
 *________________________________________________________________________*
@@ -3223,7 +3223,7 @@ lpulse = 0
 * JUSTIFICATION: Not used, no minimum burn time required
 * VARIABLES:     Calculated in-situ
 
-*t_burn_min =  
+*t_burn_min =
 * DESCRIPTION:   Minimum required burn Time (s)
 * JUSTIFICATION: No required burn time
 
@@ -3234,13 +3234,13 @@ lpulse = 0
 * DESCRIPTION:   f-value for minimum burn time
 * JUSTIFICATION: Used with icc=13 to enforce minimum burn time, not required
 
-t_burn = 1000.0 
+t_burn = 1000.0
 * DESCRIPTION:   Burn Time (s)
 * JUSTIFICATION: Default, steady-state device so input, calculates if lpulse = 1
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-t_between_pulse = 100.0 
+t_between_pulse = 100.0
 * DESCRIPTION:   Time Between Pulses in a Pulsed Reactor (s)
 * JUSTIFICATION: Steady-state device, assumed
 
@@ -3254,43 +3254,43 @@ t_between_pulse = 100.0
 
 *icc = 41
 * DESCRIPTION:   Constraint equation for plasma current ramp-up time lower limit
-* JUSTIFICATION: Turned off, do not care about plasma current ramp up time 
+* JUSTIFICATION: Turned off, do not care about plasma current ramp up time
 * VARIABLES:     t_current_ramp_up (s) calculated in-situ
 
-*t_current_ramp_up_min =  
+*t_current_ramp_up_min =
 * DESCRIPTION:   Minimum plasma current ramp-up time (s)
 * JUSTIFICATION: Turned off, not using icc = 41
 
-*tohsin =  
+*tohsin =
 * DESCRIPTION:   Switch for t_current_ramp_up calculation
 * = 0, t_current_ramp_up = t_precharge = t_ramp_down = Ip(MA)/0.5
 * = 1, t_current_ramp_up = tohsin; t_precharge, t_ramp_down are input
 * JUSTIFICATION: Not used, assuming default
 
-*t_ramp_down =  
+*t_ramp_down =
 * DESCRIPTION:   PF coil shutdown time (s)
 * JUSTIFICATION: Assuming default.
 
-*t_current_ramp_up =  
+*t_current_ramp_up =
 * DESCRIPTION:   Plasma current ramp-up time for current initiation (s)
 * JUSTIFICATION: Assuming default of 10 seconds
 
-*t_precharge =  
+*t_precharge =
 * DESCRIPTION:   Initial charge time for PF coils (s)
 * JUSTIFICATION: Assuming default.
 
-*theat =  
+*theat =
 * DESCRIPTION:   Heating time after current ramp (s)
 * JUSTIFICATION: Assuming default of 10 seconds
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 *icc = 42
-* DESCRIPTION:   Constraint equation for full pulse cycle time lower limit. 
-* JUSTIFICATION: Turned off, do not care about the full pulse cycle time 
+* DESCRIPTION:   Constraint equation for full pulse cycle time lower limit.
+* JUSTIFICATION: Turned off, do not care about the full pulse cycle time
 * VARIABLES:     t_cycle (s) calculated in-situ
 
-*tcycmn =  
+*tcycmn =
 * DESCRIPTION:   Minimum full pulse cycle time (s)
 * JUSTIFICATION: Turned off, not using icc = 42
 
@@ -3306,107 +3306,107 @@ iavail = 0
 * =0 use input value for cfactr
 * =1 calculate cfactr using Taylor and Ward 1999 model
 * =2 calculate cfactr using new (2015) model
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 *cfactr = 0.9
 * DESCRIPTION:   Total plant availability fraction; input if iavail=0
 * JUSTIFICATION: testing
 
-*ibkt_life = 
+*ibkt_life =
 * DESCRIPTION: Switch for fw/blanket lifetime calculation in availability module:
 *  =0 use neutron fluence model
-* =1 use fusion power model 
+* =1 use fusion power model
 * JUSTIFICATION: testing
 
-*life_dpa = 
+*life_dpa =
 * DESCRIPTION: Allowable DPA for fw/blanket lifetime calculation in availability module
 * JUSTIFICATION: testing
 
-*num_rh_systems = 
+*num_rh_systems =
 * DESCRIPTION: Number of remote handling systems (from 1-10)
 * JUSTIFICATION: testing
 
-*conf_mag = 
+*conf_mag =
 * DESCRIPTION: c parameter, which determines the temperature margin at which magnet lifetime starts to decline
 * JUSTIFICATION: testing
 
-*div_prob_fail = 
+*div_prob_fail =
 * DESCRIPTION: Divertor probability of failure (per op day)
 * JUSTIFICATION: testing
 
-*div_umain_time = 
+*div_umain_time =
 * DESCRIPTION: Divertor unplanned maintenance time (years)
 * JUSTIFICATION: testing
 
-*div_nref = 
+*div_nref =
 * DESCRIPTION: Reference value for cycle life of divertor
 * JUSTIFICATION: testing
 
-*div_nu = 
+*div_nu =
 * DESCRIPTION: The cycle when the divertor fails with 100% probability
 * JUSTIFICATION: testing
 
-*fwbs_nref = 
+*fwbs_nref =
 * DESCRIPTION: Reference value for cycle life of blanket
 * JUSTIFICATION: testing
 
-*fwbs_nu = 
+*fwbs_nu =
 * DESCRIPTION: The cycle when the blanket fails with 100% probability
 * JUSTIFICATION: testing
 
-*fwbs_umain_time = 
+*fwbs_umain_time =
 * DESCRIPTION: Fwbs unplanned maintenace time (years)
 * JUSTIFICATION: testing
 
-*fwbs_prob_fail = 
+*fwbs_prob_fail =
 * DESCRIPTION: Fwbs probability of failure (per op day)
 * JUSTIFICATION: testing
 
-*redun_vacp = 
+*redun_vacp =
 * DESCRIPTION: Vacuum system pump redundancy level (%)
 * JUSTIFICATION: testing
 
-*tbktrepl = 
+*tbktrepl =
 * DESCRIPTION: Time needed to replace blanket (yr)
 * JUSTIFICATION: testing
 
-*tcomrepl = 
+*tcomrepl =
 * DESCRIPTION: Time needed to replace blanket+divertor (yr)
 * JUSTIFICATION: testing
 
-*tdivrepl = 
+*tdivrepl =
 * DESCRIPTION: Time needed to replace divertor (yr)
 * JUSTIFICATION: testing
 
-*tlife = 
+*tlife =
 * DESCRIPTION: Plant life (yr)
 * JUSTIFICATION: testing
 
-*uubop = 
+*uubop =
 * DESCRIPTION: Unplanned unavailability for BOP
 * JUSTIFICATION: testing
 
-*uucd = 
+*uucd =
 * DESCRIPTION: Unplanned unavailability for CD system
 * JUSTIFICATION: testing
 
-*uudiv = 
+*uudiv =
 * DESCRIPTION: Unplanned unavailability for divertor
 * JUSTIFICATION: testing
 
-*uufuel = 
+*uufuel =
 * DESCRIPTION: Unplanned unavailability for fuel system
 * JUSTIFICATION: testing
 
-*uufw = 
+*uufw =
 * DESCRIPTION: Unplanned unavailability for first wall
 * JUSTIFICATION: testing
 
-*uumag = 
+*uumag =
 * DESCRIPTION: Unplanned unavailability for magnets
 * JUSTIFICATION: testing
 
-*uuves = 
+*uuves =
 * DESCRIPTION: Unplanned unavailability for vessel
 * JUSTIFICATION: testing
 
@@ -3415,19 +3415,19 @@ iavail = 0
 
 *icc = 61
 * DESCRIPTION:   Constraint equation for availability limit
-* JUSTIFICATION: Turned off, do not care about availability limit 
+* JUSTIFICATION: Turned off, do not care about availability limit
 * VARIABLES:     tmargmin_cs (Minimum allowable temperature margin in CS (K)), tmargoh calculated in-situ
 
-*avail_min = 
+*avail_min =
 * DESCRIPTION: Minimum availability (`constraint equation 61`)
 * JUSTIFICATION: testing
 
 *ixc = 107
-*favail = 
-*boundl(107) = 
-*boundu(107) = 
+*favail =
+*boundl(107) =
+*boundu(107) =
 * DESCRIPTION:   F-value for minimum availability (constraint equation 61)
-* JUSTIFICATION: 
+* JUSTIFICATION:
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -3435,7 +3435,7 @@ iavail = 0
 *------------------------------ Energy Storage --------------------------*
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾*
 
-*iscenr = 
+*iscenr =
 * DESCRIPTION:    Switch for PF coil energy storage option (default = 2):
 * =1 all power from MGF (motor-generator flywheel) units
 * =2 all pulsed power from line
@@ -3448,25 +3448,25 @@ iavail = 0
 * JUSTIFICATION: Turned off, dont care about poloidal field change
 * VARIABLES:     maxpoloidalpower (Maximum permitted absolute rate of change of stored energy in poloidal field (MW)), peakpoloidalpower calculated in-situ
 
-*maxpoloidalpower = 
+*maxpoloidalpower =
 * DESCRIPTION:    Maximum permitted absolute rate of change of stored energy in poloidal field (MW)
 * JUSTIFICATION: Not set as not using icc = 66
 
-*etapsu =  
+*etapsu =
 * DESCRIPTION:   Efficiency of transfer of PF stored energy into or out of storage.
 * JUSTIFICATION: Not used. Using default
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*istore =  
+*istore =
 * DESCRIPTION:   Switch for thermal storage method: (default = 1)
 * =1 option 1 of Electrowatt report, AEA FUS 205
 * =2 option 2 of Electrowatt report, AEA FUS 205
 * =3 stainless steel block
 * JUSTIFICATION: Not used. Using default
 
-*dtstor =  
-* DESCRIPTION:   Maximum allowable temperature change in stainless steel thermal storage 
+*dtstor =
+* DESCRIPTION:   Maximum allowable temperature change in stainless steel thermal storage
 * block (K) (`istore=3`) (default = 300.0)
 * JUSTIFICATION: Not used. Using default
 
@@ -3474,15 +3474,15 @@ iavail = 0
 *------------------------------  Water Usage ----------------------------*
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾*
 
-*airtemp = 
+*airtemp =
 * DESCRIPTION:   Ambient air temperature (degrees C) (default = 15.0)
 * JUSTIFICATION: Not yet set
 
-*watertemp = 
+*watertemp =
 * DESCRIPTION:   Water temperature (degrees C) (default = 5.0)
 * JUSTIFICATION: Not yet set
 
-*windspeed = 
+*windspeed =
 * DESCRIPTION:   Wind speed (m/s) (default = 4.0)
 * JUSTIFICATION: Not yet set
 
@@ -3490,11 +3490,11 @@ iavail = 0
 *--------------------------------Buildings-------------------------------*
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾*
 
-*i_bldgs_size = 
+*i_bldgs_size =
 * DESCRIPTION:   Switch between routines estimating building sizes (0 = default)
 * JUSTIFICATION: Not yet set
 
-*i_bldgs_v = 
+*i_bldgs_v =
 * DESCRIPTION:   Switch to select verbose output for buildings (1 = verbose)
 * JUSTIFICATION: Not yet set
 
@@ -3510,7 +3510,7 @@ iavail = 0
 *icc = 91
 * DESCRIPTION:   Constraint equation for ECRH ignition in Stellerator
 * JUSTIFICATION: Turned off, non Stellerator device
-* VARIABLES: 
+* VARIABLES:
 
 *________________________________________________________________________*
 *------------------------------Inertial Fusion---------------------------*
@@ -3519,7 +3519,7 @@ iavail = 0
 *icc = 49-50
 * DESCRIPTION:   Removed IFE constraint and IFE repetition rate constraint
 * JUSTIFICATION: Removed constraint and not used as not IFE device
-* VARIABLES: 
+* VARIABLES:
 
 *________________________________________________________________________*
 *-------------------------------- Obsolete ------------------------------*
@@ -3532,20 +3532,20 @@ iavail = 0
 
 *icc = 38
 * DESCRIPTION:   Obsolete constraint
-* JUSTIFICATION: Turned off, obsolete constraint 
-* VARIABLES: 
+* JUSTIFICATION: Turned off, obsolete constraint
+* VARIABLES:
 
 *icc = 57-58
 * DESCRIPTION:   Obsolete constraint
 * JUSTIFICATION: Turned off, obsolete constraint
-* VARIABLES:  
+* VARIABLES:
 
 *icc = 47
 * DESCRIPTION:   TF coil toroidal thickness upper limit for FRC devices
 * JUSTIFICATION: Constraint removed, so not used
-* VARIABLES: 
+* VARIABLES:
 
 *icc = 29
-* DESCRIPTION:   Constraint equation for inboard major radius: This is a consistency equation 
-* JUSTIFICATION: Turned off, build consistency covered by icc = 11  
+* DESCRIPTION:   Constraint equation for inboard major radius: This is a consistency equation
+* JUSTIFICATION: Turned off, build consistency covered by icc = 11
 * VARIABLES:     rinboard calculated in-situ

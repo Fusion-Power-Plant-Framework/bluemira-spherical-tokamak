@@ -1,0 +1,452 @@
+
+*--------------------------------------------------*
+
+
+*---------------Constraint Equations---------------*
+
+icc = 1 * Beta
+icc = 2 * Global power balance
+icc = 9 * Fusion power upper limit
+icc = 5 * Density upper limit
+icc = 24 * Beta upper limit
+icc = 15 * LH power threshold limit
+icc = 62 * taup
+icc = 81 * Ne
+icc = 17 * Radiation fraction upper limit
+icc = 56 * Pseparatrix
+icc = 33 * I_op
+icc = 31 * TF coil case stress upper limit
+icc = 32 * TF coil conduit stress upper limit
+icc = 11 * Radial build
+icc = 67 * Simple Radiation Wall load limit
+icc = 30 * Injection power upper limit
+icc = 46 * Equation for Ip
+
+*---------------Iteration Variables----------------*
+
+ixc = 4 * te
+boundl(4) = 5.0
+boundu(4) = 25.0
+ixc = 5 * beta
+boundl(5) = 0.01
+boundu(5) = 1.0
+ixc = 6 * dene
+boundl(6) = 0.5d+20
+boundu(6) = 5.0d+20
+ixc = 9 * fdene
+boundl(9) = 0.1
+boundu(9) = 1.0
+ixc = 10 * hfact
+boundl(10) = 0.8
+boundu(10) = 1.2
+ixc = 16 * ohcth
+boundl(16) = 0.03
+boundu(16) = 0.5
+ixc = 18 * q
+boundl(18) = 3.0
+boundu(18) = 20.0
+ixc = 28 * fradpwr
+boundu(28) = 1.0
+ixc = 29 * bore
+boundl(29) = 0.1
+boundu(29) = 0.8
+ixc = 36 * fbeta_max
+boundl(36) = 0.01
+boundu(36) = 1.0
+ixc = 46 * fpinj
+boundl(46) = 0.6
+boundu(46) = 1.5
+ixc = 48 * fstrcase
+boundl(48) = 0.01
+boundu(48) = 1.0
+ixc = 49 * fstrcond
+boundu(49) = 1.0
+ixc = 50 * fiooic
+boundl(50) = 0.01
+boundu(50) = 1.0
+ixc = 57 * thkcas
+boundl(57) = 0.01
+boundu(57) = 0.5
+ixc = 72 * fipir
+ixc = 93 * shldith
+boundl(93) = 0.01
+boundu(93) = 1.0
+ixc = 97 * fpsepr
+boundl(97) = 0.01
+boundu(97) = 1.0
+ixc = 103 * flhthresh
+ixc = 109 * ralpne
+boundl(109) = 0.001
+boundu(109) = 1.0
+ixc = 110 * ftaulimit
+boundl(110) = 0.01
+boundu(110) = 1.0
+ixc = 116 * fradwall
+boundl(116) = 0.01
+boundu(116) = 1.0
+ixc = 135 * fimp(13)
+ixc = 140 * dr_tf_wp
+boundl(140) = 0.4
+boundu(140) = 0.8
+ixc = 145 * fgwped
+boundl(145) = 0.1
+boundu(145) = 1.0
+ixc = 152 * fgwsep
+boundl(152) = 0.001
+boundu(152) = 0.1
+ixc = 154 * fne0
+boundu(154) = 0.99
+
+*---------------Cs Fatigue Variables---------------*
+
+
+*------------------- Costs 1990--------------------*
+
+
+*------------------- Costs 2015--------------------*
+
+
+*-----------------Blanket Library------------------*
+
+
+*----------------------Build-----------------------*
+
+
+*-----------------Build Variables------------------*
+
+blnkith  = 0.0 * 
+blnkoth  = 1.0 * 
+bore     = 0.3 * 
+d_vv_in  = 0.2 * 
+d_vv_out = 0.3 * 
+d_vv_top = 0.3 * 
+d_vv_bot = 0.3 * 
+gapds    = 0.01 * 
+gapoh    = 0.0 * 
+gapomin  = 0.0 * 
+iohcl    = 0 * 
+iprecomp = 0 * 
+tf_in_cs = 0 * 
+ohcth    = 0.25 * 
+i_r_cp_top = 2 * 
+scrapli  = 0.1 * 
+scraplo  = 0.1 * 
+shldith  = 0.4 * 
+shldlth  = 0.6 * 
+shldoth  = 0.3 * 
+shldtth  = 0.3 * 
+tfootfi  = 1.0 * 
+tftsgap  = 0.01 * 
+thshield_ib = 0.05 * 
+thshield_ob = 0.07 * 
+thshield_vb = 0.075 * 
+vgap_vv_thermalshield = 2.0 * 
+vgap_xpoint_divertor = 0.75 * 
+vvblgap  = 0.01 * 
+
+*---------------Buildings Variables----------------*
+
+i_bldgs_size = 0 * 
+
+*-----------------Ccfe Hcpb Module-----------------*
+
+
+*--------------------Constants---------------------*
+
+
+*---------------Constraint Variables---------------*
+
+fbeta_max = 0.75 * 
+fdene    = 1.0 * 
+ffuspow  = 1.0 * 
+fiooic   = 1.0 * 
+fipir    = 0.58 * 
+flhthresh = 1.0 * 
+fpinj    = 1.0 * 
+fpsepr   = 1.0 * 
+fradpwr  = 0.64 * 
+fradwall = 1.0 * 
+fstrcase = 1.0 * 
+fstrcond = 1.0 * 
+maxradwallload = 1.2 * 
+peakfactrad = 1.0 * 
+powfmax  = 2500.0 * 
+pseprmax = 40.0 * 
+taulimit = 5.0 * 
+ftaulimit = 1.0 * 
+
+*-------------------Constraints--------------------*
+
+
+*------------------Cost Variables------------------*
+
+cost_model = 0 * 
+iavail   = 0 * 
+ifueltyp = 0 * 
+lsa      = 2 * 
+output_costs = 1 * 
+
+*----------------------Costs-----------------------*
+
+
+*-------------Current Drive Variables--------------*
+
+bootstrap_current_fraction_max = 0.9 * 
+harnum   = 2.0 * 
+wave_mode = 0 * 
+etaech   = 0.45 * 
+feffcd   = 1.0 * 
+iefrf    = 13 * 
+irfcd    = 1 * 
+pinjalw  = 150.0 * 
+
+*-------------------Dcll Module--------------------*
+
+
+*------------Define Iteration Variables------------*
+
+
+*----------------Divertor Variables----------------*
+
+divfix   = 1.0 * 
+
+*------------------Error Handling------------------*
+
+
+*-------------------Fson Library-------------------*
+
+
+*-------------------Fson Path M--------------------*
+
+
+*------------------Fson String M-------------------*
+
+
+*-------------------Fson Value M-------------------*
+
+
+*------------------Fwbs Variables------------------*
+
+fwbsshape = 1 * 
+fw_armour_thickness = 0.003 * 
+iblanket = 1 * 
+iblnkith = 0 * 
+inuclear = 0 * 
+primary_pumping = 3 * 
+secondary_cycle = 2 * 
+fwcoolant = helium * 
+etaiso   = 0.9 * 
+etahtp   = 0.87 * 
+ipump    = 0 * 
+outlet_temp_liq = 873.0 * 
+
+*-----------------Global Variables-----------------*
+
+runtitle = st regression * 
+maxcal   = 2000 * 
+
+*-------------Heat Transport Variables-------------*
+
+etath    = 0.4 * 
+ipowerflow = 0 * 
+iprimshld = 1 * 
+
+*------------------Ife Variables-------------------*
+
+
+*------------Impurity Radiation Module-------------*
+
+coreradius = 0.75 * 
+coreradiationfraction = 0.7 * 
+fimp(1) = 1.0
+fimp(2) = 0.1
+fimp(3) = 0.0
+fimp(4) = 0.0
+fimp(5) = 0.0
+fimp(6) = 0.0
+fimp(7) = 0.0
+fimp(8) = 0.0
+fimp(9) = 0.0
+fimp(10) = 0.0
+fimp(11) = 0.0
+fimp(12) = 0.0
+fimp(13) = 0.0005
+fimp(14) = 5e-05
+
+*-------------------Init Module--------------------*
+
+
+*-------------------Main Module--------------------*
+
+
+*------------------Maths Library-------------------*
+
+
+*--------------Neoclassics Constants---------------*
+
+
+*----------------Neoclassics Module----------------*
+
+
+*---------------------Numerics---------------------*
+
+ioptimz  = 1 * for optimisation VMCON only
+minmax   = -5 * 
+epsvmc   = 1e-11 * 
+
+*----------------Pf Power Variables----------------*
+
+
+*------------------Pfcoil Module-------------------*
+
+
+*-----------------Pfcoil Variables-----------------*
+
+ipfloc   = 2, 3, 3, 4 * 
+ipfres   = 0 * 
+isumatpf = 9 * 
+i_sup_pf_shape = 1 * 
+ncls     = 2, 2, 2, 2 * 
+ngrp     = 4 * 
+rref     = 7.0, 7.0, 7.0, 2.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0 * 
+zref(1) = 3.6
+zref(2) = 1.2
+zref(3) = 2.5
+zref(4) = 5.2
+zref(5) = 1.0
+zref(6) = 1.0
+zref(7) = 1.0
+zref(8) = 1.0
+zref(9) = 1.0
+zref(10) = 1.0
+
+*------------------Physics Module------------------*
+
+
+*----------------Physics Variables-----------------*
+
+alphaj   = 0.1 * 
+alphan   = 0.9 * 
+alphat   = 1.4 * 
+aspect   = 1.8 * 
+beta     = 0.2 * 
+bt       = 3.0 * 
+dene     = 1.5e+20 * 
+beta_norm_max = 5.0 * 
+ftar     = 0.5 * 
+fgwped   = 0.1 * 
+fgwsep   = 0.1 * 
+fne0     = 0.08 * 
+hfact    = 1.0 * 
+i_bootstrap_current = 4 * 
+i_beta_component = 3 * 
+i_plasma_current = 9 * 
+i_diamagnetic_current = 2 * 
+i_density_limit = 7 * 
+ipedestal = 1 * 
+i_pfirsch_schluter_current = 1 * 
+rhopedn  = 0.95 * 
+rhopedt  = 0.925 * 
+tbeta    = 2.0 * 
+teped    = 4.5 * 
+tesep    = 0.125 * 
+iprofile = 0 * 
+ishape   = 0 * 
+itart    = 1 * 
+itartpf  = 1 * 
+kappa    = 2.8 * 
+q        = 6.0 * 
+q0       = 2.0 * 
+ralpne   = 0.2 * 
+rli      = 0.3 * 
+rmajor   = 4.5 * 
+i_single_null = 0 * 
+ssync    = 0.6 * 
+te       = 15.0 * 
+tratio   = 1.0 * 
+triang   = 0.5 * 
+
+*----------------------Power-----------------------*
+
+
+*------------Primary Pumping Variables-------------*
+
+
+*------------------Process Input-------------------*
+
+
+*------------------Process Output------------------*
+
+
+*-----------------Pulse Variables------------------*
+
+lpulse   = 0 * 
+
+*-----------------Rebco Variables------------------*
+
+
+*------------------Reinke Module-------------------*
+
+
+*-----------------Reinke Variables-----------------*
+
+
+*---------------Resistive Materials----------------*
+
+
+*-------------------Scan Module--------------------*
+
+
+*-----------------Sctfcoil Module------------------*
+
+
+*------------Stellarator Configuration-------------*
+
+
+*----------------Stellarator Module----------------*
+
+
+*--------------Stellarator Variables---------------*
+
+
+*---------------Structure Variables----------------*
+
+
+*-----------------Tfcoil Variables-----------------*
+
+sig_tf_case_max = 850000000.0 * 
+sig_tf_wp_max = 700000000.0 * 
+casthi_fraction = 1e-12 * 
+casths_fraction = 0.65 * 
+i_tf_stress_model = 0 * 
+i_tf_tresca = 0 * 
+i_tf_wp_geom = 2 * 
+i_tf_case_geom = 0 * 
+i_tf_turns_integer = 0 * 
+i_tf_sc_mat = 9 * 
+i_tf_sup = 1 * 
+i_tf_shape = 2 * 
+i_tf_bucking = 1 * 
+eyoung_res_tf_buck = 205000000000.0 * 
+ripmax   = 1.0 * 
+i_cp_joints = 0 * 
+n_tf     = 12.0 * 
+tftmp    = 20.0 * 
+thkcas   = 0.4 * 
+dr_tf_wp = 0.6 * 
+tmpcry   = 20.0 * 
+f_vforce_inboard = 0.5 * 
+
+*-----------------Times Variables------------------*
+
+t_burn   = 1000.0 * 
+t_between_pulse = 100.0 * 
+
+*--------------------Utilities---------------------*
+
+
+*-----------------Vacuum Variables-----------------*
+
+
+*--------------Water Usage Variables---------------*
+
