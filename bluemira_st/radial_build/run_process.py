@@ -1,8 +1,10 @@
 from bluemira.base.parameter_frame import ParameterFrame
 from bluemira.codes import plot_radial_build, systems_code_solver
 
+from bluemira_st.params import BluemiraSTParams
 
-def radial_build(params: ParameterFrame, build_config: dict) -> ParameterFrame:
+
+def radial_build(params: BluemiraSTParams, build_config: dict) -> ParameterFrame:
     run_mode = build_config.get("run_mode", "mock")
     plot = build_config.get("plot", False)
 
@@ -37,4 +39,8 @@ def radial_build(params: ParameterFrame, build_config: dict) -> ParameterFrame:
         plot_radial_build(solver.run_directory)
 
     params.update_from_frame(new_params)
+    params._set_param("tf_cl_ib_x", new_params.r_tf_in_centre)  # noqa: SLF001
+    params._set_param("tf_cl_ob_x", new_params.r_tf_out_centre)  # noqa: SLF001
+    params._set_param("tf_tot_tk_y", new_params.tf_wp_width)  # noqa: SLF001
+    params._set_param("tf_tot_tk_z", new_params.tk_tf_inboard)  # noqa: SLF001
     return params

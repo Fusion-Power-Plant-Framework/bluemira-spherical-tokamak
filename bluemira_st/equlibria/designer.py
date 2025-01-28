@@ -8,34 +8,37 @@ Designer for an `Equilibrium` solving an unconstrained Tikhnov current
 gradient coil-set optimisation problem.
 """
 
+from __future__ import annotations
+
 from dataclasses import dataclass
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import matplotlib.pyplot as plt
 import numpy as np
 from bluemira.base.designer import Designer
-from bluemira.base.look_and_feel import bluemira_warn
 from bluemira.base.parameter_frame import Parameter, ParameterFrame
 from bluemira.equilibria import Equilibrium
+from bluemira.equilibria.coils import Coil, CoilSet, SymmetricCircuit
+from bluemira.equilibria.grid import Grid
 from bluemira.equilibria.optimisation.problem import (
+    CoilsetOptimisationProblem,
     UnconstrainedTikhonovCurrentGradientCOP,
 )
 from bluemira.equilibria.profiles import BetaLiIpProfile, Profile
+from bluemira.equilibria.shapes import ZakharovLCFS
 from bluemira.equilibria.solve import DudsonConvergence, PicardIterator
-from bluemira.geometry.coordinates import Coordinates
-from bluemira.geometry.tools import make_circle, make_polygon
+from bluemira.geometry.tools import offset_wire
 from bluemira.geometry.wire import BluemiraWire
-from bluemira.utilities.tools import get_class_from_module
-from eudemo.equilibria.tools import (
-    ReferenceConstraints,
-    handle_lcfs_shape_input,
-)
 
 from bluemira_st.equlibria.tools import (
-    ReferenceEquilibriumParams,
-    make_reference_equilibrium,
+    build_reference_constraint_set,
+    get_intersections_from_angles,
     plasma_data,
 )
+
+if TYPE_CHECKING:
+    from bluemira.geometry.coordinates import Coordinates
 
 
 @dataclass
@@ -56,7 +59,7 @@ class DummyFixedEquilibriumDesignerParams(ParameterFrame):
     kappa_95: Parameter[float]
 
 
-class DummyFixedEquilibriumDesigner(Designer[tuple[Coordinates, Profile]]):
+class DummyFixedEquilibriumDesigner(Designer[tuple[BluemiraWire, Profile]]):
     """
     Dummy equilibrium designer that produces a LCFS shape and a profile
     object to be used in later reference free boundary equilibrium
@@ -71,7 +74,36 @@ class DummyFixedEquilibriumDesigner(Designer[tuple[Coordinates, Profile]]):
     def __init__(self, params, build_config):
         super().__init__(params, build_config)
 
-    def run(self) -> tuple[Coordinates, Profile]:
+    def _create_lcfs_parameterisation(self) -> ZakharovLCFS:
+        """
+        Create the values for the LCFS parameterisation.
+
+        Returns
+        -------
+        :
+            LCFS parameterisation
+        """
+        p = self.params
+        # these adjust the default values of ZakharovLCFS parametrisation
+        return ZakharovLCFS({
+            "r_0": {
+                "value": p.R_0.value,
+            },
+            "z_0": {
+                "value": 0.0,
+            },
+            "a": {
+                "value": p.R_0.value / p.A.value,
+            },
+            "kappa": {
+                "value": p.kappa_95.value,
+            },
+            "delta": {
+                "value": p.delta_95.value,
+            },
+        })
+
+    def run(self) -> tuple[BluemiraWire, Profile]:
         """
         Run the DummyFixedEquilibriumDesigner.
 
@@ -82,24 +114,8 @@ class DummyFixedEquilibriumDesigner(Designer[tuple[Coordinates, Profile]]):
         profiles:
             Equilibria profiles
         """
-        param_cls = self.build_config.get(
-            "param_class", "bluemira.equilibria.shapes::JohnerLCFS"
-        )
-        param_cls = get_class_from_module(param_cls)
-        shape_config = self.build_config.get("shape_config", {})
-        input_dict = handle_lcfs_shape_input(param_cls, self.params, shape_config)
-        lcfs_parameterisation = param_cls(input_dict)
-
-        default_settings = {
-            "n_points": 200,
-            "li_rel_tol": 0.01,
-            "li_min_iter": 2,
-        }
-        settings = self.build_config.get("settings", {})
-        settings = {**default_settings, **settings}
-        lcfs_coords = lcfs_parameterisation.create_shape().discretise(
-            byedges=True, ndiscr=settings["n_points"]
-        )
+        lcfs_parameterisation = self._create_lcfs_parameterisation()
+        lcfs_wire = lcfs_parameterisation.create_shape()
 
         profiles = BetaLiIpProfile(
             self.params.beta_p.value,
@@ -107,30 +123,35 @@ class DummyFixedEquilibriumDesigner(Designer[tuple[Coordinates, Profile]]):
             self.params.I_p.value,
             R_0=self.params.R_0.value,
             B_0=self.params.B_0.value,
-            li_rel_tol=settings["li_rel_tol"],
-            li_min_iter=settings["li_min_iter"],
+            li_rel_tol=self.build_config.get("li_rel_tol", 0.01),
+            li_min_iter=self.build_config.get("li_min_iter", 2),
         )
-        return lcfs_coords, profiles
+        return lcfs_wire, profiles
 
 
 @dataclass
 class ReferenceFreeBoundaryEquilibriumDesignerParams(ParameterFrame):
     """Parameters for running the fixed boundary equilibrium solver."""
 
-    A: Parameter[float]
+    R_0: Parameter[float]
     B_0: Parameter[float]
     I_p: Parameter[float]
-    kappa: Parameter[float]
-    R_0: Parameter[float]
-
-    # Updated parameters
-    delta_95: Parameter[float]
-    delta: Parameter[float]
-    kappa_95: Parameter[float]
-    q_95: Parameter[float]
-    beta_p: Parameter[float]
     l_i: Parameter[float]
+    beta_p: Parameter[float]
+    A: Parameter[float]
+    delta: Parameter[float]
+    delta_95: Parameter[float]
+    kappa: Parameter[float]
+    kappa_95: Parameter[float]
+
+    q_95: Parameter[float]
     shaf_shift: Parameter[float]
+
+    n_PF: Parameter[int]
+
+    # tf shape parameters
+    tf_tot_tk_z: Parameter[float]
+    tf_pf_gap: Parameter[float]
 
 
 class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
@@ -162,28 +183,200 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
         self,
         params: dict | ParameterFrame,
         build_config: dict | None = None,
-        lcfs_coords: Coordinates | None = None,
+        lcfs_wire: BluemiraWire | None = None,
         profiles: Profile | None = None,
+        tf_cl_wire: BluemiraWire | None = None,
     ):
         super().__init__(params, build_config)
         self.file_path: str = self.build_config.get("file_path", None)
-        self.lcfs_coords = lcfs_coords
+        self.lcfs_wire = lcfs_wire
         self.profiles = profiles
+        self.tf_cl_wire = tf_cl_wire
 
         if self.run_mode == "read" and self.file_path is None:
             raise ValueError(
                 f"Cannot execute {type(self).__name__} in 'read' mode: "
                 "'file_path' missing from build config."
             )
-        self.opt_problem = None
 
         if self.run_mode == "run" and (
-            (self.lcfs_coords is None) or (self.profiles is None)
+            (self.lcfs_wire is None) or (self.profiles is None)
         ):
             raise ValueError(
                 f"Cannot execute {type(self).__name__} in 'run' mode without "
                 "input LCFS shape or profiles."
             )
+
+    def _make_reference_coilset(self, lcfs_coords: Coordinates) -> CoilSet:
+        defaults = {
+            "coil_discretisation": 200,
+        }
+        coilset_config = {**defaults, **self.build_config.get("coilset", {})}
+
+        # total thickness of the TF coil face in the z direction
+        tf_tot_tk_z = self.params.tf_tot_tk_z.value
+        # gap between the TF coil face and the PF coils
+        tf_pf_gap = self.params.tf_pf_gap.value
+        # number of PF coils
+        n_PF = self.params.n_PF.value  # noqa: N806
+
+        if n_PF % 2 != 0:
+            raise ValueError(
+                "Number of PF coils must be even as the equblrium must be symmetric."
+            ) from None
+
+        pf_track = offset_wire(
+            self.tf_cl_wire,
+            tf_tot_tk_z + tf_pf_gap,
+        )
+
+        arg_z_max = np.argmax(lcfs_coords.z)
+
+        r_mid = 0.5 * (np.min(lcfs_coords.x) + np.max(lcfs_coords.x))
+
+        d_delta_u = lcfs_coords.x[arg_z_max] - r_mid
+        d_kappa_u = lcfs_coords.z[arg_z_max]
+
+        angle_upper = np.arctan2(d_kappa_u, d_delta_u)
+        angles = np.linspace(angle_upper, 0, n_PF // 2 + 1)
+        x_c, z_c = get_intersections_from_angles(pf_track, r_mid, 0.0, angles)
+
+        pf_coils = []
+        for i, (x, z) in enumerate(zip(x_c, z_c, strict=False)):
+            coil_u = Coil(
+                x,
+                z,
+                current=0,
+                ctype="PF",
+                name=f"PF_u{i + 1}",
+                j_max=100.0e6,
+            )
+            coil_l = Coil(
+                x,
+                -z,
+                current=0,
+                ctype="PF",
+                name=f"PF_l{i + 1}",
+                j_max=100.0e6,
+            )
+            coil = SymmetricCircuit(coil_u, coil_l)
+            coil.discretisation = coilset_config["coil_discretisation"]
+            pf_coils.append(coil)
+        return CoilSet(*pf_coils)
+
+    def _make_grid(self) -> Grid:
+        """
+        Make a finite difference Grid for an Equilibrium.
+
+        Returns
+        -------
+        :
+            Finite difference grid for an Equilibrium
+        """
+        defaults = {
+            "grid_scale_x": 2.0,
+            "grid_scale_z": 2.0,
+            "nx": 65,
+            "nz": 65,
+        }
+        grid_settings = {**defaults, **self.build_config.get("grid", {})}
+
+        # major radius
+        R_0 = self.params.R_0.value  # noqa: N806
+        # aspect ratio
+        A = self.params.A.value  # noqa: N806
+        # elongation
+        kappa = self.params.kappa.value
+
+        scale_x = grid_settings["grid_scale_x"]
+        scale_z = grid_settings["grid_scale_z"]
+        nx = grid_settings["nx"]
+        nz = grid_settings["nz"]
+
+        x_min, x_max = R_0 - scale_x * (R_0 / A), R_0 + scale_x * (R_0 / A)
+        z_min, z_max = -scale_z * (kappa * R_0 / A), scale_z * (kappa * R_0 / A)
+
+        return Grid(x_min, x_max, z_min, z_max, nx, nz)
+
+    def _make_grid_coilset(self, coilset: CoilSet) -> Grid:
+        """
+        Make a finite difference Grid for an Equilibrium based on the positions
+        of coils in the coilset.
+
+        Returns
+        -------
+        :
+            Finite difference grid for an Equilibrium
+        """
+        defaults = {
+            "nx": 100,
+            "nz": 100,
+        }
+        grid_settings = {**defaults, **self.build_config.get("grid", {})}
+
+        x_coil_max = max(coilset.x + coilset.dx) * 1.1  # % 10% extra space
+        z_coil_max = max(coilset.z + coilset.dz) * 1.1
+
+        return Grid(
+            x_min=0.0,
+            x_max=x_coil_max,
+            z_min=-z_coil_max,
+            z_max=z_coil_max,
+            nx=grid_settings["nx"],
+            nz=grid_settings["nz"],
+        )
+
+    def _make_fix_to_free_opt_problem(
+        self, eq: Equilibrium, lcfs_coords: Coordinates
+    ) -> UnconstrainedTikhonovCurrentGradientCOP:
+        """
+        Create the optimisation problem for the equilibrium.
+
+        Returns
+        -------
+        :
+            The optimisation problem
+        """
+        defaults = {
+            "gamma": 1e-8,
+        }
+        opt_problem_config = {**defaults, **self.build_config.get("optimisation", {})}
+
+        constraint_config = opt_problem_config.get("constraint", {})
+
+        eq_targets = build_reference_constraint_set(constraint_config, lcfs_coords)
+        return UnconstrainedTikhonovCurrentGradientCOP(
+            eq.coilset, eq, eq_targets, gamma=opt_problem_config["gamma"]
+        )
+
+    def _make_iterative_solver(
+        self, eq: Equilibrium, opt_problem: CoilsetOptimisationProblem
+    ) -> PicardIterator:
+        """
+        Create the iterative solver for the equilibrium.
+
+        Returns
+        -------
+        :
+            The iterative solver
+        """
+        defaults = {
+            "plot": False,
+            "iter_err_max": 1e-6,
+            "max_iter": 100,
+            "relaxation": 0.02,
+        }
+        solver_config: dict = {**defaults, **self.build_config.get("solver", {})}
+
+        return PicardIterator(
+            eq,
+            opt_problem,
+            fixed_coils=True,
+            convergence=DudsonConvergence(solver_config["iter_err_max"]),
+            plot=solver_config["plot"],
+            maxiter=solver_config["max_iter"],
+            relaxation=solver_config["relaxation"],
+        )
 
     def run(self) -> Equilibrium:
         """
@@ -194,61 +387,27 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
         :
             The optimised equilibrium
         """
-        if (save := self.build_config.get("save", False)) and self.file_path is None:
-            raise ValueError(
-                "Cannot execute save equilibrium: 'file_path' missing from build config."
-            )
+        # 200 is arb and sufficent
+        lcfs_discr_coords = self.lcfs_wire.discretise(byedges=True, ndiscr=200)
 
-        lcfs_shape = make_polygon(self.lcfs_coords, closed=True)
+        ref_coilset = self._make_reference_coilset(lcfs_discr_coords)
+        eq_grid = self._make_grid()
 
-        defaults = {
-            "relaxation": 0.02,
-            "coil_discretisation": 0.3,
-            "gamma": 1e-8,
-            "iter_err_max": 1e-2,
-            "max_iter": 30,
-        }
-        settings = self.build_config.get("settings", {})
-        settings = {**defaults, **settings}
+        eq = Equilibrium(ref_coilset, grid=eq_grid, profiles=self.profiles)
 
-        eq = make_reference_equilibrium(
-            ReferenceEquilibriumParams.from_frame(self.params),
-            tf_coil_boundary,
-            lcfs_shape,
-            self.profiles,
-            self.build_config.get("grid_settings", {}),
-        )
-        # TODO: Check coil discretisation is sensible when size not set...
-        discretisation = settings.pop("coil_discretisation")
-        # eq.coilset.discretisation = settings.pop("coil_discretisation")
-        eq.coilset.get_coiltype("CS").discretisation = discretisation
-
-        self.opt_problem = self._make_fbe_opt_problem(
-            eq, lcfs_shape, len(self.lcfs_coords.x), settings.pop("gamma")
-        )
-
-        iter_err_max = settings.pop("iter_err_max")
-        max_iter = settings.pop("max_iter")
-        settings["maxiter"] = max_iter  # TODO: Standardise name in PicardIterator
-        iterator_program = PicardIterator(
-            eq,
-            self.opt_problem,
-            convergence=DudsonConvergence(iter_err_max),
-            plot=self.build_config.get("plot", False),
-            fixed_coils=True,
-            **settings,
-        )
-        self._result = iterator_program()
+        fbe_opt_problem = self._make_fix_to_free_opt_problem(eq, lcfs_discr_coords)
+        iterator_program = self._make_iterative_solver(eq, fbe_opt_problem)
+        result = iterator_program()
 
         if self.build_config.get("plot", False):
             _, ax = plt.subplots()
             eq.plot(ax=ax)
             eq.coilset.plot(ax=ax, label=True)
-            ax.plot(self.lcfs_coords.x, self.lcfs_coords.z, "", marker="o")
-            self.opt_problem.targets.plot(ax=ax)
+            ax.plot(lcfs_discr_coords.x, lcfs_discr_coords.z, color="black")
+            fbe_opt_problem.targets.plot(ax=ax)
             plt.show()
 
-        if save:
+        if self.build_config.get("save", False):
             eq.to_eqdsk(self.file_path, directory=str(Path().cwd()))
 
         self._update_params_from_eq(eq)
@@ -266,54 +425,6 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
         eq = Equilibrium.from_eqdsk(self.file_path, qpsi_positive=False, from_cocos=3)
         self._update_params_from_eq(eq)
         return eq
-
-    def _make_tf_boundary(
-        self,
-        lcfs_shape: BluemiraWire,
-    ) -> BluemiraWire:
-        coords = lcfs_shape.discretise(byedges=True, ndiscr=200)
-        xu_arg = np.argmax(coords.z)
-        xl_arg = np.argmin(coords.z)
-        xz_min, z_min = coords.x[xl_arg], coords.z[xl_arg]
-        xz_max, z_max = coords.x[xu_arg], coords.z[xu_arg]
-        x_circ = min(xz_min, xz_max)
-        z_circ = z_max - abs(z_min)
-        r_circ = 0.5 * (z_max + abs(z_min))
-
-        offset_value = self.params.tk_bb_ob.value + self.params.tk_vv_out.value + 2.5
-        semi_circle = make_circle(
-            r_circ + offset_value,
-            center=(x_circ, 0, z_circ),
-            start_angle=-90,
-            end_angle=90,
-            axis=(0, 1, 0),
-        )
-
-        xs, zs = semi_circle.start_point().xz.T[0]
-        xe, ze = semi_circle.end_point().xz.T[0]
-        r_cs_out = self.params.r_cs_in.value + self.params.tk_cs.value
-
-        lower_wire = make_polygon({"x": [r_cs_out, xs], "y": [0, 0], "z": [zs, zs]})
-        upper_wire = make_polygon({"x": [xe, r_cs_out], "y": [0, 0], "z": [ze, ze]})
-
-        return BluemiraWire([lower_wire, semi_circle, upper_wire])
-
-    @staticmethod
-    def _make_fbe_opt_problem(
-        eq: Equilibrium, lcfs_shape: BluemiraWire, n_points: int, gamma: float
-    ) -> UnconstrainedTikhonovCurrentGradientCOP:
-        """
-        Create the `UnconstrainedTikhonovCurrentGradientCOP` optimisation problem.
-
-        Returns
-        -------
-        :
-            Optimisation problem
-        """
-        eq_targets = ReferenceConstraints(lcfs_shape, n_points)
-        return UnconstrainedTikhonovCurrentGradientCOP(
-            eq.coilset, eq, eq_targets, gamma=gamma
-        )
 
     def _update_params_from_eq(self, eq: Equilibrium):
         self.params.update_values(plasma_data(eq), source=type(self).__name__)

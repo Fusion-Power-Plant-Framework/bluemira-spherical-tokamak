@@ -1,22 +1,132 @@
-# SPDX-FileCopyrightText: 2021-present M. Coleman, J. Cook, F. Franza
-# SPDX-FileCopyrightText: 2021-present I.A. Maione, S. McIntosh
-# SPDX-FileCopyrightText: 2021-present J. Morris, D. Short
-#
-# SPDX-License-Identifier: LGPL-2.1-or-later
-from dataclasses import dataclass
+from __future__ import annotations
+
+from enum import Enum, auto
+from typing import TYPE_CHECKING
+
+from bluemira.equilibria import Equilibrium
+from bluemira.geometry.constants import VERY_BIG
+from bluemira.geometry.face import BluemiraFace
+from bluemira.geometry.tools import (
+    boolean_cut,
+    distance_to,
+    make_polygon,
+    offset_wire,
+    split_wire,
+)
+
+from bluemira_st.optimisation.magnectic_constrains import make_auto_lcfs_constraint
+
+if TYPE_CHECKING:
+    from bluemira.base.parameter_frame import ParameterFrame
+    from bluemira.equilibria.optimisation.constraints import MagneticConstraint
+    from bluemira.geometry.parameterisations import GeometryParameterisation
+    from bluemira.geometry.wire import BluemiraWire
 
 import numpy as np
-from bluemira.base.parameter_frame import Parameter, ParameterFrame
-from bluemira.equilibria import Equilibrium
-from bluemira.equilibria.profiles import BetaIpProfile, Profile
-from bluemira.geometry.wire import BluemiraWire
-from eudemo.equilibria.tools import make_grid
-from eudemo.pf_coils.tools import make_coilset, make_reference_coilset
+from bluemira.base.look_and_feel import bluemira_warn
+from bluemira.equilibria.grid import Grid
+from bluemira.equilibria.optimisation.constraints import (
+    FieldNullConstraint,
+    IsofluxConstraint,
+    MagneticConstraintSet,
+    PsiBoundaryConstraint,
+)
+from bluemira.equilibria.shapes import flux_surface_johner
+from bluemira.geometry.coordinates import Coordinates, interpolate_points
 
-KAPPA_95_TO_100 = 1.12
+
+def build_reference_constraint_set(
+    constraint_config: dict, lcfs_coords: Coordinates
+) -> MagneticConstraintSet:
+    """
+    Build a set of reference constraints for the equilibrium.
+
+    Parameters
+    ----------
+    constraint_config:
+        Configuration for the constraints
+    lcfs_coords:
+        Coordinates of the LCFS (discretised)
+
+    Returns
+    -------
+    ReferenceConstraints:
+        Set of reference constraints for the equilibrium
+    """
+    z_min = np.min(lcfs_coords.z)
+    z_max = np.max(lcfs_coords.z)
+    arg_z_min = np.argmin(lcfs_coords.z)
+    arg_z_max = np.argmax(lcfs_coords.z)
+
+    constraints: list[MagneticConstraint]
+
+    if np.isclose(abs(z_min), z_max):
+        # Double null
+        constraints = [
+            FieldNullConstraint(lcfs_coords.x[arg_z_min], lcfs_coords.z[arg_z_min]),
+            FieldNullConstraint(lcfs_coords.x[arg_z_max], lcfs_coords.z[arg_z_max]),
+        ]
+    else:
+        # Single null
+        constraints = [
+            FieldNullConstraint(lcfs_coords.x[arg_z_min], lcfs_coords.z[arg_z_min])
+            if abs(z_min) > z_max
+            else FieldNullConstraint(lcfs_coords.x[arg_z_max], lcfs_coords.z[arg_z_max]),
+        ]
+
+    lcfs_iso_flux_const = make_auto_lcfs_constraint(
+        constraint_config, x_lcfs=lcfs_coords.x, z_lcfs=lcfs_coords.z
+    )
+    constraints.append(lcfs_iso_flux_const)
+
+    return MagneticConstraintSet(constraints)
 
 
-def plasma_data(eq):
+def get_intersections_from_angles(
+    boundary: BluemiraWire, ref_x: float, ref_z: float, angles: np.ndarray
+) -> tuple[np.ndarray, np.ndarray]:
+    """
+    Get the intersections of a boundary with lines defined by angles.
+
+    Parameters
+    ----------
+    boundary:
+        Boundary to intersect with
+
+    ref_x:
+        Reference x coordinate
+    ref_z:
+        Reference z coordinate
+    angles:
+        Angles to use to define the lines
+
+    Returns
+    -------
+    :
+        Intersections of the boundary with the lines defined by the angles
+    """
+    n_angles = len(angles)
+    x_c, z_c = np.zeros(n_angles), np.zeros(n_angles)
+    for i, angle in enumerate(angles):
+        line = make_polygon([
+            [ref_x, ref_x + VERY_BIG * np.cos(angle)],
+            [0, 0],
+            [ref_z, ref_z + VERY_BIG * np.sin(angle)],
+        ])
+        _, intersection = distance_to(boundary, line)
+        x_c[i], _, z_c[i] = intersection[0][0]
+    return x_c, z_c
+
+
+def plasma_data(eq: Equilibrium) -> dict[str, float]:
+    """
+    Extract and return plasma data from an equilibrium object.
+
+    Returns
+    -------
+    :
+        Plasma data extracted from the equilibrium object
+    """
     p_dat = eq.analyse_plasma()
     return {
         "beta_p": p_dat.beta_p,
@@ -29,137 +139,3 @@ def plasma_data(eq):
         "q_95": p_dat.q_95,
         "shaf_shift": np.hypot(p_dat.dx_shaf, p_dat.dz_shaf),
     }
-
-
-@dataclass
-class EquilibriumParams(ParameterFrame):
-    """Parameters required to make a new equilibrium."""
-
-    A: Parameter[float]
-    B_0: Parameter[float]
-    beta_p: Parameter[float]
-    CS_bmax: Parameter[float]
-    CS_jmax: Parameter[float]
-    delta_95: Parameter[float]
-    g_cs_mod: Parameter[float]
-    I_p: Parameter[float]
-    kappa_95: Parameter[float]
-    n_CS: Parameter[int]
-    n_PF: Parameter[int]
-    PF_bmax: Parameter[float]
-    PF_jmax: Parameter[float]
-    R_0: Parameter[float]
-    r_cs_in: Parameter[float]
-    tk_cs_casing: Parameter[float]
-    tk_cs_insulation: Parameter[float]
-    tk_cs: Parameter[float]
-
-
-def make_equilibrium(
-    _params: EquilibriumParams | dict,
-    tf_coil_boundary: BluemiraWire,
-    grid_settings: dict,
-) -> Equilibrium:
-    """
-    Build an equilibrium using a coilset and a `BetaIpProfile` profile.
-
-    Returns
-    -------
-    :
-        The equilibrium
-    """
-    if isinstance(_params, dict):
-        params = EquilibriumParams.from_dict(_params)
-    else:
-        params = _params
-
-    kappa = KAPPA_95_TO_100 * params.kappa_95.value
-    coilset = make_coilset(
-        tf_coil_boundary,
-        R_0=params.R_0.value,
-        kappa=kappa,
-        delta=params.delta_95.value,
-        r_cs=params.r_cs_in.value + params.tk_cs.value / 2,
-        tk_cs=params.tk_cs.value / 2,
-        g_cs=params.g_cs_mod.value,
-        tk_cs_ins=params.tk_cs_insulation.value,
-        tk_cs_cas=params.tk_cs_casing.value,
-        n_CS=params.n_CS.value,
-        n_PF=params.n_PF.value,
-        CS_jmax=params.CS_jmax.value,
-        CS_bmax=params.CS_bmax.value,
-        PF_jmax=params.PF_jmax.value,
-        PF_bmax=params.PF_bmax.value,
-    )
-    profiles = BetaIpProfile(
-        params.beta_p.value,
-        params.I_p.value,
-        params.R_0.value,
-        params.B_0.value,
-    )
-    grid = make_grid(params.R_0.value, params.A.value, kappa, grid_settings)
-
-    return Equilibrium(coilset, grid, profiles)
-
-
-@dataclass
-class ReferenceEquilibriumParams(ParameterFrame):
-    """Parameters required to make a new reference equilibrium."""
-
-    A: Parameter[float]
-    B_0: Parameter[float]
-    I_p: Parameter[float]
-    kappa: Parameter[float]
-    R_0: Parameter[float]
-    r_cs_in: Parameter[float]
-    g_cs_mod: Parameter[float]
-    tk_cs_casing: Parameter[float]
-    tk_cs_insulation: Parameter[float]
-    tk_cs: Parameter[float]
-    beta_p: Parameter[float]
-    l_i: Parameter[float]
-    n_CS: Parameter[int]
-    n_PF: Parameter[int]
-
-
-def make_reference_equilibrium(
-    _params: ReferenceEquilibriumParams | dict,
-    tf_track: BluemiraWire,
-    lcfs_shape: BluemiraWire,
-    profiles: Profile,
-    grid_settings: dict,
-) -> Equilibrium:
-    """
-    Make a crude reference equilibrium, scaling coils and grid for a first pass
-    solve.
-
-    Returns
-    -------
-    :
-        The equilibrium
-    """
-    if isinstance(_params, dict):
-        params = ReferenceEquilibriumParams.from_dict(_params)
-    else:
-        params = _params
-
-    coilset = make_reference_coilset(
-        tf_track,
-        lcfs_shape,
-        r_cs=params.r_cs_in.value + 0.5 * params.tk_cs.value,
-        tk_cs=0.5 * params.tk_cs.value,
-        g_cs_mod=params.g_cs_mod.value,
-        tk_cs_casing=params.tk_cs_casing.value,
-        tk_cs_insulation=params.tk_cs_insulation.value,
-        n_CS=params.n_CS.value,
-        n_PF=params.n_PF.value,
-    )
-
-    grid = make_grid(
-        params.R_0.value,
-        params.A.value,
-        params.kappa.value,
-        grid_settings,
-    )
-
-    return Equilibrium(coilset, grid, profiles)

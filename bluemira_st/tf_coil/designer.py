@@ -3,13 +3,18 @@
 # SPDX-License-Identifier: MIT
 """TF Coil Designer."""
 
+from dataclasses import dataclass
+
 import numpy as np
 from bluemira.base.designer import Designer
+from bluemira.base.parameter_frame import Parameter, ParameterFrame
 from bluemira.base.reactor_config import ConfigParams
+from bluemira.geometry.coordinates import Coordinates
 from bluemira.geometry.optimisation import optimise_geometry
-from bluemira.geometry.parameterisations import GeometryParameterisation
+from bluemira.geometry.parameterisations import GeometryParameterisation, PrincetonD
 from bluemira.geometry.tools import (
     distance_to,
+    make_polygon,
 )
 from bluemira.geometry.wire import BluemiraWire
 from bluemira.utilities.tools import get_class_from_module
@@ -26,6 +31,79 @@ from bluemira.utilities.tools import get_class_from_module
 # [geometry tutorial](../geometry/geometry_tutorial.ex.py) and
 # [geometry optimisation tutorial](../optimisation/geometry_optimisation.ex.py).
 #
+
+
+@dataclass
+class TFInitialShapeDesignerParams(ParameterFrame):
+    """
+    Parameter frame for the initial TF center-line designer.
+    """
+
+    tf_cl_ib_x: Parameter[float]
+    tf_cl_ob_x: Parameter[float]
+    tf_tot_tk_y: Parameter[float]
+    tf_tot_tk_z: Parameter[float]
+
+
+class TFInitialShapeDesigner(Designer[tuple[PrincetonD, BluemiraWire]]):
+    """
+    Designer to create the initial TF coil centreline.
+
+    Parameters
+    ----------
+    params:
+        The parameters for the designer
+    build_config:
+        The config for the designer
+    """
+
+    params: TFInitialShapeDesignerParams
+    param_cls: type[TFInitialShapeDesignerParams] = TFInitialShapeDesignerParams
+
+    def __init__(
+        self,
+        params,
+        build_config,
+        lcfs_boundary: BluemiraWire,
+    ):
+        super().__init__(params, build_config)
+        self.lcfs_boundary = lcfs_boundary
+
+    def run(self) -> tuple[PrincetonD, BluemiraWire]:
+        """
+        Run the InitialTFCentrelineDesigner.
+
+        Returns
+        -------
+        :
+            The initial TF coil centreline
+        """
+        lcfs_coords = self.lcfs_boundary.discretise(byedges=True, ndiscr=200)
+        lcfs_z_max = np.min(lcfs_coords.z)
+        lcfs_z_min = np.max(lcfs_coords.z)
+        cl_ib_x = self.params.tf_cl_ib_x.value
+        cl_ob_x = self.params.tf_cl_ob_x.value
+        prin_d = PrincetonD({
+            "x1": {"value": cl_ib_x, "fixed": True},
+            "dz": {"value": (lcfs_z_max + lcfs_z_min) / 2, "fixed": True},
+            "x2": {
+                "value": cl_ob_x,
+                "lower_bound": cl_ob_x * 0.9,
+                "upper_bound": cl_ob_x * 1.1,
+            },
+        })
+
+        z_top = self.params.tf_tot_tk_z.value / 2
+        y_right = self.params.tf_tot_tk_y.value / 2
+        tf_face = make_polygon(
+            {
+                "x": 0,
+                "y": [y_right, y_right, -y_right, -y_right],
+                "z": [z_top, -z_top, -z_top, z_top],
+            },
+            closed=True,
+        )
+        return prin_d, tf_face
 
 
 class TFCoilDesigner(Designer[GeometryParameterisation]):

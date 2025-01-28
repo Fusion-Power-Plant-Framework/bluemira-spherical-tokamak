@@ -16,6 +16,8 @@ class BluemiraSTParams(ParameterFrame):
     """All parameters for the Bluemira ST reactor."""
 
     n_TF: Parameter[int]
+    n_PF: Parameter[int]
+
     R_0: Parameter[float]
 
     # plasma parameters
@@ -30,3 +32,10 @@ class BluemiraSTParams(ParameterFrame):
     kappa_95: Parameter[float]
     q_95: Parameter[float]
     shaf_shift: Parameter[float]
+
+    # tf shape parameters
+    tf_cl_ib_x: Parameter[float]
+    tf_cl_ob_x: Parameter[float]
+    tf_tot_tk_y: Parameter[float]
+    tf_tot_tk_z: Parameter[float]
+    tf_pf_gap: Parameter[float]

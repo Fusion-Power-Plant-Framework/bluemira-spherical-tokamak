@@ -7,8 +7,24 @@
     "run_dir": "$path_expand:../data/PROCESS/run_dir",
     "plot": false
   },
-  "equilibria": {
-    "grid": {}
+  "reference_fbe": {
+    "plot": true,
+    "coilset": {
+      "coil_discretisation": 10
+    },
+    "grid": {
+      "nx": 65,
+      "nz": 65
+    },
+    "solver": {
+      "plot": true
+    },
+    "optimisation": {
+      "gamma": 1e-8,
+      "constraint": {
+        "n_points": 30
+      }
+    }
   },
   "plasma": {},
   "tf_coils": {

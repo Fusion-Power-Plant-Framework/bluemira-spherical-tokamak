@@ -14,12 +14,16 @@ from bluemira.base.reactor import Reactor
 from bluemira.base.reactor_config import ReactorConfig
 from bluemira.builders.plasma import Plasma
 
-from bluemira_st.build_routines import build_plasma, build_reference_equilibrium
+from bluemira_st.build_routines import (
+    build_initial_tf_shapes,
+    build_plasma,
+    build_reference_equilibrium,
+)
 from bluemira_st.equlibria.designer import DummyFixedEquilibriumDesigner
 from bluemira_st.params import BluemiraSTParams
 from bluemira_st.radial_build.run_process import radial_build
 from bluemira_st.tf_coil.builder import TFCoilBuilder
-from bluemira_st.tf_coil.designer import TFCoilDesigner
+from bluemira_st.tf_coil.designer import TFCoilDesigner, TFInitialShapeDesigner
 from bluemira_st.tf_coil.manager import TFCoil
 
 # %% [markdown]
@@ -58,19 +62,26 @@ def main(build_config: Union[str, Path, dict]) -> MyReactor:  # noqa: FA100
         reactor_config.config_for("radial_build"),
     )
 
-    lcfs_coords, profiles = run_designer(
+    lcfs_wire, profiles = run_designer(
         DummyFixedEquilibriumDesigner,
-        reactor_config.params_for("Dummy fixed boundary equilibrium"),
-        reactor_config.config_for("Dummy fixed boundary equilibrium"),
+        reactor_config.params_for("dummy_fixed_boundary"),
+        reactor_config.config_for("dummy_fixed_boundary"),
+    )
+
+    tf_inital_cl, tf_face = build_initial_tf_shapes(
+        reactor_config.params_for("TFInitialShape"),
+        reactor_config.config_for("TFInitialShape"),
+        lcfs_wire,
     )
 
     # reactor.equilibria = EquilibriumManager()
 
-    reference_eq = build_reference_equilibrium(
-        reactor_config.params_for("Free boundary equilibrium"),
-        reactor_config.config_for("Free boundary equilibrium"),
-        lcfs_coords,
+    ref_fbe = build_reference_equilibrium(
+        reactor_config.params_for("reference_fbe"),
+        reactor_config.config_for("reference_fbe"),
+        lcfs_wire,
         profiles,
+        tf_inital_cl,
     )
 
     reactor = MyReactor(
@@ -81,7 +92,7 @@ def main(build_config: Union[str, Path, dict]) -> MyReactor:  # noqa: FA100
     reactor.plasma = build_plasma(
         reactor_config.params_for("Plasma"),
         reactor_config.config_for("Plasma"),
-        reference_eq,
+        ref_fbe,
     )
     # %% [markdown]
     #

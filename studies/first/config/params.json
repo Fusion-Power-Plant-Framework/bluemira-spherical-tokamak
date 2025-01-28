@@ -1,4 +1,10 @@
 {
+  "n_PF": {
+    "value": 8,
+    "unit": "dimensionless",
+    "source": "Input",
+    "long_name": "Number of PF coils"
+  },
   "n_TF": {
     "value": 0,
     "unit": "dimensionless",
@@ -76,5 +82,35 @@
     "unit": "meter",
     "source": "equilibria",
     "long_name": "Shafranov shift of plasma (geometric=>magnetic)"
+  },
+  "tf_cl_ib_x": {
+    "value": 0,
+    "unit": "meter",
+    "source": "PROCESS",
+    "long_name": "TF coil center line inboard x-coordinate"
+  },
+  "tf_cl_ob_x": {
+    "value": 0,
+    "unit": "meter",
+    "source": "PROCESS",
+    "long_name": "TF coil center line outboard x-coordinate"
+  },
+  "tf_tot_tk_y": {
+    "value": 0,
+    "unit": "meter",
+    "source": "PROCESS",
+    "long_name": "Total TF coil thickness in y-direction"
+  },
+  "tf_tot_tk_z": {
+    "value": 0,
+    "unit": "meter",
+    "source": "PROCESS",
+    "long_name": "Total TF coil thickness in z-direction"
+  },
+  "tf_pf_gap": {
+    "value": 0.5,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "TF coil to PF coils gap"
   }
 }
