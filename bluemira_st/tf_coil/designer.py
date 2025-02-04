@@ -8,29 +8,10 @@ from dataclasses import dataclass
 import numpy as np
 from bluemira.base.designer import Designer
 from bluemira.base.parameter_frame import Parameter, ParameterFrame
-from bluemira.base.reactor_config import ConfigParams
-from bluemira.geometry.coordinates import Coordinates
-from bluemira.geometry.optimisation import optimise_geometry
+from bluemira.builders.tf_coils import EquispacedSelector, RippleConstrainedLengthGOP
 from bluemira.geometry.parameterisations import GeometryParameterisation, PrincetonD
-from bluemira.geometry.tools import (
-    distance_to,
-    make_polygon,
-)
+from bluemira.geometry.tools import make_polygon
 from bluemira.geometry.wire import BluemiraWire
-from bluemira.utilities.tools import get_class_from_module
-
-# And now the TF Coil, in this instance for simplicity we are only making
-# one TF coil.
-#
-# The TF coil designer finds the geometry parameterisation given in
-# the `build_config` which should point to a class.
-# The parameterisation is then fed into the optimiser that
-# minimises the size of the TF coil, whilst keeping at least a meter away
-# from the plasma at any point.
-# Further information on geometry and geometry optimisations can be found in the
-# [geometry tutorial](../geometry/geometry_tutorial.ex.py) and
-# [geometry optimisation tutorial](../optimisation/geometry_optimisation.ex.py).
-#
 
 
 @dataclass
@@ -41,11 +22,9 @@ class TFInitialShapeDesignerParams(ParameterFrame):
 
     tf_cl_ib_x: Parameter[float]
     tf_cl_ob_x: Parameter[float]
-    tf_tot_tk_y: Parameter[float]
-    tf_tot_tk_z: Parameter[float]
 
 
-class TFInitialShapeDesigner(Designer[tuple[PrincetonD, BluemiraWire]]):
+class TFInitialShapeDesigner(Designer[PrincetonD]):
     """
     Designer to create the initial TF coil centreline.
 
@@ -69,7 +48,7 @@ class TFInitialShapeDesigner(Designer[tuple[PrincetonD, BluemiraWire]]):
         super().__init__(params, build_config)
         self.lcfs_boundary = lcfs_boundary
 
-    def run(self) -> tuple[PrincetonD, BluemiraWire]:
+    def run(self) -> PrincetonD:
         """
         Run the InitialTFCentrelineDesigner.
 
@@ -83,7 +62,7 @@ class TFInitialShapeDesigner(Designer[tuple[PrincetonD, BluemiraWire]]):
         lcfs_z_min = np.max(lcfs_coords.z)
         cl_ib_x = self.params.tf_cl_ib_x.value
         cl_ob_x = self.params.tf_cl_ob_x.value
-        prin_d = PrincetonD({
+        return PrincetonD({
             "x1": {"value": cl_ib_x, "fixed": True},
             "dz": {"value": (lcfs_z_max + lcfs_z_min) / 2, "fixed": True},
             "x2": {
@@ -93,75 +72,75 @@ class TFInitialShapeDesigner(Designer[tuple[PrincetonD, BluemiraWire]]):
             },
         })
 
-        z_top = self.params.tf_tot_tk_z.value / 2
-        y_right = self.params.tf_tot_tk_y.value / 2
-        tf_face = make_polygon(
-            {
-                "x": 0,
-                "y": [y_right, y_right, -y_right, -y_right],
-                "z": [z_top, -z_top, -z_top, z_top],
-            },
-            closed=True,
-        )
-        return prin_d, tf_face
+
+@dataclass
+class TFCoilDesignerParams(ParameterFrame):
+    """Parameters for building a TF coil."""
+
+    # RippleConstrainedLengthGOPParams
+    n_TF: Parameter[int]
+    R_0: Parameter[float]
+    z_0: Parameter[float]
+    B_0: Parameter[float]
+    TF_ripple_limit: Parameter[float]
+
+    # WP
+    tf_wp_width: Parameter[float]
+    tf_wp_depth: Parameter[float]
 
 
-class TFCoilDesigner(Designer[GeometryParameterisation]):
+class TFCoilDesigner(Designer[tuple[GeometryParameterisation, BluemiraWire]]):
     """TF coil shape designer."""
 
-    param_cls = None  # This designer takes no parameters
+    params = TFCoilDesignerParams
+    param_cls: type[TFCoilDesignerParams] = TFCoilDesignerParams
 
     def __init__(
         self,
-        plasma_lcfs: BluemiraWire,
-        params: None,
-        build_config: ConfigParams,
+        params: dict | ParameterFrame,
+        build_config: dict,
+        initial_tf_cl: GeometryParameterisation,
+        lcfs_wire: BluemiraWire,
     ):
         super().__init__(params, build_config)
-        self.lcfs = plasma_lcfs
-        self.parameterisation_cls = get_class_from_module(
-            self.build_config["param_class"],
-            default_module="bluemira.geometry.parameterisations",
+        self.initial_tf_cl = initial_tf_cl
+        self.lcfs_wire = lcfs_wire
+
+    def _build_wp_xz(self) -> BluemiraWire:
+        width = self.params.tf_wp_width.value / 2
+        depth = self.params.tf_wp_depth.value / 2
+        return make_polygon(
+            {
+                "x": [-width, width, width, -width],
+                "y": [-depth, -depth, depth, depth],
+                "z": 0.0,
+            },
+            closed=True,
         )
 
-    def run(self) -> GeometryParameterisation:
+    def _build_gop(self, wp_xs: BluemiraWire) -> RippleConstrainedLengthGOP:
+        defaults = {"max_eval": 100, "ftol_rel": 1e-6, "n_ripple_pts": 10}
+        opt_config = {**defaults, **self.build_config.get("optimisation", {})}
+        ripple_selector_pts = opt_config.pop("n_ripple_pts")
+        return RippleConstrainedLengthGOP(
+            self.initial_tf_cl,
+            "SLSQP",
+            opt_conditions=opt_config,
+            opt_parameters={},
+            params=self.params,
+            wp_cross_section=wp_xs,
+            ripple_wire=self.lcfs_wire,
+            ripple_selector=EquispacedSelector(ripple_selector_pts),
+        )
+
+    def run(self) -> tuple[GeometryParameterisation, BluemiraWire]:
         """Run the design of the TF coil."""
-        parameterisation = self.parameterisation_cls(
-            var_dict=self.build_config["var_dict"],
-        )
-        min_dist_to_plasma = 1  # meter
-        return self.minimise_tf_coil_size(parameterisation, min_dist_to_plasma)
 
-    def minimise_tf_coil_size(
-        self,
-        geom: GeometryParameterisation,
-        min_dist_to_plasma: float,
-    ) -> GeometryParameterisation:
-        """Run an optimisation to minimise the size of the TF coil.
+        wp_xs = self._build_wp_xz()
+        gop = self._build_gop(wp_xs)
+        result = gop.optimise()
 
-        We're minimising the size of the coil whilst always keeping a
-        minimum distance to the plasma.
-        """
-        distance_constraint = {
-            "f_constraint": lambda g: self._constrain_distance(
-                g,
-                min_dist_to_plasma,
-            ),
-            "tolerance": np.array([1e-6]),
-        }
-        optimisation_result = optimise_geometry(
-            geom=geom,
-            f_objective=lambda g: g.create_shape().length,
-            opt_conditions={"max_eval": 500, "ftol_rel": 1e-6},
-            ineq_constraints=[distance_constraint],
-        )
-        return optimisation_result.geom
+        if self.build_config.get("plot"):
+            gop.plot()
 
-    def _constrain_distance(
-        self,
-        geom: BluemiraWire,
-        min_distance: float,
-    ) -> np.ndarray:
-        return np.array(
-            min_distance - distance_to(geom.create_shape(), self.lcfs)[0],
-        )
+        return result, wp_xs

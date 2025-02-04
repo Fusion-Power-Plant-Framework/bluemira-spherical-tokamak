@@ -8,21 +8,23 @@
     "plot": false
   },
   "reference_fbe": {
+    "plot_setup": true,
     "plot": true,
     "coilset": {
       "coil_discretisation": 10
     },
     "grid": {
-      "nx": 65,
-      "nz": 65
+      "nx": 100,
+      "nz": 100
     },
     "solver": {
-      "plot": true
+      "plot": false,
+      "iter_err_max": 1e-2
     },
     "optimisation": {
       "gamma": 1e-8,
       "constraint": {
-        "n_points": 30
+        "n_points": 5
       }
     }
   },

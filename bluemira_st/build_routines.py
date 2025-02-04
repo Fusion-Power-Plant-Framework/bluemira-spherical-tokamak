@@ -8,7 +8,9 @@ from bluemira.geometry.tools import distance_to, interpolate_bspline, offset_wir
 from bluemira.geometry.wire import BluemiraWire
 
 from bluemira_st.equlibria.designer import ReferenceFreeBoundaryEquilibriumDesigner
-from bluemira_st.tf_coil.designer import TFInitialShapeDesigner
+from bluemira_st.tf_coil.builder import TFCoilBuilder
+from bluemira_st.tf_coil.designer import TFCoilDesigner, TFInitialShapeDesigner
+from bluemira_st.tf_coil.manager import TFCoil
 
 
 def build_reference_equilibrium(
@@ -38,7 +40,9 @@ def build_reference_equilibrium(
     return designer.execute()
 
 
-def build_plasma(params, build_config: dict, eq: Equilibrium) -> Plasma:
+def build_plasma(
+    params: dict | ParameterFrame, build_config: dict, eq: Equilibrium
+) -> Plasma:
     """Build EUDEMO plasma from an equilibrium.
 
     Returns
@@ -52,9 +56,9 @@ def build_plasma(params, build_config: dict, eq: Equilibrium) -> Plasma:
     return Plasma(builder.build())
 
 
-def build_initial_tf_shapes(
-    params, build_config: dict, lcfs_wire: BluemiraWire
-) -> tuple[PrincetonD, BluemiraWire]:
+def build_initial_tf_centerline(
+    params: dict | ParameterFrame, build_config: dict, lcfs_wire: BluemiraWire
+) -> PrincetonD:
     """Build the initial TF coil shapes from an equilibrium.
 
     Returns
@@ -62,7 +66,24 @@ def build_initial_tf_shapes(
     :
         The inboard and outboard TF coil shapes
     """
-    tf_initial_cl, tf_face = TFInitialShapeDesigner(
-        params, build_config, lcfs_wire
-    ).run()
-    return tf_initial_cl, tf_face
+    return TFInitialShapeDesigner(params, build_config, lcfs_wire).run()
+
+
+def build_tf_coils(
+    params: dict | ParameterFrame,
+    build_config: dict,
+    tf_initial_cl: PrincetonD,
+    plasma_lcfs: BluemiraWire,
+) -> TFCoil:
+    """Build the TF coils from the initial TF coil shapes.
+
+    Returns
+    -------
+    :
+        The TF coil shapes
+    """
+    tf_cl, tf_wp_xs = TFCoilDesigner(
+        params, build_config, tf_initial_cl, plasma_lcfs
+    ).execute()
+    builder = TFCoilBuilder(params, build_config, tf_cl.create_shape(), tf_wp_xs)
+    return TFCoil(builder.build())

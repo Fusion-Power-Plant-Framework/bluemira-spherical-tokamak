@@ -17,6 +17,12 @@
     "source": "PROCESS",
     "long_name": "Major radius"
   },
+  "z_0": {
+    "value": 0,
+    "unit": "meter",
+    "source": "PROCESS",
+    "long_name": "z-coordinate of the plasma centre radius"
+  },
   "A": {
     "value": 0,
     "unit": "dimensionless",
@@ -95,13 +101,13 @@
     "source": "PROCESS",
     "long_name": "TF coil center line outboard x-coordinate"
   },
-  "tf_tot_tk_y": {
+  "tf_wp_depth": {
     "value": 0,
     "unit": "meter",
     "source": "PROCESS",
     "long_name": "Total TF coil thickness in y-direction"
   },
-  "tf_tot_tk_z": {
+  "tf_wp_width": {
     "value": 0,
     "unit": "meter",
     "source": "PROCESS",
@@ -112,5 +118,11 @@
     "unit": "meter",
     "source": "Input",
     "long_name": "TF coil to PF coils gap"
+  },
+  "TF_ripple_limit": {
+    "value": 0.6,
+    "unit": "percent",
+    "source": "Input",
+    "long_name": "TF coil ripple limit"
   }
 }

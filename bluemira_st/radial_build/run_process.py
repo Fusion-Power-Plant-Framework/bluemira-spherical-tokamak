@@ -32,6 +32,8 @@ def radial_build(params: BluemiraSTParams, build_config: dict) -> ParameterFrame
         "kappa": {"recv": True, "send": False},
         "kappa_95": {"recv": True, "send": False},
         "q_95": {"recv": True, "send": False},
+        "tf_wp_width": {"recv": True, "send": False},
+        "tf_wp_depth": {"recv": True, "send": False},
     })
     new_params = solver.execute(run_mode)
 
@@ -41,6 +43,4 @@ def radial_build(params: BluemiraSTParams, build_config: dict) -> ParameterFrame
     params.update_from_frame(new_params)
     params._set_param("tf_cl_ib_x", new_params.r_tf_in_centre)  # noqa: SLF001
     params._set_param("tf_cl_ob_x", new_params.r_tf_out_centre)  # noqa: SLF001
-    params._set_param("tf_tot_tk_y", new_params.tf_wp_width)  # noqa: SLF001
-    params._set_param("tf_tot_tk_z", new_params.tk_tf_inboard)  # noqa: SLF001
     return params

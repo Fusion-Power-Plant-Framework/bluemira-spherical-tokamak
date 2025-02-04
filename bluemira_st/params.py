@@ -19,6 +19,7 @@ class BluemiraSTParams(ParameterFrame):
     n_PF: Parameter[int]
 
     R_0: Parameter[float]
+    z_0: Parameter[float]
 
     # plasma parameters
     A: Parameter[float]
@@ -36,6 +37,9 @@ class BluemiraSTParams(ParameterFrame):
     # tf shape parameters
     tf_cl_ib_x: Parameter[float]
     tf_cl_ob_x: Parameter[float]
-    tf_tot_tk_y: Parameter[float]
-    tf_tot_tk_z: Parameter[float]
+    tf_wp_depth: Parameter[float]
+    tf_wp_width: Parameter[float]
     tf_pf_gap: Parameter[float]
+
+    # tf opt params
+    TF_ripple_limit: Parameter[float]

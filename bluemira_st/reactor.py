@@ -9,21 +9,19 @@ from pathlib import Path
 from typing import Union
 
 from bluemira.base.designer import run_designer
-from bluemira.base.parameter_frame import EmptyFrame
 from bluemira.base.reactor import Reactor
 from bluemira.base.reactor_config import ReactorConfig
 from bluemira.builders.plasma import Plasma
 
 from bluemira_st.build_routines import (
-    build_initial_tf_shapes,
+    build_initial_tf_centerline,
     build_plasma,
     build_reference_equilibrium,
+    build_tf_coils,
 )
 from bluemira_st.equlibria.designer import DummyFixedEquilibriumDesigner
 from bluemira_st.params import BluemiraSTParams
 from bluemira_st.radial_build.run_process import radial_build
-from bluemira_st.tf_coil.builder import TFCoilBuilder
-from bluemira_st.tf_coil.designer import TFCoilDesigner, TFInitialShapeDesigner
 from bluemira_st.tf_coil.manager import TFCoil
 
 # %% [markdown]
@@ -68,9 +66,9 @@ def main(build_config: Union[str, Path, dict]) -> MyReactor:  # noqa: FA100
         reactor_config.config_for("dummy_fixed_boundary"),
     )
 
-    tf_inital_cl, tf_face = build_initial_tf_shapes(
-        reactor_config.params_for("TFInitialShape"),
-        reactor_config.config_for("TFInitialShape"),
+    tf_initial_cl = build_initial_tf_centerline(
+        reactor_config.params_for("tf_initial_centerline"),
+        reactor_config.config_for("tf_initial_centerline"),
         lcfs_wire,
     )
 
@@ -81,7 +79,7 @@ def main(build_config: Union[str, Path, dict]) -> MyReactor:  # noqa: FA100
         reactor_config.config_for("reference_fbe"),
         lcfs_wire,
         profiles,
-        tf_inital_cl,
+        tf_initial_cl,
     )
 
     reactor = MyReactor(
@@ -90,38 +88,18 @@ def main(build_config: Union[str, Path, dict]) -> MyReactor:  # noqa: FA100
     )
 
     reactor.plasma = build_plasma(
-        reactor_config.params_for("Plasma"),
-        reactor_config.config_for("Plasma"),
+        reactor_config.params_for("plasma"),
+        reactor_config.config_for("plasma"),
         ref_fbe,
     )
-    # %% [markdown]
-    #
-    # We create our TF coil
-
-    # %%
-    tf_coil_designer = TFCoilDesigner(
-        plasma.lcfs(),
-        None,
-        reactor_config.config_for("TF Coil", "designer"),
+    reactor.tf_coil = build_tf_coils(
+        reactor_config.params_for("tf_coil"),
+        reactor_config.config_for("tf_coil"),
+        tf_initial_cl,
+        lcfs_wire,
     )
-    tf_parameterisation = tf_coil_designer.execute()
 
-    tf_coil_builder = TFCoilBuilder(
-        reactor_config.params_for("TF Coil", "builder"),
-        tf_parameterisation.create_shape(),
-    )
-    tf_coil = TFCoil(tf_coil_builder.build())
-
-    # %% [markdown]
-    #
-    # Finally we add the components to the reactor and show the CAD
-
-    # %%
-
-    reactor.plasma = plasma
-    reactor.tf_coil = tf_coil
-
-    reactor.show_cad(n_sectors=1)
+    reactor.show_cad()
     reactor.show_cad("xz")
 
     return reactor

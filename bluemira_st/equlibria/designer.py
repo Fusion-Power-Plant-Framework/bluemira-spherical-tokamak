@@ -18,6 +18,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from bluemira.base.designer import Designer
 from bluemira.base.parameter_frame import Parameter, ParameterFrame
+from bluemira.display import plot_2d
 from bluemira.equilibria import Equilibrium
 from bluemira.equilibria.coils import Coil, CoilSet, SymmetricCircuit
 from bluemira.equilibria.grid import Grid
@@ -48,6 +49,7 @@ class DummyFixedEquilibriumDesignerParams(ParameterFrame):
     """
 
     R_0: Parameter[float]
+    z_0: Parameter[float]
     B_0: Parameter[float]
     I_p: Parameter[float]
     l_i: Parameter[float]
@@ -150,7 +152,7 @@ class ReferenceFreeBoundaryEquilibriumDesignerParams(ParameterFrame):
     n_PF: Parameter[int]
 
     # tf shape parameters
-    tf_tot_tk_z: Parameter[float]
+    tf_wp_width: Parameter[float]
     tf_pf_gap: Parameter[float]
 
 
@@ -214,7 +216,7 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
         coilset_config = {**defaults, **self.build_config.get("coilset", {})}
 
         # total thickness of the TF coil face in the z direction
-        tf_tot_tk_z = self.params.tf_tot_tk_z.value
+        tf_wp_width = self.params.tf_wp_width.value
         # gap between the TF coil face and the PF coils
         tf_pf_gap = self.params.tf_pf_gap.value
         # number of PF coils
@@ -222,12 +224,12 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
 
         if n_PF % 2 != 0:
             raise ValueError(
-                "Number of PF coils must be even as the equblrium must be symmetric."
+                "Number of PF coils must be even as the equilibrium must be symmetric."
             ) from None
 
         pf_track = offset_wire(
             self.tf_cl_wire,
-            tf_tot_tk_z + tf_pf_gap,
+            tf_wp_width + tf_pf_gap,
         )
 
         arg_z_max = np.argmax(lcfs_coords.z)
@@ -238,7 +240,7 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
         d_kappa_u = lcfs_coords.z[arg_z_max]
 
         angle_upper = np.arctan2(d_kappa_u, d_delta_u)
-        angles = np.linspace(angle_upper, 0, n_PF // 2 + 1)
+        angles = np.linspace(angle_upper, 0, n_PF // 2 + 1)[:-1]
         x_c, z_c = get_intersections_from_angles(pf_track, r_mid, 0.0, angles)
 
         pf_coils = []
@@ -298,34 +300,6 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
 
         return Grid(x_min, x_max, z_min, z_max, nx, nz)
 
-    def _make_grid_coilset(self, coilset: CoilSet) -> Grid:
-        """
-        Make a finite difference Grid for an Equilibrium based on the positions
-        of coils in the coilset.
-
-        Returns
-        -------
-        :
-            Finite difference grid for an Equilibrium
-        """
-        defaults = {
-            "nx": 100,
-            "nz": 100,
-        }
-        grid_settings = {**defaults, **self.build_config.get("grid", {})}
-
-        x_coil_max = max(coilset.x + coilset.dx) * 1.1  # % 10% extra space
-        z_coil_max = max(coilset.z + coilset.dz) * 1.1
-
-        return Grid(
-            x_min=0.0,
-            x_max=x_coil_max,
-            z_min=-z_coil_max,
-            z_max=z_coil_max,
-            nx=grid_settings["nx"],
-            nz=grid_settings["nz"],
-        )
-
     def _make_fix_to_free_opt_problem(
         self, eq: Equilibrium, lcfs_coords: Coordinates
     ) -> UnconstrainedTikhonovCurrentGradientCOP:
@@ -340,13 +314,13 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
         defaults = {
             "gamma": 1e-8,
         }
-        opt_problem_config = {**defaults, **self.build_config.get("optimisation", {})}
+        opt_config = {**defaults, **self.build_config.get("optimisation", {})}
 
-        constraint_config = opt_problem_config.get("constraint", {})
+        constraint_config = opt_config.get("constraint", {})
 
         eq_targets = build_reference_constraint_set(constraint_config, lcfs_coords)
         return UnconstrainedTikhonovCurrentGradientCOP(
-            eq.coilset, eq, eq_targets, gamma=opt_problem_config["gamma"]
+            eq.coilset, eq, eq_targets, gamma=opt_config["gamma"]
         )
 
     def _make_iterative_solver(
@@ -378,6 +352,20 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
             relaxation=solver_config["relaxation"],
         )
 
+    @staticmethod
+    def plot_opt_setup(
+        lcfs_discr_coords: Coordinates,
+        coilset: CoilSet,
+        fbe_opt_problem,
+        tf_cl_wire: BluemiraWire,
+    ):
+        _, ax = plt.subplots()
+        fbe_opt_problem.targets.plot(ax=ax)
+        coilset.plot(ax=ax, label=True)
+        ax.plot(lcfs_discr_coords.x, lcfs_discr_coords.z, color="black")
+        plot_2d(tf_cl_wire, ax=ax)
+        plt.show()
+
     def run(self) -> Equilibrium:
         """
         Run the FreeBoundaryEquilibriumFromFixedDesigner.
@@ -387,7 +375,7 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
         :
             The optimised equilibrium
         """
-        # 200 is arb and sufficent
+        # 200 is arb and sufficient
         lcfs_discr_coords = self.lcfs_wire.discretise(byedges=True, ndiscr=200)
 
         ref_coilset = self._make_reference_coilset(lcfs_discr_coords)
@@ -396,8 +384,14 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
         eq = Equilibrium(ref_coilset, grid=eq_grid, profiles=self.profiles)
 
         fbe_opt_problem = self._make_fix_to_free_opt_problem(eq, lcfs_discr_coords)
+
+        if self.build_config.get("plot_setup", False):
+            self.plot_opt_setup(
+                lcfs_discr_coords, ref_coilset, fbe_opt_problem, self.tf_cl_wire
+            )
+
         iterator_program = self._make_iterative_solver(eq, fbe_opt_problem)
-        result = iterator_program()
+        _result = iterator_program()
 
         if self.build_config.get("plot", False):
             _, ax = plt.subplots()
