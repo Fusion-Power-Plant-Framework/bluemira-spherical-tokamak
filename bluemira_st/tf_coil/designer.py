@@ -135,7 +135,6 @@ class TFCoilDesigner(Designer[tuple[GeometryParameterisation, BluemiraWire]]):
 
     def run(self) -> tuple[GeometryParameterisation, BluemiraWire]:
         """Run the design of the TF coil."""
-
         wp_xs = self._build_wp_xz()
         gop = self._build_gop(wp_xs)
         result = gop.optimise()

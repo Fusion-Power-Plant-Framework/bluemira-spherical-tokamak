@@ -18,7 +18,7 @@
       "nz": 100
     },
     "solver": {
-      "plot": false,
+      "plot": true,
       "iter_err_max": 1e-2
     },
     "optimisation": {

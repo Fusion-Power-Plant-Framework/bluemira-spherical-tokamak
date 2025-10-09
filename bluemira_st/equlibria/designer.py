@@ -21,6 +21,7 @@ from bluemira.base.parameter_frame import Parameter, ParameterFrame
 from bluemira.display import plot_2d
 from bluemira.equilibria import Equilibrium
 from bluemira.equilibria.coils import Coil, CoilSet, SymmetricCircuit
+from bluemira.equilibria.diagnostics import PicardDiagnosticOptions
 from bluemira.equilibria.grid import Grid
 from bluemira.equilibria.optimisation.problem import (
     CoilsetOptimisationProblem,
@@ -347,7 +348,7 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
             opt_problem,
             fixed_coils=True,
             convergence=DudsonConvergence(solver_config["iter_err_max"]),
-            plot=solver_config["plot"],
+            diagnostic_plotting=PicardDiagnosticOptions(plot=solver_config["plot"]),
             maxiter=solver_config["max_iter"],
             relaxation=solver_config["relaxation"],
         )

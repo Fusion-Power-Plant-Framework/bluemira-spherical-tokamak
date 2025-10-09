@@ -51,7 +51,7 @@ class MyReactor(Reactor):
     # equilibria: EquilibriumManager
 
 
-def main(build_config: Union[str, Path, dict]) -> MyReactor:  # noqa: FA100
+def main(build_config: str | Path | dict) -> MyReactor:
     """Main reactor function."""
     reactor_config = ReactorConfig(build_config, BluemiraSTParams)
 

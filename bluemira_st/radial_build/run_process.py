@@ -1,5 +1,5 @@
 from bluemira.base.parameter_frame import ParameterFrame
-from bluemira.codes import plot_radial_build, systems_code_solver
+from bluemira.codes import systems_code_solver
 
 from bluemira_st.params import BluemiraSTParams
 
@@ -38,7 +38,7 @@ def radial_build(params: BluemiraSTParams, build_config: dict) -> ParameterFrame
     new_params = solver.execute(run_mode)
 
     if plot:
-        plot_radial_build(solver.run_directory)
+        solver.plot_radial_build(show=True)
 
     params.update_from_frame(new_params)
     params._set_param("tf_cl_ib_x", new_params.r_tf_in_centre)  # noqa: SLF001
