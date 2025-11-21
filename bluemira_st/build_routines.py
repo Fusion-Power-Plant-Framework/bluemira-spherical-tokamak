@@ -41,7 +41,10 @@ def build_reference_equilibrium(
 
 
 def build_plasma(
-    params: dict | ParameterFrame, build_config: dict, eq: Equilibrium
+    params: dict | ParameterFrame,
+    build_config: dict,
+    lcfs_wire,
+    # eq: Equilibrium
 ) -> Plasma:
     """Build EUDEMO plasma from an equilibrium.
 
@@ -50,8 +53,8 @@ def build_plasma(
     :
         Plasma component manager
     """
-    lcfs_loop = eq.get_LCFS()
-    lcfs_wire = interpolate_bspline({"x": lcfs_loop.x, "z": lcfs_loop.z}, closed=True)
+    # lcfs_loop = eq.get_LCFS()
+    # lcfs_wire = interpolate_bspline({"x": lcfs_loop.x, "z": lcfs_loop.z}, closed=True)
     builder = PlasmaBuilder(params, build_config, lcfs_wire)
     return Plasma(builder.build())
 

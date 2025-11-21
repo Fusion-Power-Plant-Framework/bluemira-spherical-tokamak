@@ -74,13 +74,13 @@ def main(build_config: str | Path | dict) -> MyReactor:
 
     # reactor.equilibria = EquilibriumManager()
 
-    ref_fbe = build_reference_equilibrium(
-        reactor_config.params_for("reference_fbe"),
-        reactor_config.config_for("reference_fbe"),
-        lcfs_wire,
-        profiles,
-        tf_initial_cl,
-    )
+    # ref_fbe = build_reference_equilibrium(
+    #     reactor_config.params_for("reference_fbe"),
+    #     reactor_config.config_for("reference_fbe"),
+    #     lcfs_wire,
+    #     profiles,
+    #     tf_initial_cl,
+    # )
 
     reactor = MyReactor(
         "Bluemira Spherical Tokamak Example",
@@ -90,7 +90,7 @@ def main(build_config: str | Path | dict) -> MyReactor:
     reactor.plasma = build_plasma(
         reactor_config.params_for("plasma"),
         reactor_config.config_for("plasma"),
-        ref_fbe,
+        lcfs_wire,
     )
     reactor.tf_coil = build_tf_coils(
         reactor_config.params_for("tf_coil"),
