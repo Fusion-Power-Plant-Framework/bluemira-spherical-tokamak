@@ -89,7 +89,7 @@ icc = 2
 *----------------*
 
 *ixc = 2
-bt = 3.0
+b_plasma_toroidal_on_axis = 3.0
 *boundl(2) = 2.0
 *boundu(2) = 5.0
 * DESCRIPTION:   Toroidal field on axis (T)
@@ -237,14 +237,14 @@ triang = 0.5
 icc = 5
 * DESCRIPTION:   Density Upper Limit
 * JUSTIFICATION: Used to enforce Greenwald limit
-* VARIABLES:     dnelimt & nd_electron_line calculated in-situ
+* VARIABLES:     nd_plasma_electrons_max & nd_plasma_electron_line calculated in-situ
 
 i_density_limit = 7
 * DESCRIPTION:   Switch for Density Limit to Enforce (icc=5) (7: Greenwald Limit)
 * JUSTIFICATION: Enforce Greenwald limit
 
 ixc = 6
-dene = 1.5E+20
+nd_plasma_electrons_vol_avg = 1.5E+20
 boundl(6) = 0.5E+20
 boundu(6) = 5.0E+20
 * DESCRIPTION: Average electron density (/m3)
@@ -271,19 +271,19 @@ boundu(109) = 1.0
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 ixc = 4
-te = 15.0
+temp_plasma_electron_vol_avg_kev = 15.0
 boundl(4) = 5.0
 boundu(4) = 25.0
 * DESCRIPTION:   Volume averaged electron temperature (keV)
 * JUSTIFICATION: Iterate temperature to get solution
 
-tratio = 1.0
+f_temp_plasma_ion_electron = 1.0
 * DESCRIPTION:   Ion Temperature / Electron Temperature
 * JUSTIFICATION: Default value
 
-*ti =
-* DESCRIPTION:   volume averaged ion temperature (keV). N.B. calculated from te if tratio > 0.0
-* JUSTIFICATION: Calculated in-situ as tratio >0
+*temp_plasma_ion_vol_avg_kev =
+* DESCRIPTION:   volume averaged ion temperature (keV). N.B. calculated from temp_plasma_electron_vol_avg_kev if f_temp_plasma_ion_electron > 0.0
+* JUSTIFICATION: Calculated in-situ as f_temp_plasma_ion_electron >0
 
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Beta ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -305,12 +305,12 @@ icc = 24
 * JUSTIFICATION: Limit for plasma stability
 * VARIABLES:     beta calculated in-situ
 
-*beta_max
+*beta_vol_avg_max
 * DESCRIPTION:   Plasma beta upper limit
 * JUSTIFICATION: Turned off, not in use. icc=24. Allow to be calculated in-situ
 
 ixc = 5
-beta = 0.2
+beta_total_vol_avg = 0.2
 boundl(5) = 0.01
 boundu(5) = 1.0
 * DESCRIPTION:   Total Plasma Beta,
@@ -349,9 +349,9 @@ i_beta_norm_max = 0
 *icc = 84
 * DESCRIPTION:   Constraint equation for lower limit of beta
 * JUSTIFICATION: Turned off, do not require a beta lower limit
-* VARIABLES:     beta_min (Lower limit for beta). beta,betaft calculated in-situ
+* VARIABLES:     beta_vol_avg_min (Lower limit for beta). beta,betaft calculated in-situ
 
-*beta_min =
+*beta_vol_avg_min =
 * DESCRIPTION:   Plasma beta lower limit
 * JUSTIFICATION: Turned off, not in use, Used with icc=84 to enforce beta limit
 
@@ -425,7 +425,7 @@ boundu(21) = 10.0
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*taumax =
+*t_plasma_energy_confinement_max =
 * DESCRIPTION:   Maximum allowed energy confinement time (s)
 * JUSTIFICATION: Not setting a limit on confinement time.
 
@@ -463,7 +463,7 @@ f_alpha_energy_confinement_min = 5.0
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Pedestal & Profiles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 *‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-ipedestal= 1
+i_plasma_pedestal= 1
 * DESCRIPTION:   Switch for Pedestal Profiles (1: Use Pedestal Profiles)
 * =0 use original parabolic profiles
 * =1 use pedestal profile
@@ -478,8 +478,8 @@ ipedestal= 1
 * Density *
 *---------*
 
-rhopedn = 0.95
-* DESCRIPTION:   r/a of Density Pedestal (ipedestal==1)
+radius_plasma_pedestal_density_norm = 0.95
+* DESCRIPTION:   r/a of Density Pedestal (i_plasma_pedestal==1)
 * JUSTIFICATION:
 
 alphan = 0.9
@@ -487,25 +487,25 @@ alphan = 0.9
 * JUSTIFICATION:
 
 ixc = 145
-fgwped = 0.1
+f_nd_plasma_pedestal_greenwald = 0.1
 boundl(145) = 0.1
 boundu(145) = 1.0
 * DESCRIPTION:   Fraction of Greenwald Density to Set as Pedestal-Top Density
 * JUSTIFICATION: testing...
 
 ixc = 152
-fgwsep = 0.1
+f_nd_plasma_separatrix_greenwald = 0.1
 boundl(152) = 0.001
 boundu(152) = 0.1
 * DESCRIPTION:   Fraction of Greenwald Density to Set as Separatrix Density
 * JUSTIFICATION: Assumed, compare with SCENE profile
 
-*neped =
-* DESCRIPTION:   Electron density of pedestal [m-3] (ipedestal=1)(default = 4.0E19)
+*nd_plasma_pedestal_electron =
+* DESCRIPTION:   Electron density of pedestal [m-3] (i_plasma_pedestal=1)(default = 4.0E19)
 * JUSTIFICATION: Not set, used as a fraction of greenwald instead
 
-*nesep =
-* DESCRIPTION:   electron density at separatrix [m-3] (ipedestal=1)(default = 3.0E19)
+*nd_plasma_separatrix_electron =
+* DESCRIPTION:   electron density at separatrix [m-3] (i_plasma_pedestal=1)(default = 3.0E19)
 * JUSTIFICATION: Not set, assumed default
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -538,8 +538,8 @@ boundu(154) = 0.99
 * Temperature *
 *-------------*
 
-rhopedt = 0.925
-* DESCRIPTION:   r/a of Temperature Pedestal (ipedestal==1)
+radius_plasma_pedestal_temp_norm = 0.925
+* DESCRIPTION:   r/a of Temperature Pedestal (i_plasma_pedestal==1)
 * JUSTIFICATION:
 
 alphat = 1.4
@@ -550,11 +550,11 @@ tbeta = 2.0
 * DESCRIPTION:   Temperature Profile Index Beta
 * JUSTIFICATION:
 
-teped = 4.5
+temp_plasma_pedestal_kev = 4.5
 * DESCRIPTION:   Electron Temperature of Pedestal top (keV)
 * JUSTIFICATION:
 
-tesep = 0.125
+temp_plasma_separatrix_kev = 0.125
 * DESCRIPTION:   Electron Temperature at Separatrix (keV)
 * JUSTIFICATION:
 
@@ -582,7 +582,7 @@ radius_plasma_core_norm = 0.75
 * JUSTIFICATION:
 * REFERENCE:     Lux et al. (2016), Plasma Phys. Control. Fusion, 58, 075001
 
-coreradiationfraction = 0.7
+f_p_plasma_core_rad_reduction = 0.7
 * DESCRIPTION:   Fraction of Radiation from Core Region Lost
 * JUSTIFICATION:
 * REFERENCE:     Lux et al. (2016), Plasma Phys. Control. Fusion, 58, 075001
@@ -622,15 +622,15 @@ boundu(28) = 1.0
 * DESCRIPTION:   Seeded f_nd_protium_electrons density / electron density (default = 0.0)
 * JUSTIFICATION: Not used, no f_nd_protium_electrons seeding.
 
-*f_deuterium =
+*f_plasma_fuel_deuterium =
 * DESCRIPTION:   Deuterium fuel fraction
 * JUSTIFICATION: Using default = 0.5
 
-*f_tritium =
+*f_plasma_fuel_tritium =
 * DESCRIPTION:   Tritium fuel fraction
 * JUSTIFICATION: Using default = 0.5
 
-*f_helium3 =
+*f_plasma_fuel_helium3 =
 * DESCRIPTION:   Helium-3 fuel fraction
 * JUSTIFICATION: Using default = 0.0
 
@@ -831,7 +831,7 @@ boundu(97) = 1.0
 * JUSTIFICATION: Not yet set
 
 *prn1 =
-* DESCRIPTION:   n-scrape-off / n-average plasma; (input for `ipedestal=0`, = nesep/dene if `ipedestal==1`) (default =  0.285)
+* DESCRIPTION:   n-scrape-off / n-average plasma; (input for `i_plasma_pedestal=0`, = nd_plasma_separatrix_electron/nd_plasma_electrons_vol_avg if `i_plasma_pedestal==1`) (default =  0.285)
 * JUSTIFICATION: Not yet set
 
 *tdiv =
@@ -910,27 +910,27 @@ i_tf_sc_mat = 9
 * REBCO HTS SETTINGS *
 *--------------------*
 
-*tape_width =
+*dr_hts_tape =
 * DESCRIPTION:   Mean width of tape (m) (default = 4.0E-3)
 * JUSTIFICATION:
 
-*tape_thickness =
+*dx_hts_tape_total =
 * DESCRIPTION:   Thickness of tape, inc. all layers (hts, copper, substrate, etc.) (m) (default = 6.5E-5)
 * JUSTIFICATION:
 
-*hastelloy_thickness =
+*dx_hts_tape_hastelloy =
 * DESCRIPTION:   Thickness of Hastelloy layer in HTS tape (m) (default = 50.0E-6)
 * JUSTIFICATION:
 
 *ixc = 138
-*rebco_thickness = 1.0E-6
+*dx_hts_tape_rebco = 1.0E-6
 *boundl(138) =
 *boundu(138) =
 * DESCRIPTION:   Thickness of REBCO layer in tape (m) (iteration variable 138) (default = 1.0E-6)
 * JUSTIFICATION:
 
 *ixc = 139
-*copper_thick =
+*dx_hts_tape_copper =
 *boundl(139) =
 *boundu(139) =
 * DESCRIPTION:   Thickness of copper layer in tape (m) (iteration variable 139) (default = 100.0E-6)
@@ -1110,9 +1110,9 @@ i_tf_turns_integer = 0
 *icc = 86
 * DESCRIPTION:   Constraint equation for limiting the numer of turns in the TF coil
 * JUSTIFICATION: Turned off, not concerned with number of TF turns
-* VARIABLES:     t_turn_tf_max. t_turn_tf calculated in-situ
+* VARIABLES:     t_turn_tf_max. dx_tf_turn_general calculated in-situ
 
-*t_turn_tf =
+*dx_tf_turn_general =
 * DESCRIPTION:   TF coil turn edge length including turn insulation [m]
 * JUSTIFICATION:
 
@@ -1142,11 +1142,11 @@ i_tf_turns_integer = 0
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*t_cable_tf =
+*dx_tf_turn_cable_space_general =
 * DESCRIPTION:   TF coil superconducting cable squared/rounded dimensions [m]
 * If the turn is not a square (i_tf_turns_integer = 1) a squared cable of
 * equivelent size is use to calculated this quantity
-* If the t_cable_tf is non zero, c_tf_turn is calculated
+* If the dx_tf_turn_cable_space_general is non zero, c_tf_turn is calculated
 * Sets the cable space and allows the turn size to be calculated
 * JUSTIFICATION: Not set, as i_tf_turns_integer = 0
 
@@ -1596,7 +1596,7 @@ i_pf_conductor = 0
 * DESCRIPTION:   Copper fraction of strand in central solenoid
 * JUSTIFICATION: Not yet set.
 
-*f_a_cs_steel =
+*f_a_cs_turn_steel =
 * DESCRIPTION:   Central solenoid steel fraction
 * JUSTIFICATION: Not used. Using default
 
@@ -1670,7 +1670,7 @@ i_pf_conductor = 0
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*nfxfh =
+*n_cs_current_filaments =
 * DESCRIPTION:   Number of filaments the top and bottom of the central solenoid should be broken
 *into during scaling (5 - 10 is good)
 * JUSTIFICATION: Not yet set.
@@ -1865,7 +1865,7 @@ i_pf_location = 2,3,3,4
 * JUSTIFICATION: Design choice, one above x-point and two outboard
 
 
-i_sup_pf_shape = 1
+i_r_pf_outside_tf_placement = 1
 * DESCRIPTION:   Switch for the placement of i_pf_location = 3 (outboard) PF coils
 *  when the TF coils are superconducting (i_tf_sup = 1)
 *  =0 (Default) Outboard PF coils follow TF shape
@@ -1874,12 +1874,12 @@ i_sup_pf_shape = 1
 *  winding surface
 * JUSTIFICATION: Not used, no i_pf_location = 3 coils
 
-*routr =
+*dr_pf_tf_outboard_out_offset =
 * DESCRIPTION:  Radial distance (m) from outboard TF coil leg to centre of i_pf_location=3 PF coils
 * (default = 1.5)
 * JUSTIFICATION: Not used, no i_pf_location = 3 coils
 
-*rpf1 =
+*dr_pf_cs_middle_offset =
 * DESCRIPTION:  offset (m) of radial position of i_pf_location=1 PF coils from being directly above
 * the central solenoid
 * JUSTIFICATION: Not used, no i_pf_location = 1 coils
@@ -2086,7 +2086,7 @@ gapomin = 0.0
 * JUSTIFICATION: Gap is set by the ripple, no need to set minimum
 
 *ixc = 75
-tfootfi = 1.0
+f_dr_tf_outboard_inboard = 1.0
 *boundl(75) =
 *boundu(75) =
 * DESCRIPTION:   TF coil outboard leg / inboard leg radial thickness
@@ -2569,7 +2569,7 @@ f_fw_rad_max = 1.0
 * JUSTIFICATION: Turned off, dot care about wall load
 * VARIABLES:     pflux_fw_neutron_mw calculated in-situ
 
-*iwalld = 2
+*i_pflux_fw_neutron = 2
 * DESCRIPTION:   Switch for neutron wall load calculation (default = 1)
 * =1 use scaled plasma surface area
 * =2 use first wall area directly
@@ -2606,7 +2606,7 @@ boundu(116) = 1.0
 
 *ffwal =
 * DESCRIPTION:   Wall load fiddle factor
-* JUSTIFICATION: Not scaling wall load. Used when iwalld=1
+* JUSTIFICATION: Not scaling wall load. Used when i_pflux_fw_neutron=1
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -3095,9 +3095,9 @@ lsa = 2
 
 *i_vac_pump_dwell =
 * DESCRIPTION:   Switch for dwell pumping options:
-* =0 pumping only during t_between_pulse
-* =1 pumping only during t_precharge
-* =2 pumping during t_between_pulse + t_precharge
+* =0 pumping only during t_plant_pulse_dwell
+* =1 pumping only during t_plant_pulse_coil_precharge
+* =2 pumping during t_plant_pulse_dwell + t_plant_pulse_coil_precharge
 * JUSTIFICATION: Not yet set.
 
 *pumpareafraction =
@@ -3155,13 +3155,13 @@ i_pulsed_plant = 0
 * DESCRIPTION:   f-value for minimum burn time
 * JUSTIFICATION: Used with icc=13 to enforce minimum burn time, not required
 
-t_burn = 1000.0
+t_plant_pulse_burn = 1000.0
 * DESCRIPTION:   Burn Time (s)
 * JUSTIFICATION: Default, steady-state device so input, calculates if i_pulsed_plant = 1
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-t_between_pulse = 100.0
+t_plant_pulse_dwell = 100.0
 * DESCRIPTION:   Time Between Pulses in a Pulsed Reactor (s)
 * JUSTIFICATION: Steady-state device, assumed
 
@@ -3169,34 +3169,34 @@ t_between_pulse = 100.0
 
 *pulsetimings
 * DESCRIPTION:   Switch for pulse timings (if i_pulsed_plant=1):
-* =0, t_current_ramp_up = Ip(MA)/0.1 t_precharge, t_ramp_down = input
-* =1, t_current_ramp_up = iteration var or input. t_precharge/t_ramp_down max of input or t_current_ramp_up
+* =0, t_plant_pulse_plasma_current_ramp_up = Ip(MA)/0.1 t_plant_pulse_coil_precharge, t_plant_pulse_plasma_current_ramp_down = input
+* =1, t_plant_pulse_plasma_current_ramp_up = iteration var or input. t_plant_pulse_coil_precharge/t_plant_pulse_plasma_current_ramp_down max of input or t_plant_pulse_plasma_current_ramp_up
 * JUSTIFICATION: Assuming default, may change
 
 *icc = 41
 * DESCRIPTION:   Constraint equation for plasma current ramp-up time lower limit
 * JUSTIFICATION: Turned off, do not care about plasma current ramp up time
-* VARIABLES:     t_current_ramp_up (s) calculated in-situ
+* VARIABLES:     t_plant_pulse_plasma_current_ramp_up (s) calculated in-situ
 
 *t_current_ramp_up_min =
 * DESCRIPTION:   Minimum plasma current ramp-up time (s)
 * JUSTIFICATION: Turned off, not using icc = 41
 
 *tohsin =
-* DESCRIPTION:   Switch for t_current_ramp_up calculation
-* = 0, t_current_ramp_up = t_precharge = t_ramp_down = Ip(MA)/0.5
-* = 1, t_current_ramp_up = tohsin; t_precharge, t_ramp_down are input
+* DESCRIPTION:   Switch for t_plant_pulse_plasma_current_ramp_up calculation
+* = 0, t_plant_pulse_plasma_current_ramp_up = t_plant_pulse_coil_precharge = t_plant_pulse_plasma_current_ramp_down = Ip(MA)/0.5
+* = 1, t_plant_pulse_plasma_current_ramp_up = tohsin; t_plant_pulse_coil_precharge, t_plant_pulse_plasma_current_ramp_down are input
 * JUSTIFICATION: Not used, assuming default
 
-*t_ramp_down =
+*t_plant_pulse_plasma_current_ramp_down =
 * DESCRIPTION:   PF coil shutdown time (s)
 * JUSTIFICATION: Assuming default.
 
-*t_current_ramp_up =
+*t_plant_pulse_plasma_current_ramp_up =
 * DESCRIPTION:   Plasma current ramp-up time for current initiation (s)
 * JUSTIFICATION: Assuming default of 10 seconds
 
-*t_precharge =
+*t_plant_pulse_coil_precharge =
 * DESCRIPTION:   Initial charge time for PF coils (s)
 * JUSTIFICATION: Assuming default.
 
@@ -3209,7 +3209,7 @@ t_between_pulse = 100.0
 *icc = 42
 * DESCRIPTION:   Constraint equation for full pulse cycle time lower limit.
 * JUSTIFICATION: Turned off, do not care about the full pulse cycle time
-* VARIABLES:     t_cycle (s) calculated in-situ
+* VARIABLES:     t_plant_pulse_total (s) calculated in-situ
 
 *t_cycle_min =
 * DESCRIPTION:   Minimum full pulse cycle time (s)
