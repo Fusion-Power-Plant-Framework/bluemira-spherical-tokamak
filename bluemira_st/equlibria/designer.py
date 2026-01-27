@@ -321,7 +321,7 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
 
         eq_targets = build_reference_constraint_set(constraint_config, lcfs_coords)
         return UnconstrainedTikhonovCurrentGradientCOP(
-            eq.coilset, eq, eq_targets, gamma=opt_config["gamma"]
+            eq, eq_targets, gamma=opt_config["gamma"]
         )
 
     def _make_iterative_solver(
