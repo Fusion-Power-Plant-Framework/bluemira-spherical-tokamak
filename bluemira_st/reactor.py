@@ -6,7 +6,6 @@
 
 # %%
 from pathlib import Path
-from typing import Union
 
 from bluemira.base.designer import run_designer
 from bluemira.base.reactor import Reactor
@@ -24,23 +23,7 @@ from bluemira_st.params import BluemiraSTParams
 from bluemira_st.radial_build.run_process import radial_build
 from bluemira_st.tf_coil.manager import TFCoil
 
-# %% [markdown]
-#
-# # Simplistic Reactor Design
-#
-# This example show hows to set up a simple reactor, consisting of a plasma and
-# a single TF coil.
-# The TF coil will be optimised such that its length is minimised,
-# whilst maintaining a minimum distance to the plasma.
-#
-# To do this we'll run through how to set up the parameters for the build,
-# how to define the `Builder`s and `Designer`s
-# (including the optimisation problem) for the plasma and TF coil,
-# and how to run the build with configurable parameters.
-#
 
-
-# %%
 class MyReactor(Reactor):
     """A simple reactor with two components."""
 
@@ -52,7 +35,7 @@ class MyReactor(Reactor):
 
 
 def main(build_config: str | Path | dict) -> MyReactor:
-    """Main reactor function."""
+    """Reactor function."""
     reactor_config = ReactorConfig(build_config, BluemiraSTParams)
 
     radial_build(

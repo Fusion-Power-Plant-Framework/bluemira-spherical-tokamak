@@ -17,7 +17,7 @@ def make_auto_lcfs_constraint(
     x_lcfs: np.ndarray,
     z_lcfs: np.ndarray,
 ) -> IsofluxConstraint:
-    """Returns a mixture of an isoflux constraint and field null constraints.
+    """Create a mixture of an isoflux constraint and field null constraints.
 
     The isoflux constraint is generated from the LCFS points, and the field null
     constraints are generated from the top and bottom points of the LCFS.

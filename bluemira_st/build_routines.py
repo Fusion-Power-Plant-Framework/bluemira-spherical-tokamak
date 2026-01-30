@@ -2,9 +2,8 @@ from bluemira.base.parameter_frame import ParameterFrame
 from bluemira.builders.plasma import Plasma, PlasmaBuilder
 from bluemira.equilibria.equilibrium import Equilibrium
 from bluemira.equilibria.profiles import Profile
-from bluemira.geometry.coordinates import Coordinates
 from bluemira.geometry.parameterisations import GeometryParameterisation, PrincetonD
-from bluemira.geometry.tools import distance_to, interpolate_bspline, offset_wire
+from bluemira.geometry.tools import interpolate_bspline
 from bluemira.geometry.wire import BluemiraWire
 
 from bluemira_st.equlibria.designer import ReferenceFreeBoundaryEquilibriumDesigner

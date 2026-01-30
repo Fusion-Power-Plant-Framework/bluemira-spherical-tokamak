@@ -1,38 +1,25 @@
 from __future__ import annotations
 
-from enum import Enum, auto
 from typing import TYPE_CHECKING
 
-from bluemira.equilibria import Equilibrium
-from bluemira.geometry.constants import VERY_BIG
-from bluemira.geometry.face import BluemiraFace
-from bluemira.geometry.tools import (
-    boolean_cut,
-    distance_to,
-    make_polygon,
-    offset_wire,
-    split_wire,
-)
-
-from bluemira_st.optimisation.magnectic_constrains import make_auto_lcfs_constraint
-
-if TYPE_CHECKING:
-    from bluemira.base.parameter_frame import ParameterFrame
-    from bluemira.equilibria.optimisation.constraints import MagneticConstraint
-    from bluemira.geometry.parameterisations import GeometryParameterisation
-    from bluemira.geometry.wire import BluemiraWire
-
 import numpy as np
-from bluemira.base.look_and_feel import bluemira_warn
-from bluemira.equilibria.grid import Grid
 from bluemira.equilibria.optimisation.constraints import (
     FieldNullConstraint,
-    IsofluxConstraint,
     MagneticConstraintSet,
-    PsiBoundaryConstraint,
 )
-from bluemira.equilibria.shapes import flux_surface_johner
-from bluemira.geometry.coordinates import Coordinates, interpolate_points
+from bluemira.geometry.constants import VERY_BIG
+from bluemira.geometry.tools import (
+    distance_to,
+    make_polygon,
+)
+
+from bluemira_st.optimisation.magnetic_constraints import make_auto_lcfs_constraint
+
+if TYPE_CHECKING:
+    from bluemira.equilibria import Equilibrium
+    from bluemira.equilibria.optimisation.constraints import MagneticConstraint
+    from bluemira.geometry.coordinates import Coordinates
+    from bluemira.geometry.wire import BluemiraWire
 
 
 def build_reference_constraint_set(

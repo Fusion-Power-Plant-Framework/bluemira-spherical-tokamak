@@ -10,12 +10,9 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
 keywords = []
-authors = [
-  { name = "The Bluemira Team", email = "oliver.funk@ukaea.co.uk" },
-]
+authors = [{ name = "The Bluemira Team"}]
 classifiers = [
-  "Programming Language :: Python",
-  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python"
 ]
 
 dependencies = ["bluemira", "numpy", "matplotlib"]
@@ -81,26 +78,19 @@ tests      = "pytest {args:tests}"
 tests-cov  = "pytest --cov bluemira_st  --cov-report html:htmlcov_bluemira_st --cov-report xml {args:tests}"
 tests-cov-private  = "pytest --private --cov bluemira_st --cov-report html:htmlcov --cov-report xml {args:tests}"
 
-# tool: ruff
 [tool.ruff]
+target-version = "py310"
 line-length = 89
+output-format= "concise"
+
+[tool.ruff.format]
 preview = true
 
 [tool.ruff.lint]
-exclude = [
-  ".git",
-  "__pycache__",
-  "documentation",
-  ".env",
-  ".idea",
-  ".pytest_cache",
-  "htmlcov",
-]
+preview = true
 select = ["ALL"]
 ignore = [
-  "ANN101", # Allow no type annotation for self in method
-  "ANN102", # Allow no type annotation for cls in classmethod
-  "ANN204", # Allow no type annotation for __init__ return
+  "ANN",
   "D205", # Allow no blank lines after docstring
   "B027", # Allow non-abstract empty methods in abstract base classes
   "S105", # Ignore checks for possible passwords
@@ -116,16 +106,21 @@ ignore = [
   "D107",
   "D200",
   "D212",
+  "DOC201",
   "ERA001",
   "TRY003",
   "EM102",
   "N815",
   "PLR0914",
   "D416",
+  "D100",
+  "D102",
+  "D103",
+  "D104",
+  "CPY001",
+  "EM101",
 ]
-unfixable = [
-  "F401", # Don't touch unused imports
-]
+
 
 [tool.ruff.lint.isort]
 known-first-party = ["bluemira_st"]
@@ -137,7 +132,10 @@ ban-relative-imports = "all"
 max-complexity = 20
 
 [tool.ruff.lint.pydocstyle]
-convention = "google"
+convention = "numpy"
+
+[tool.ruff.lint.pycodestyle]
+max-doc-length = 89
 
 [tool.ruff.lint.per-file-ignores]
 # Tests can use magic values, assertions, and relative imports
