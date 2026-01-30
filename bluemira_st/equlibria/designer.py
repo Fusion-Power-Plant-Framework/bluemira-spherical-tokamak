@@ -171,10 +171,12 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
         The parameters for the solver
     build_config:
         The config for the solver.
-    lcfs_coords:
-        Coordinates for the desired LCFS shape
+    lcfs_wire:
+        Wire of the desired LCFS shape
     profiles:
         Profile object describing the equilibrium profiles
+    tf_cl_wire:
+        TF coil centreline wire
     """
 
     params: ReferenceFreeBoundaryEquilibriumDesignerParams

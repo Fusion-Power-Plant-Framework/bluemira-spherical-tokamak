@@ -18,7 +18,7 @@ plugins:
       handlers:
         python:
           options:
-            docstring_style: google
+            docstring_style: numpy
 
 theme:
   name: material
@@ -67,5 +67,5 @@ markdown_extensions:
 
 nav:
   - index.md
-  - Examples: examples/
+  - examples.md
   - API Reference: reference/

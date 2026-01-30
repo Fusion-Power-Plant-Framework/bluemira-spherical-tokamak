@@ -4,4 +4,4 @@ The `bluemira_st` package. A demonstration project for a spherical tokamak in Bl
 
 ## Examples
 
-See [examples](examples) for how to use the package.
+See [examples](examples.md) for how to use the package.
