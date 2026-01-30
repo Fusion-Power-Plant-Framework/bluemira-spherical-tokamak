@@ -27,7 +27,7 @@ from bluemira.equilibria.optimisation.problem import (
     CoilsetOptimisationProblem,
     UnconstrainedTikhonovCurrentGradientCOP,
 )
-from bluemira.equilibria.profiles import BetaLiIpProfile, Profile
+from bluemira.equilibria.profiles import BetaIpProfile, Profile
 from bluemira.equilibria.shapes import ZakharovLCFS
 from bluemira.equilibria.solve import DudsonConvergence, PicardIterator
 from bluemira.geometry.tools import offset_wire
@@ -120,14 +120,14 @@ class DummyFixedEquilibriumDesigner(Designer[tuple[BluemiraWire, Profile]]):
         lcfs_parameterisation = self._create_lcfs_parameterisation()
         lcfs_wire = lcfs_parameterisation.create_shape()
 
-        profiles = BetaLiIpProfile(
+        profiles = BetaIpProfile(
             self.params.beta_p.value,
-            self.params.l_i.value,
+            # self.params.l_i.value,
             self.params.I_p.value,
             R_0=self.params.R_0.value,
             B_0=self.params.B_0.value,
-            li_rel_tol=self.build_config.get("li_rel_tol", 0.01),
-            li_min_iter=self.build_config.get("li_min_iter", 2),
+            # li_rel_tol=self.build_config.get("li_rel_tol", 0.01),
+            # li_min_iter=self.build_config.get("li_min_iter", 2),
         )
         return lcfs_wire, profiles
 
