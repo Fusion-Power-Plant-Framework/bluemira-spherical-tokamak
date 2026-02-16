@@ -124,5 +124,17 @@
     "unit": "percent",
     "source": "Input",
     "long_name": "TF coil ripple limit"
+  },
+  "tk_insulation": {
+    "value": 0.02,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Tokamak insulation thickness"
+  },
+  "tk_casing": {
+    "value": 0.04,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Tokamak casing thickness"
   }
 }
