@@ -43,3 +43,6 @@ class BluemiraSTParams(ParameterFrame):
 
     # tf opt params
     TF_ripple_limit: Parameter[float]
+    # pf coil parameters
+    tk_insulation: Parameter[float]
+    tk_casing:  Parameter[float]
