@@ -8,6 +8,8 @@
 from pathlib import Path
 from typing import Union
 
+from click import Parameter
+
 from bluemira.base.designer import run_designer
 from bluemira.base.reactor import Reactor
 from bluemira.base.reactor_config import ReactorConfig
@@ -18,11 +20,17 @@ from bluemira_st.build_routines import (
     build_plasma,
     build_reference_equilibrium,
     build_tf_coils,
+    build_pf_coils,
 )
 from bluemira_st.equlibria.designer import DummyFixedEquilibriumDesigner
 from bluemira_st.params import BluemiraSTParams
+from bluemira_st.pf_coil.manager import PFCoil
 from bluemira_st.radial_build.run_process import radial_build
 from bluemira_st.tf_coil.manager import TFCoil
+from bluemira_st.pf_coil.coilset import pf_coilset_step_like,pf_coilset
+
+from bluemira_st.vacuum_vessel import VacuumVessel, VacuumVesselBuilder
+
 
 # %% [markdown]
 #
@@ -40,13 +48,12 @@ from bluemira_st.tf_coil.manager import TFCoil
 #
 
 
-# %%
 class MyReactor(Reactor):
-    """A simple reactor with two components."""
-
+    """A simple reactor with three components."""
+    vacuum_vessel: VacuumVessel
     plasma: Plasma
     tf_coil: TFCoil
-
+    pf_coil: PFCoil
     # Models
     # equilibria: EquilibriumManager
 
@@ -98,6 +105,12 @@ def main(build_config: str | Path | dict) -> MyReactor:
         tf_initial_cl,
         lcfs_wire,
     )
+    reactor.pf_coil = build_pf_coils(
+        reactor_config.params_for("pf_coils"),
+        build_config,
+        pf_coilset
+        )
+
 
     reactor.show_cad()
     reactor.show_cad("xz")
