@@ -117,7 +117,8 @@ def build_pf_coils(params: dict | ParameterFrame,
 
         # Create wire using PictureFrame parameterisation
         wire = PFCoilPictureFrame(
-            {"r_corner": {"value": 0.12, "unit": "m"}},
+            {"r_corner": {"value": pf_default_params.r_corner.value,
+                          "unit": pf_default_params.r_corner.unit}},
             coil
         ).execute()
 
