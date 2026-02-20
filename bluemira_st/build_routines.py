@@ -12,8 +12,6 @@ from bluemira_st.tf_coil.designer import TFCoilDesigner, TFInitialShapeDesigner
 from bluemira_st.tf_coil.manager import TFCoil
 
 from bluemira.equilibria.coils import CoilSet
-from bluemira_st.pf_coil.manager import PFCoil
-from bluemira_st.pf_coil.coilset import  pf_default_params
 from bluemira_st.pf_coil.builder import build_pf_coilset
 
 
