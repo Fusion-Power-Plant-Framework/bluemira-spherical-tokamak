@@ -63,3 +63,8 @@ class BluemiraSTParams(ParameterFrame):
     tk_tf_nose: Parameter[float]
     tk_tf_side: Parameter[float]
     tk_ts: Parameter[float]
+
+    # breeder blanket parameters
+    g_p_bb: Parameter[float]
+    g_bb_tf_min: Parameter[float]
+    tk_tf: Parameter[float]
