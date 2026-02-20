@@ -20,7 +20,7 @@ from bluemira_st.build_routines import (
     build_plasma,
     build_reference_equilibrium,
     build_tf_coils,
-    build_pf_coils,
+    build_pf_coils
 )
 from bluemira_st.equlibria.designer import DummyFixedEquilibriumDesigner
 from bluemira_st.params import BluemiraSTParams
@@ -28,8 +28,6 @@ from bluemira_st.pf_coil.manager import PFCoil
 from bluemira_st.radial_build.run_process import radial_build
 from bluemira_st.tf_coil.manager import TFCoil
 from bluemira_st.pf_coil.coilset import pf_coilset_step_like,pf_coilset
-
-from bluemira_st.vacuum_vessel import VacuumVessel, VacuumVesselBuilder
 
 
 # %% [markdown]
@@ -47,21 +45,17 @@ from bluemira_st.vacuum_vessel import VacuumVessel, VacuumVesselBuilder
 # and how to run the build with configurable parameters.
 #
 
-
 class MyReactor(Reactor):
     """A simple reactor with three components."""
-    vacuum_vessel: VacuumVessel
     plasma: Plasma
     tf_coil: TFCoil
     pf_coil: PFCoil
     # Models
     # equilibria: EquilibriumManager
 
-
 def main(build_config: str | Path | dict) -> MyReactor:
     """Main reactor function."""
     reactor_config = ReactorConfig(build_config, BluemiraSTParams)
-
     radial_build(
         reactor_config.params_for("radial_build").global_params,
         reactor_config.config_for("radial_build"),
@@ -108,11 +102,11 @@ def main(build_config: str | Path | dict) -> MyReactor:
     reactor.pf_coil = build_pf_coils(
         reactor_config.params_for("pf_coils"),
         build_config,
+        # coilset should eventually come from designer
         pf_coilset
         )
 
-
-    reactor.show_cad()
+    reactor.show_cad(construction_params={"n_sectors": 6})
     reactor.show_cad("xz")
 
     return reactor
