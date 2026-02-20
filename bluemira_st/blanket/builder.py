@@ -175,5 +175,4 @@ class BBBuilder(Builder):
         pc_xz = PhysicalComponent(self.BB, bb_xz, mat)
         pc_xyz = PhysicalComponent(self.BB, bb, mat)
         apply_component_display_options(pc_xyz, color=BLUE_PALETTE["BB"][0])
-
         return self.component_tree(xz=[pc_xz], xy=[], xyz=[pc_xyz])
