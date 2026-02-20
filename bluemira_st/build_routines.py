@@ -4,7 +4,6 @@ from bluemira.equilibria.equilibrium import Equilibrium
 from bluemira.equilibria.profiles import Profile
 from bluemira.geometry.coordinates import Coordinates
 from bluemira.geometry.parameterisations import GeometryParameterisation, PrincetonD
-from bluemira.geometry.tools import distance_to, interpolate_bspline, offset_wire
 from bluemira.geometry.wire import BluemiraWire
 
 from bluemira_st.equlibria.designer import ReferenceFreeBoundaryEquilibriumDesigner
@@ -12,15 +11,11 @@ from bluemira_st.tf_coil.builder import TFCoilBuilder
 from bluemira_st.tf_coil.designer import TFCoilDesigner, TFInitialShapeDesigner
 from bluemira_st.tf_coil.manager import TFCoil
 
-from bluemira.builders.pf_coil import PFCoilBuilder
-from bluemira.base.components import Component
-from bluemira.base.constants import CoilType
-from bluemira.builders.pf_coil import PFCoilPictureFrame
 from bluemira.equilibria.coils import CoilSet
 from bluemira_st.pf_coil.manager import PFCoil
 from bluemira_st.pf_coil.coilset import  pf_default_params
 from bluemira_st.pf_coil.builder import build_pf_coilset
-from bluemira_st.vacuum_vessel import VacuumVessel, VacuumVesselBuilder
+
 
 def build_reference_equilibrium(
     params: dict | ParameterFrame,
@@ -113,14 +108,3 @@ def build_pf_coils(params: dict | ParameterFrame,
     """ 
     pf_group= build_pf_coilset(params,build_config,coilset)
     return pf_group
-
-def build_vacuum_vessel(params, build_config, ivc_koz) -> VacuumVessel:
-    """Build the vacuum vessel around the given IVC keep-out zone.
-
-    Returns
-    -------
-    :
-        Vacuum vessel component manager
-    """
-    vv_builder = VacuumVesselBuilder(params, build_config, ivc_koz)
-    return VacuumVessel(vv_builder.build())
