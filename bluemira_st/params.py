@@ -43,3 +43,8 @@ class BluemiraSTParams(ParameterFrame):
 
     # tf opt params
     TF_ripple_limit: Parameter[float]
+    # breeder blanket parameters
+    g_p_bb: Parameter[float]
+    g_bb_tf_min: Parameter[float]
+    tk_bb: Parameter[float]
+    tk_tf: Parameter[float]
