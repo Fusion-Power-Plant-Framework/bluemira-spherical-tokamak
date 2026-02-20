@@ -12,12 +12,14 @@ class PFParams(ParameterFrame):
     n_TF: Parameter[int]
     tk_insulation: Parameter[float]
     tk_casing: Parameter[float]
+    r_corner: Parameter[float]
 
 # Default PF parameters
 pf_default_params = PFParams.from_dict({
     "n_TF":          {"value": 12, "unit": ""},
     "tk_insulation": {"value": 0.02, "unit": "m"},
     "tk_casing":     {"value": 0.04, "unit": "m"},
+    "r_corner":      {"value": 0.12, "unit": "m"},
 })
 
 # ----------------------------
@@ -25,11 +27,11 @@ pf_default_params = PFParams.from_dict({
 # ----------------------------
 
 pf_coilset = CoilSet(
-    Coil(x=7.5, z=0.0,  dx=0.40, dz=0.70, name="PF1", ctype=CoilType.PF),
-    Coil(x=6.8, z=3.0,  dx=0.35, dz=0.60, name="PF2", ctype=CoilType.PF),
-    Coil(x=6.8, z=-3.0, dx=0.35, dz=0.60, name="PF3", ctype=CoilType.PF),
+    Coil(x=8.7, z=0.0,  dx=0.40, dz=0.70, name="PF1", ctype=CoilType.PF),
+    Coil(x=8.0, z=3.0,  dx=0.35, dz=0.60, name="PF2", ctype=CoilType.PF),
+    Coil(x=8.0, z=-3.0, dx=0.35, dz=0.60, name="PF3", ctype=CoilType.PF),
 )
-
+# based roughly on extracting coordinates from a published STEP paper https://doi.org/10.1016/j.fusengdes.2025.115357
 pf_coilset_step_like = CoilSet(
 
     Coil(x=4.25, z= 9.55, dx=0.40, dz=0.70, name="PF1",  ctype=CoilType.PF),
@@ -48,7 +50,7 @@ pf_coilset_step_like = CoilSet(
     Coil(x=1.50, z=-9.50, dx=0.40, dz=0.70, name="PF10", ctype=CoilType.PF),
     Coil(x=8.00, z=-9.52, dx=0.40, dz=0.70, name="PF11", ctype=CoilType.PF),
     Coil(x=4.25, z=-9.62, dx=0.40, dz=0.70, name="PF12", ctype=CoilType.PF),
-    # Thin inboard coils (low x)
+
     Coil(x=1.60, z=  5.01, dx=0.20, dz=0.70, name="PF13", ctype=CoilType.PF),
     Coil(x=1.62, z= -5.04, dx=0.20, dz=0.70, name="PF14", ctype=CoilType.PF),
 )
