@@ -46,3 +46,10 @@ class BluemiraSTParams(ParameterFrame):
     # pf coil parameters
     tk_insulation: Parameter[float]
     tk_casing:  Parameter[float]
+    r_corner: Parameter[float]
+
+    # breeder blanket parameters
+    g_p_bb: Parameter[float]
+    g_bb_tf_min: Parameter[float]
+    tk_bb: Parameter[float]
+    tk_tf: Parameter[float]
