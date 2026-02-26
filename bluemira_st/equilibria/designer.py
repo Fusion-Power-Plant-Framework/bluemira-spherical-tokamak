@@ -33,7 +33,7 @@ from bluemira.equilibria.solve import DudsonConvergence, PicardIterator
 from bluemira.geometry.tools import offset_wire
 from bluemira.geometry.wire import BluemiraWire
 
-from bluemira_st.equlibria.tools import (
+from bluemira_st.equilibria.tools import (
     build_reference_constraint_set,
     get_intersections_from_angles,
     plasma_data,

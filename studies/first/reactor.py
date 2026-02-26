@@ -18,7 +18,7 @@ from bluemira_st.build_routines import (
     build_reference_equilibrium,
     build_tf_coils,
 )
-from bluemira_st.equlibria.designer import DummyFixedEquilibriumDesigner
+from bluemira_st.equilibria.designer import DummyFixedEquilibriumDesigner
 from bluemira_st.params import BluemiraSTParams
 from bluemira_st.radial_build.run_process import radial_build
 from bluemira_st.tf_coil.manager import TFCoil
