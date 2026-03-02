@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2024-present The Bluemira Team <oliver.funk@ukaea.co.uk>
+# SPDX-FileCopyrightText: 2024-present The Bluemira Team
 #
 # SPDX-License-Identifier: MIT
 
@@ -18,7 +18,7 @@ from bluemira_st.build_routines import (
     build_reference_equilibrium,
     build_tf_coils,
 )
-from bluemira_st.equlibria.designer import DummyFixedEquilibriumDesigner
+from bluemira_st.equilibria.designer import DummyFixedEquilibriumDesigner
 from bluemira_st.params import BluemiraSTParams
 from bluemira_st.radial_build.run_process import radial_build
 from bluemira_st.tf_coil.manager import TFCoil
@@ -100,3 +100,7 @@ def main(build_config: str | Path | dict) -> MyReactor:
     reactor.show_cad("xz")
 
     return reactor
+
+if __name__ == '__main__':
+    build_config_path = Path(Path(__file__).parent, "config/config.json").resolve()
+    reactor = main(build_config_path)

@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2024-present The Bluemira Team <oliver.funk@ukaea.co.uk>
+# SPDX-FileCopyrightText: 2024-present The Bluemira Team
 #
 # SPDX-License-Identifier: MIT
 """Tests."""

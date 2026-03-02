@@ -6,7 +6,7 @@ from bluemira.geometry.parameterisations import GeometryParameterisation, Prince
 from bluemira.geometry.tools import interpolate_bspline
 from bluemira.geometry.wire import BluemiraWire
 
-from bluemira_st.equlibria.designer import ReferenceFreeBoundaryEquilibriumDesigner
+from bluemira_st.equilibria.designer import ReferenceFreeBoundaryEquilibriumDesigner
 from bluemira_st.tf_coil.builder import TFCoilBuilder
 from bluemira_st.tf_coil.designer import TFCoilDesigner, TFInitialShapeDesigner
 from bluemira_st.tf_coil.manager import TFCoil
