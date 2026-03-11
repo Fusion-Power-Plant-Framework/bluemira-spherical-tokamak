@@ -6,13 +6,13 @@
     "long_name": "Number of PF coils"
   },
   "n_TF": {
-    "value": 0,
+    "value": 10,
     "unit": "dimensionless",
     "source": "PROCESS",
     "long_name": "Number of TF coils"
   },
   "R_0": {
-    "value": 0,
+    "value": 0.4,
     "unit": "meter",
     "source": "PROCESS",
     "long_name": "Major radius"
@@ -24,7 +24,7 @@
     "long_name": "z-coordinate of the plasma centre radius"
   },
   "A": {
-    "value": 0,
+    "value": 1.2,
     "unit": "dimensionless",
     "source": "PROCESS",
     "long_name": "Plasma aspect ratio"
@@ -60,7 +60,7 @@
     "long_name": "Last closed surface plasma triangularity"
   },
   "delta_95": {
-    "value": 0,
+    "value": 0.8,
     "unit": "dimensionless",
     "source": "PROCESS",
     "long_name": "95th percentile plasma triangularity"
@@ -72,7 +72,7 @@
     "long_name": "Last closed surface plasma elongation"
   },
   "kappa_95": {
-    "value": 0,
+    "value": 1.5,
     "unit": "dimensionless",
     "source": "PROCESS",
     "long_name": "95th percentile plasma elongation"
