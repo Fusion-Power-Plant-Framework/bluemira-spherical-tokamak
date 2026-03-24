@@ -77,9 +77,10 @@ def main(build_config: str | Path | dict) -> MyReactor:
         reactor_config.params_for("blanket"),
         reactor_config.config_for("blanket"),
         mat_name="BB_BZ_MATERIAL",
+        ref_fbe=ref_fbe
         )
 
-    reactor.show_cad()
+    reactor.show_cad("xyz")
     reactor.show_cad("xz")
 
     return reactor
