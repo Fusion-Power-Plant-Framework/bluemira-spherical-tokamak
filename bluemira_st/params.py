@@ -43,3 +43,6 @@ class BluemiraSTParams(ParameterFrame):
 
     # tf opt params
     TF_ripple_limit: Parameter[float]
+
+    # Blanket thickness
+    tk_bb: Parameter[float]

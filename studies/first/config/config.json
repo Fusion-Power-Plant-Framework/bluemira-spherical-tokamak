@@ -5,35 +5,7 @@
     "input_in_dat_path": "$path_expand:../data/PROCESS/st_regression.IN.DAT",
     "read_dir": "$path_expand:../data/PROCESS/run_dir",
     "run_dir": "$path_expand:../data/PROCESS/run_dir",
-    "plot": true
-  },
-  "dummy_fixed_boundary": {
-    "params": {
-      "R_0": {
-        "value": 0.4,
-        "unit": "meter",
-        "source": "Input",
-        "long_name": "Major radius"
-      },
-      "A": {
-        "value": 1.2,
-        "unit": "dimensionless",
-        "source": "Input",
-        "long_name": "Plasma aspect ratio"
-      },
-      "kappa_95": {
-        "value": 1.5,
-        "unit": "dimensionless",
-        "source": "Input",
-        "long_name": "95th percentile plasma elongation"
-      },
-      "delta_95": {
-        "value": 0.8,
-        "unit": "dimensionless",
-        "source": "Input",
-        "long_name": "95th percentile plasma triangularity"
-      }
-    }
+    "plot": false
   },
   "reference_fbe": {
     "plot_setup": true,

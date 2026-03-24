@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 import numpy as np
 from bluemira.equilibria.optimisation.constraints import (
     FieldNullConstraint,
+    IsofluxConstraint,
     MagneticConstraintSet,
 )
 from bluemira.geometry.constants import VERY_BIG
@@ -13,60 +14,72 @@ from bluemira.geometry.tools import (
     make_polygon,
 )
 
-from bluemira_st.optimisation.magnetic_constraints import make_auto_lcfs_constraint
+from bluemira_st.equlibria.reference_values import (
+    REF_SHAF_SHIFT,
+    REF_Z_P1_RAW,
+)
 
 if TYPE_CHECKING:
     from bluemira.equilibria import Equilibrium
-    from bluemira.equilibria.optimisation.constraints import MagneticConstraint
-    from bluemira.geometry.coordinates import Coordinates
     from bluemira.geometry.wire import BluemiraWire
 
 
 def build_reference_constraint_set(
-    constraint_config: dict, lcfs_coords: Coordinates
+    params: dict,
 ) -> MagneticConstraintSet:
     """
     Build a set of reference constraints for the equilibrium.
 
     Parameters
     ----------
-    constraint_config:
-        Configuration for the constraints
-    lcfs_coords:
-        Coordinates of the LCFS (discretised)
+    params:
+        Parameters to construct the constraints from
 
     Returns
     -------
     ReferenceConstraints:
         Set of reference constraints for the equilibrium
     """
-    z_min = np.min(lcfs_coords.z)
-    z_max = np.max(lcfs_coords.z)
-    arg_z_min = np.argmin(lcfs_coords.z)
-    arg_z_max = np.argmax(lcfs_coords.z)
+    R_0 = params.R_0.value  # noqa: N806
+    A = params.A.value  # noqa: N806
+    kappa = params.kappa.value
+    delta = params.delta.value
+    tk_bb = params.tk_bb.value
 
-    constraints: list[MagneticConstraint]
+    # Reference values
+    rshaf_shift = REF_SHAF_SHIFT
+    # rz_p1 = REF_Z_P1
+    rz_p1_raw = REF_Z_P1_RAW
 
-    if np.isclose(abs(z_min), z_max):
-        # Double null
-        constraints = [
-            FieldNullConstraint(lcfs_coords.x[arg_z_min], lcfs_coords.z[arg_z_min]),
-            FieldNullConstraint(lcfs_coords.x[arg_z_max], lcfs_coords.z[arg_z_max]),
-        ]
-    else:
-        # Single null
-        constraints = [
-            FieldNullConstraint(lcfs_coords.x[arg_z_min], lcfs_coords.z[arg_z_min])
-            if abs(z_min) > z_max
-            else FieldNullConstraint(lcfs_coords.x[arg_z_max], lcfs_coords.z[arg_z_max]),
-        ]
+    # Minor radius
+    R_a = R_0 / A  # noqa: N806
+    shaf_shift = rshaf_shift * R_a
 
-    lcfs_iso_flux_const = make_auto_lcfs_constraint(
-        constraint_config, x_lcfs=lcfs_coords.x, z_lcfs=lcfs_coords.z
+    # Null coords
+    Z_x = kappa * R_a  # noqa: N806
+    R_x = R_0 - delta * R_a  # noqa: N806
+
+    R_in = R_0 - R_a  # noqa: N806
+    R_out = R_0 + R_a  # noqa: N806
+
+    R_leg1 = R_0 + shaf_shift  # noqa: N806
+    Z_leg = Z_x + rz_p1_raw  # *Z_x # noqa: N806
+    R_leg2 = R_0 + R_a + tk_bb  # R_leg1 + shaf_shift # noqa: N806
+
+    x_point_u = FieldNullConstraint(R_x, Z_x)
+    x_point_l = FieldNullConstraint(R_x, -Z_x)
+
+    isoflux = IsofluxConstraint(
+        [R_x, R_x, R_in, R_out, R_leg1, R_leg1, R_leg2, R_leg2],
+        [Z_x, -Z_x, 0.0, 0.0, Z_leg, -Z_leg, Z_leg, -Z_leg],
+        R_x,
+        Z_x,
+        tolerance=1e-6,
     )
-    constraints.append(lcfs_iso_flux_const)
 
-    return MagneticConstraintSet(constraints)
+    constraints_list = [isoflux, x_point_u, x_point_l]
+
+    return MagneticConstraintSet(constraints_list)
 
 
 def get_intersections_from_angles(
