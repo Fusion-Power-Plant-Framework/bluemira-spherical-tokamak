@@ -55,6 +55,7 @@ def build_tf_coils(
     build_config: dict,
     coilset: CoilSet,
     plasma_lcfs: BluemiraWire,
+
 ) -> TFCoil:
     """Build the TF coils from the initial TF coil shapes.
 
@@ -70,8 +71,12 @@ def build_tf_coils(
     return TFCoil(builder.build())
 
 
-def build_bb(params: dict | ParameterFrame, build_config: dict, lcfs_wire: BluemiraWire
-, mat_name: str):
+def build_bb(
+        params: dict | ParameterFrame,
+        build_config: dict,
+        lcfs_wire: BluemiraWire,
+        mat_name: str,
+        ref_fbe: Equilibrium):
     """Build the breeder blanket component."""
-    bb = BB(BBBuilder(params, lcfs_wire, mat_name).build())
+    bb = BB(BBBuilder(params, lcfs_wire, mat_name, ref_fbe).build())
     return bb
