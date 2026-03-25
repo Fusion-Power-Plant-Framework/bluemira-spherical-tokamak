@@ -11,7 +11,7 @@
     "plot_setup": true,
     "plot": true,
     "coilset": {
-      "coil_discretisation": 10
+      "coil_discretisation": 0.1
     },
     "grid": {
       "nx": 100,

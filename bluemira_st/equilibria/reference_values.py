@@ -9,26 +9,37 @@ REF_SHAF_SHIFT = 0.39238
 
 # PF coil positions
 # Diff in x coords for P1 and null, scaled by minor radius
-# dx(P1 - R_x) / a
-REF_X_P1 = -0.11944
-# dz(P1 - Z_x) / Z_x (plasma height, Z_x)
+#     dx(P1 - R_x) / a**2
+REF_X_P1 = -0.10750
+#     dz(P1 - Z_x) / Z_x (plasma height, Z_x)
 REF_Z_P1 = 0.38889  # scaled
 REF_Z_P1_RAW = 2.380  # not scaled, [m]
 
 # Diff in z coords for P2 and P1, scaled by plasma height (Z_x)
-# dz(P2-P1) / Z_x
+#     dz(P2-P1) / Z_x
 REF_Z_P2 = 0.16340
+# Diff in x coords for P2 and P1, scaled by minor radius (a)
+#      dx(P2-P1) / a
+REF_X_P2 = 0.55
 
 # Diff in x coords for P3 and P2, scaled by minor radius (a)
-# dx(P3 - P2) / a
+#     dx(P3 - P2) / a
 REF_X_P3 = 1.8
 REF_X_P3_RAW = 3.6  # [m]
 
 # PF coil sizes
-# of PF coil height to width
-REF_ASPECTRATIO_PF = 1.81744
+# Aspect ratio of PF coil height to width
+REF_ASPECTRATIO_PF1 = 2.49813
+REF_ASPECTRATIO_PF2 = 1.27248
+REF_ASPECTRATIO_PF3 = 1.54496
+REF_ASPECTRATIO_PF4 = 2.68539
+REF_ASPECTRATIO_PF5 = 1.81744
 # Height scaled with plasma current
-REF_HEIGHT_PF = 2.9305799648506143e-08
+REF_HEIGHT_PF1 = 2.9305799648506222e-08
+REF_HEIGHT_PF2 = 2.051845342706497e-08
+REF_HEIGHT_PF3 = 2.4912126537785598e-08
+REF_HEIGHT_PF4 = 3.1502636203866455e-08
+REF_HEIGHT_PF5 = 2.9305799648506143e-08
 
 # CS coils
 # Full height of CS coils, scaled to plasma height (Z_x)

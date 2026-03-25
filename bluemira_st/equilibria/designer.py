@@ -14,6 +14,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+import numpy as np
 from bluemira.base.designer import Designer
 from bluemira.base.parameter_frame import Parameter, ParameterFrame
 from bluemira.equilibria import Equilibrium
@@ -134,13 +135,15 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
 
         # Reference scaling values, put into separate file
         rx_p1 = refs.REF_X_P1
+        # rx_p2 = refs.REF_X_P2
         rz_p1 = refs.REF_Z_P1
         rz_p2 = refs.REF_Z_P2
         # rX_p3 = refs.REF_X_P3
 
         z_p1 = Z_x + (rz_p1 * Z_x)
         z_p2 = z_p1 + (rz_p2 * Z_x)
-        x_p1 = R_x + (rx_p1 * R_a)
+        x_p1 = R_x + (rx_p1 * (R_a**2))  # in relation to null
+        # x_p1 = R_0 - (rx_p2 * R_a) # in reln to P2 and R_0
         x_p3 = R_0 + refs.REF_X_P3_RAW
         x_p4 = R_0 + tk_bb + R_a  # + shaf_shift
         x_p5 = x_p4 + shaf_shift  # R_0 + R_a + tk_bb
@@ -148,16 +151,31 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
         x_c = [x_p1, R_0, x_p3, x_p4, x_p5]
         z_c = [z_p1, z_p2, z_p2, Z_x, Z_x * (1 / 3)]
 
-        pf_scale = I_p * refs.REF_HEIGHT_PF
-        pf_A = 1.0 / refs.REF_ASPECTRATIO_PF  # noqa: N806
+        pf_scales = np.array([
+            refs.REF_HEIGHT_PF1,
+            refs.REF_HEIGHT_PF2,
+            refs.REF_HEIGHT_PF3,
+            refs.REF_HEIGHT_PF4,
+            refs.REF_HEIGHT_PF5,
+        ])
+        pf_scales *= I_p
+        pf_As = np.array([  # noqa: N806
+            refs.REF_ASPECTRATIO_PF1,
+            refs.REF_ASPECTRATIO_PF2,
+            refs.REF_ASPECTRATIO_PF3,
+            refs.REF_ASPECTRATIO_PF4,
+            refs.REF_ASPECTRATIO_PF5,
+        ])
 
         coils = []
-        for i, (x, z) in enumerate(zip(x_c, z_c, strict=False)):
+        for i, (x, z, scale, pf_A) in enumerate(  # noqa: N806
+            zip(x_c, z_c, pf_scales, pf_As, strict=False)
+        ):
             coil_u = Coil(
                 x,
                 z,
-                dx=pf_scale * pf_A,
-                dz=pf_scale,
+                dx=scale * (1.0 / pf_A),
+                dz=scale,
                 current=0,
                 ctype="PF",
                 name=f"PF_u{i + 1}",
@@ -166,8 +184,8 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
             coil_l = Coil(
                 x,
                 -z,
-                dx=pf_scale * pf_A,
-                dz=pf_scale,
+                dx=scale * (1.0 / pf_A),
+                dz=scale,
                 current=0,
                 ctype="PF",
                 name=f"PF_l{i + 1}",
