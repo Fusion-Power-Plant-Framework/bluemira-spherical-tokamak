@@ -10,23 +10,31 @@ REF_SHAF_SHIFT = 0.39238
 # PF coil positions
 # Diff in x coords for P1 and null, scaled by minor radius
 # dx(P1 - R_x) / a
-REF_X_P1 = -0.215
+REF_X_P1 = -0.11944
 # dz(P1 - Z_x) / Z_x (plasma height, Z_x)
-REF_Z_P1 = 0.51886  # scaled
-REF_Z_P1_RAW = 2.9  # not scaled, [m]
+REF_Z_P1 = 0.38889  # scaled
+REF_Z_P1_RAW = 2.380  # not scaled, [m]
 
 # Diff in z coords for P2 and P1, scaled by plasma height (Z_x)
 # dz(P2-P1) / Z_x
-REF_Z_P2 = 0.179
+REF_Z_P2 = 0.16340
 
 # Diff in x coords for P3 and P2, scaled by minor radius (a)
 # dx(P3 - P2) / a
 REF_X_P3 = 1.8
 REF_X_P3_RAW = 3.6  # [m]
 
+# PF coil sizes
+# of PF coil height to width
+REF_ASPECTRATIO_PF = 1.81744
+# Height scaled with plasma current
+REF_HEIGHT_PF = 2.9305799648506143e-08
+
 # CS coils
 # Full height of CS coils, scaled to plasma height (Z_x)
-REF_HEIGHT_CS = 0.15482
+REF_HEIGHT_CS = 0.14167
+REF_HEIGHT_CS_SQ = 0.02315  # divided by Z_x**2
+REF_HEIGHT_CS_QU = 0.00062  # by Z**4
 # CS coil height / width
 REF_ASPECTRATIO_CS = 27.09375
 # X coord ref for CS coils nearest the null points, prop. to minor radius (a)
@@ -34,7 +42,9 @@ REF_ASPECTRATIO_CS = 27.09375
 REF_X_CS_NULL = 0.47675
 # Z coord ref for CS coil above null, prop. to plasma height (Z_x)
 # dz(Z_CS1 - Z_x) / Z_x
-REF_Z_CSU = 0.14643
+REF_Z_CSU = 0.04902
+REF_Z_CSU_RAW = 0.3
 # Z coord ref for CS coil below null, prop. to plasma height (Z_x)
 # dz(Z_CS2 - Z_x) / Z_x
-REF_Z_CSL = -0.03571
+REF_Z_CSL = -0.11765
+REF_Z_CSL_RAW = -0.72

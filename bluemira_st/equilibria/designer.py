@@ -134,30 +134,30 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
 
         # Reference scaling values, put into separate file
         rx_p1 = refs.REF_X_P1
-        # rz_p1 = refs.REF_Z_P1
-        rz_p1_raw = refs.REF_Z_P1_RAW
+        rz_p1 = refs.REF_Z_P1
         rz_p2 = refs.REF_Z_P2
         # rX_p3 = refs.REF_X_P3
 
-        z_p1 = Z_x + rz_p1_raw  # *Z_x
+        z_p1 = Z_x + (rz_p1 * Z_x)
         z_p2 = z_p1 + (rz_p2 * Z_x)
         x_p1 = R_x + (rx_p1 * R_a)
         x_p3 = R_0 + refs.REF_X_P3_RAW
-        x_p4 = R_0 + shaf_shift + tk_bb
-        x_p5 = R_0 + R_a + tk_bb
+        x_p4 = R_0 + tk_bb + R_a  # + shaf_shift
+        x_p5 = x_p4 + shaf_shift  # R_0 + R_a + tk_bb
 
         x_c = [x_p1, R_0, x_p3, x_p4, x_p5]
         z_c = [z_p1, z_p2, z_p2, Z_x, Z_x * (1 / 3)]
 
-        pf_scale = I_p * (1e-8)
+        pf_scale = I_p * refs.REF_HEIGHT_PF
+        pf_A = 1.0 / refs.REF_ASPECTRATIO_PF  # noqa: N806
 
         coils = []
         for i, (x, z) in enumerate(zip(x_c, z_c, strict=False)):
             coil_u = Coil(
                 x,
                 z,
-                dx=pf_scale,
-                dz=2.0 * pf_scale,
+                dx=pf_scale * pf_A,
+                dz=pf_scale,
                 current=0,
                 ctype="PF",
                 name=f"PF_u{i + 1}",
@@ -166,8 +166,8 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
             coil_l = Coil(
                 x,
                 -z,
-                dx=pf_scale,
-                dz=2.0 * pf_scale,
+                dx=pf_scale * pf_A,
+                dz=pf_scale,
                 current=0,
                 ctype="PF",
                 name=f"PF_l{i + 1}",
@@ -178,20 +178,21 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
             coils.append(coil)
 
         # CS reference values
-        rh_cs = refs.REF_HEIGHT_CS
+        rh_cs = refs.REF_HEIGHT_CS_QU
         rA_cs = refs.REF_ASPECTRATIO_CS  # noqa: N806
         rx_cs_u = refs.REF_X_CS_NULL
         # rz_cs1 = refs.REF_Z_CSU
-        rz_cs2 = refs.REF_Z_CSL
+        # rz_cs2 = refs.REF_Z_CSL
 
-        cs_height = rh_cs * Z_x * 0.5  # plasma height
+        cs_height = rh_cs * (Z_x**4) * 0.5
         cs_width = cs_height / rA_cs
         x_cs_u = rx_cs_u * R_a
         z_cs_0 = cs_height
-        x_cs_0 = R_0 - R_a - tk_bb
+        x_cs_0 = x_cs_u - 2.0 * cs_width
+
         z_cs = [
-            Z_x + cs_height,  # Z_x*(1+rZ_CS1),
-            Z_x * (1 + rz_cs2) - cs_height,
+            Z_x + cs_height,
+            Z_x - 1.5 * cs_height,
             z_cs_0 + (4.0 * cs_height),
             z_cs_0 + (2.0 * cs_height),
             z_cs_0,
@@ -277,9 +278,9 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
         }
         opt_config = {**defaults, **self.build_config.get("optimisation", {})}
 
-        constraint_config = opt_config.get("constraint", {})
+        # constraint_config = opt_config.get("constraint", {})
 
-        eq_targets = build_reference_constraint_set(constraint_config, self.params)
+        eq_targets = build_reference_constraint_set(self.params)
         return UnconstrainedTikhonovCurrentGradientCOP(
             eq, eq_targets, gamma=opt_config["gamma"]
         )
