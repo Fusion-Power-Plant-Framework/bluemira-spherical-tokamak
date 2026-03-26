@@ -64,7 +64,7 @@ class ReferenceFreeBoundaryEquilibriumDesignerParams(ParameterFrame):
 
 class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
     """
-    Solves a free boundary equilibrium from .
+    Solves a free boundary equilibrium parametrically.
 
     Some coils are positioned at sensible locations to try and get an initial
     free boundary equilibrium in order to be able to draw an initial first wall
@@ -135,22 +135,8 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
 
         # Reference scaling values, put into separate file
         rx_p1 = refs.REF_X_P1
-        # rx_p2 = refs.REF_X_P2
         rz_p1 = refs.REF_Z_P1
         rz_p2 = refs.REF_Z_P2
-        # rX_p3 = refs.REF_X_P3
-
-        z_p1 = Z_x + (rz_p1 * Z_x)
-        z_p2 = z_p1 + (rz_p2 * Z_x)
-        x_p1 = R_x + (rx_p1 * (R_a**2))  # in relation to null
-        # x_p1 = R_0 - (rx_p2 * R_a) # in reln to P2 and R_0
-        x_p3 = R_0 + refs.REF_X_P3_RAW
-        x_p4 = R_0 + tk_bb + R_a  # + shaf_shift
-        x_p5 = x_p4 + shaf_shift  # R_0 + R_a + tk_bb
-
-        x_c = [x_p1, R_0, x_p3, x_p4, x_p5]
-        z_c = [z_p1, z_p2, z_p2, Z_x, Z_x * (1 / 3)]
-
         pf_scales = np.array([
             refs.REF_HEIGHT_PF1,
             refs.REF_HEIGHT_PF2,
@@ -158,24 +144,34 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
             refs.REF_HEIGHT_PF4,
             refs.REF_HEIGHT_PF5,
         ])
-        pf_scales *= I_p
-        pf_As = np.array([  # noqa: N806
+        pf_heights = pf_scales * I_p
+        pf_As = [  # noqa: N806
             refs.REF_ASPECTRATIO_PF1,
             refs.REF_ASPECTRATIO_PF2,
             refs.REF_ASPECTRATIO_PF3,
             refs.REF_ASPECTRATIO_PF4,
             refs.REF_ASPECTRATIO_PF5,
-        ])
+        ]
+
+        z_p1 = Z_x + (rz_p1 * Z_x)
+        z_p2 = z_p1 + (rz_p2 * Z_x)
+        x_p1 = R_x + (rx_p1 * (R_a**2))
+        x_p3 = R_0 + R_a + tk_bb
+        x_p4 = x_p3
+        x_p5 = x_p4 + shaf_shift
+
+        x_c = [x_p1, R_0, x_p3, x_p4, x_p5]
+        z_c = [z_p1, z_p2, z_p2, Z_x, Z_x * (1 / 3)]
 
         coils = []
-        for i, (x, z, scale, pf_A) in enumerate(  # noqa: N806
-            zip(x_c, z_c, pf_scales, pf_As, strict=False)
+        for i, (x, z, height, pf_A) in enumerate(  # noqa: N806
+            zip(x_c, z_c, pf_heights, pf_As, strict=False)
         ):
             coil_u = Coil(
                 x,
                 z,
-                dx=scale * (1.0 / pf_A),
-                dz=scale,
+                dx=height * (1.0 / pf_A),
+                dz=height,
                 current=0,
                 ctype="PF",
                 name=f"PF_u{i + 1}",
@@ -184,8 +180,8 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
             coil_l = Coil(
                 x,
                 -z,
-                dx=scale * (1.0 / pf_A),
-                dz=scale,
+                dx=height * (1.0 / pf_A),
+                dz=height,
                 current=0,
                 ctype="PF",
                 name=f"PF_l{i + 1}",
@@ -196,21 +192,21 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
             coils.append(coil)
 
         # CS reference values
-        rh_cs = refs.REF_HEIGHT_CS_QU
+        rh_cs = refs.REF_HEIGHT_CS
         rA_cs = refs.REF_ASPECTRATIO_CS  # noqa: N806
-        rx_cs_u = refs.REF_X_CS_NULL
-        # rz_cs1 = refs.REF_Z_CSU
-        # rz_cs2 = refs.REF_Z_CSL
+        rx_cs_u = refs.REF_X_CS_NULL_R0
 
-        cs_height = rh_cs * (Z_x**4) * 0.5
+        cs_height = rh_cs * Z_x * 0.5
         cs_width = cs_height / rA_cs
-        x_cs_u = rx_cs_u * R_a
-        z_cs_0 = cs_height
+        x_cs_u = rx_cs_u * R_0
+        z_cs_u = Z_x + 0.5 * cs_height
+
         x_cs_0 = x_cs_u - 2.0 * cs_width
+        z_cs_0 = cs_height
 
         z_cs = [
-            Z_x + cs_height,
-            Z_x - 1.5 * cs_height,
+            z_cs_u,
+            z_cs_u - refs.REF_CS_SEP * cs_height * 2.0,
             z_cs_0 + (4.0 * cs_height),
             z_cs_0 + (2.0 * cs_height),
             z_cs_0,

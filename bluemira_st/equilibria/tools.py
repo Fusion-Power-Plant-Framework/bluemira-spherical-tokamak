@@ -48,7 +48,6 @@ def build_reference_constraint_set(
 
     # Reference values
     rshaf_shift = REF_SHAF_SHIFT
-    # rz_p1 = REF_Z_P1
     rz_p1_raw = REF_Z_P1_RAW
 
     # Minor radius
@@ -63,8 +62,8 @@ def build_reference_constraint_set(
     R_out = R_0 + R_a  # noqa: N806
 
     R_leg1 = R_0 + shaf_shift  # noqa: N806
-    Z_leg = Z_x + rz_p1_raw  # *Z_x # noqa: N806
-    R_leg2 = R_0 + R_a + tk_bb  # R_leg1 + shaf_shift # noqa: N806
+    Z_leg = Z_x + rz_p1_raw  # noqa: N806
+    R_leg2 = R_0 + R_a + tk_bb  # noqa: N806
 
     x_point_u = FieldNullConstraint(R_x, Z_x)
     x_point_l = FieldNullConstraint(R_x, -Z_x)
