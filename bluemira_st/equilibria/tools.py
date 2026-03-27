@@ -14,7 +14,7 @@ from bluemira.geometry.tools import (
     make_polygon,
 )
 
-from bluemira_st.equlibria.reference_values import (
+from bluemira_st.equilibria.reference_values import (
     SHAF_SHIFT,
     Z_P1_RAW,
 )
