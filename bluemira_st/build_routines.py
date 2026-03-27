@@ -10,17 +10,10 @@ from bluemira_st.tf_coil.builder import TFCoilBuilder
 from bluemira_st.tf_coil.designer import TFCoilDesigner, TFInitialShapeDesigner
 from bluemira_st.tf_coil.manager import TFCoil
 
-# from bluemira_st.pf_coil.designer import PFCoilDesigner
-# from bluemira_st.pf_coil.builder import build_pf_coils_component
-
 
 def build_reference_equilibrium(
     params: dict | ParameterFrame,
     build_config: dict,
-    # equilibrium_manager: EquilibriumManager,
-    # lcfs_wire: BluemiraWire | None,
-    # profiles: Profile | None,
-    # tf_cl: GeometryParameterisation | None,
 ) -> Equilibrium:
     """
     Build the reference equilibrium for the tokamak and store in
@@ -34,9 +27,6 @@ def build_reference_equilibrium(
     designer = ReferenceFreeBoundaryEquilibriumDesigner(
         params,
         build_config,
-        # lcfs_wire,
-        # profiles,
-        # tf_cl_wire=tf_cl.create_shape() if tf_cl else None,
     )
     return designer.execute()
 
@@ -88,26 +78,3 @@ def build_tf_coils(
     ).execute()
     builder = TFCoilBuilder(params, build_config, tf_cl.create_shape(), tf_wp_xs)
     return TFCoil(builder.build())
-
-
-# def build_pf_coils(
-#     params: dict | ParameterFrame,
-#     build_config: dict,
-#     equilibrium_manager,
-# ) -> PFCoil:
-#     """Design and build the PF coils.
-
-#     Returns
-#     -------
-#     :
-#         The PF coil shapes?? that then are put in a position ?
-#     """
-#     pf_designer = PFCoilsDesigner(
-#         params,
-#         build_config,
-#         equilibrium_manager
-#     )
-
-#     coilset = pf_designer.execute()
-#     component = build_pf_coils_component(params, build_config, coilset)
-#     return PFCoil(component, coilset)
