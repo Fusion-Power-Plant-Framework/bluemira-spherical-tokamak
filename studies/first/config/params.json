@@ -113,7 +113,19 @@
     "source": "PROCESS",
     "long_name": "Total TF coil thickness in z-direction"
   },
-  "tf_pf_gap": {
+  "r_tf_corner_inner": {
+    "value": 0.5,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "TF coil inner corner radius"
+  },
+  "r_tf_corner_outer": {
+    "value": 0.5,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "TF coil outer corner radius"
+  },
+  "g_tf_pf": {
     "value": 0.5,
     "unit": "meter",
     "source": "Input",
@@ -125,10 +137,273 @@
     "source": "Input",
     "long_name": "TF coil ripple limit"
   },
-  "tk_bb": {
-    "value": 1.5,
+  "g_cr_rs": {
+    "value": 0.3,
     "unit": "meter",
     "source": "Input",
-    "long_name": "Thickness of the vaccuum vessel"
+    "long_name": "Gap between Cyrostat and radiation shield"
+  },
+  "g_cr_ts": {
+    "value": 0.3,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Gap between Cyrostat and Cryostat thermal shield"
+  },
+  "g_cs_tf": {
+    "value": 0.05,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Gap between CS and TF"
+  },
+  "g_ts_pf": {
+    "value": 0.3,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Gap between TS and PF"
+  },
+  "g_ts_tf": {
+    "value": 0.05,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Gap between TS and TF"
+  },
+  "g_vv_bb": {
+    "value": 0.02,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Gap between VV and BB"
+  },
+  "g_vv_ts": {
+    "value": 0.05,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Gap between VV and TS"
+  },
+  "r_cs_in": {
+    "value": 2.2,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Central Solenoid inner radius"
+  },
+  "r_fw_ib_in": {
+    "value": 5.8,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Inboard first wall inner radius"
+  },
+  "r_fw_ob_in": {
+    "value": 12.1,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Outboard first wall inner radius"
+  },
+  "r_tf_in": {
+    "value": 3.2,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Inboard radius of the TF coil inboard leg"
+  },
+  "r_tf_in_centre": {
+    "value": 3.7,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Inboard TF leg centre radius"
+  },
+  "r_tf_inboard_out": {
+    "value": 0.6265,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Outboard Radius of the TF coil inboard leg tapered region"
+  },
+  "r_tf_out_centre": {
+    "value": 16.2,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Outboard TF leg centre radius"
+  },
+  "r_ts_ib_in": {
+    "value": 4.3,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Inboard TS inner radius"
+  },
+  "r_vv_ib_in": {
+    "value": 5.1,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Inboard vessel inner radius"
+  },
+  "r_vv_ob_in": {
+    "value": 14.5,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Outboard vessel inner radius"
+  },
+  "tk_bb_ib": {
+    "value": 0.755,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Inboard blanket thickness"
+  },
+  "tk_bb_ob": {
+    "value": 0.982,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Outboard blanket thickness"
+  },
+  "tk_cr_vv": {
+    "value": 0.15,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Cryostat VV thickness"
+  },
+  "tk_rs": {
+    "value": 2.0,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "thickness of the radiation shield"
+  },
+  "tk_cs": {
+    "value": 0.8,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Central Solenoid radial thickness"
+  },
+  "tk_fw_in": {
+    "value": 0.052,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Inboard first wall thickness"
+  },
+  "tk_fw_out": {
+    "value": 0.052,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Outboard first wall thickness"
+  },
+  "tk_pf_insulation": {
+    "value": 0.01,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "PF coil insulation thickness"
+  },
+  "tk_pf_casing": {
+    "value": 0.05,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "PF coil casing thickness"
+  },
+  "tk_sh_bot": {
+    "value": 0.0,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Lower shield thickness",
+    "description": "DO NOT USE - PROCESS has VV = VV + shield"
+  },
+  "tk_sh_in": {
+    "value": 0.0,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Inboard shield thickness",
+    "description": "DO NOT USE - PROCESS has VV = VV + shield"
+  },
+  "tk_sol_ib": {
+    "value": 0.225,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Inboard SOL thickness"
+  },
+  "tk_sol_ob": {
+    "value": 0.225,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Outboard SOL thickness"
+  },
+  "tk_sh_out": {
+    "value": 0.0,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Outboard shield thickness",
+    "description": "DO NOT USE - PROCESS has VV = VV + shield"
+  },
+  "tk_sh_top": {
+    "value": 0.0,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Upper shield thickness",
+    "description": "DO NOT USE - PROCESS has VV = VV + shield"
+  },
+  "tk_tf_front_ib": {
+    "value": 0.06,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "TF coil inboard steel front plasma-facing"
+  },
+  "tk_tf_inboard": {
+    "value": 1,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "TF coil inboard thickness"
+  },
+  "tk_tf_ins": {
+    "value": 0.08,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "TF coil ground insulation thickness"
+  },
+  "tk_tf_insgap": {
+    "value": 0.01,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "TF coil WP insertion gap",
+    "description": "Backfilled with epoxy resin (impregnation). This is an average value; can be less or more due to manufacturing tolerances"
+  },
+  "tk_tf_nose": {
+    "value": 0.6,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "TF coil inboard nose thickness"
+  },
+  "tk_tf_outboard": {
+    "value": 1,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "TF coil outboard thickness"
+  },
+  "tk_tf_side": {
+    "value": 0.05,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "TF coil inboard case minimum side wall thickness"
+  },
+  "tk_ts": {
+    "value": 0.05,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "TS thickness"
+  },
+  "tk_vv_bot": {
+    "value": 0.6,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Lower vacuum vessel thickness"
+  },
+  "tk_vv_in": {
+    "value": 0.6,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Inboard vacuum vessel thickness"
+  },
+  "tk_vv_out": {
+    "value": 1.1,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Outboard vacuum vessel thickness"
+  },
+  "tk_vv_top": {
+    "value": 0.6,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Upper vacuum vessel thickness"
   }
 }
