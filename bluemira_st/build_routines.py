@@ -1,8 +1,7 @@
 from bluemira.base.parameter_frame import ParameterFrame
 from bluemira.builders.plasma import Plasma, PlasmaBuilder
 from bluemira.equilibria.equilibrium import Equilibrium
-from bluemira.equilibria.profiles import Profile
-from bluemira.geometry.parameterisations import GeometryParameterisation, PrincetonD
+from bluemira.geometry.parameterisations import PrincetonD
 from bluemira.geometry.tools import interpolate_bspline
 from bluemira.geometry.wire import BluemiraWire
 
@@ -15,10 +14,6 @@ from bluemira_st.tf_coil.manager import TFCoil
 def build_reference_equilibrium(
     params: dict | ParameterFrame,
     build_config: dict,
-    # equilibrium_manager: EquilibriumManager,
-    lcfs_wire: BluemiraWire | None,
-    profiles: Profile | None,
-    tf_cl: GeometryParameterisation | None,
 ) -> Equilibrium:
     """
     Build the reference equilibrium for the tokamak and store in
@@ -32,9 +27,6 @@ def build_reference_equilibrium(
     designer = ReferenceFreeBoundaryEquilibriumDesigner(
         params,
         build_config,
-        lcfs_wire,
-        profiles,
-        tf_cl_wire=tf_cl.create_shape() if tf_cl else None,
     )
     return designer.execute()
 

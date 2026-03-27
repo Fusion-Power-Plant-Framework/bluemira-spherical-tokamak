@@ -1,7 +1,7 @@
 {
   "params": "$path:params.json",
   "radial_build": {
-    "run_mode": "run",
+    "run_mode": "read",
     "input_in_dat_path": "$path_expand:../data/PROCESS/st_regression.IN.DAT",
     "read_dir": "$path_expand:../data/PROCESS/run_dir",
     "run_dir": "$path_expand:../data/PROCESS/run_dir",
@@ -11,11 +11,11 @@
     "plot_setup": true,
     "plot": true,
     "coilset": {
-      "coil_discretisation": 10
+      "coil_discretisation": 0.1
     },
     "grid": {
       "nx": 100,
-      "nz": 100
+      "nz": 200
     },
     "solver": {
       "plot": true,
