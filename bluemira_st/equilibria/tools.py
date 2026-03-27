@@ -15,8 +15,8 @@ from bluemira.geometry.tools import (
 )
 
 from bluemira_st.equlibria.reference_values import (
-    REF_SHAF_SHIFT,
-    REF_Z_P1_RAW,
+    SHAF_SHIFT,
+    Z_P1_RAW,
 )
 
 if TYPE_CHECKING:
@@ -47,8 +47,8 @@ def build_reference_constraint_set(
     tk_bb = params.tk_bb.value
 
     # Reference values
-    rshaf_shift = REF_SHAF_SHIFT
-    rz_p1_raw = REF_Z_P1_RAW
+    rshaf_shift = SHAF_SHIFT
+    rz_p1_raw = Z_P1_RAW
 
     # minor radius
     R_a = R_0 / A  # noqa: N806

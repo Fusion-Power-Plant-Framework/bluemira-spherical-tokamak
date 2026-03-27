@@ -123,37 +123,33 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
         tk_bb = self.params.tk_bb.value
         # plasma current
         I_p = self.params.I_p.value  # noqa: N806
-
         # minor radius
         R_a = R_0 / A  # noqa: N806
         # shafranov shift
-        shaf_shift = refs.REF_SHAF_SHIFT * R_a
-
+        shaf_shift = refs.SHAF_SHIFT * R_a
         # null coords
         R_x = R_0 - delta * R_a  # noqa: N806
         Z_x = kappa * R_a  # noqa: N806
 
         # reference scaling values
-        rx_p1 = refs.REF_X_P1
-        rx_p2 = refs.REF_X_P2
-        rz_p1 = refs.REF_Z_P1
-        rz_p2 = refs.REF_Z_P2
+        rx_p1 = refs.X_P1
+        rx_p2 = refs.X_P2
+        rz_p1 = refs.Z_P1
+        rz_p2 = refs.Z_P2
         pf_scales = np.array([
-            refs.REF_HEIGHT_PF1,
-            refs.REF_HEIGHT_PF2,
-            refs.REF_HEIGHT_PF3,
-            refs.REF_HEIGHT_PF4,
-            refs.REF_HEIGHT_PF5,
+            refs.HEIGHT_PF1,
+            refs.HEIGHT_PF2,
+            refs.HEIGHT_PF3,
+            refs.HEIGHT_PF4,
+            refs.HEIGHT_PF5,
         ])
-        pf_heights = (
-            pf_scales * I_p * 0.5
-        )  # 0.5 is a new addition, makes the coils same size as paper
+        pf_heights = pf_scales * I_p * 0.5
         pf_As = [  # noqa: N806
-            refs.REF_ASPECTRATIO_PF1,
-            refs.REF_ASPECTRATIO_PF2,
-            refs.REF_ASPECTRATIO_PF3,
-            refs.REF_ASPECTRATIO_PF4,
-            refs.REF_ASPECTRATIO_PF5,
+            refs.ASPECTRATIO_PF1,
+            refs.ASPECTRATIO_PF2,
+            refs.ASPECTRATIO_PF3,
+            refs.ASPECTRATIO_PF4,
+            refs.ASPECTRATIO_PF5,
         ]
 
         x_p1 = R_x + (rx_p1 * (R_a**2))
@@ -196,14 +192,15 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
             coils.append(coil)
 
         # CS reference values
-        rh_cs = refs.REF_HEIGHT_CS
-        rA_cs = refs.REF_ASPECTRATIO_CS  # noqa: N806
-        rx_cs_u = refs.REF_X_CS_NULL_R0
+        ref_h_cs = refs.HEIGHT_CS
+        ref_A_cs = refs.ASPECTRATIO_CS  # noqa: N806
+        ref_x_cs_u = refs.X_CS_NULL_R0
 
-        cs_height = rh_cs * Z_x * 0.5
-        cs_width = cs_height / rA_cs
-        # z and x coords for the upper two CS coils near the null
-        x_cs_u = rx_cs_u * R_0
+        # CS coil dimensions
+        cs_height = ref_h_cs * Z_x * 0.5
+        cs_width = cs_height / ref_A_cs
+        # z and x coords for the CS coils near the null
+        x_cs_u = ref_x_cs_u * R_0
         z_cs_u = Z_x + 0.5 * cs_height
 
         x_cs_0 = x_cs_u * 0.8
@@ -211,15 +208,12 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
 
         z_cs = [
             z_cs_u,
-            z_cs_u - refs.REF_CS_SEP * cs_height * 2.0,
-            z_cs_0
-            + (
-                4.0 * cs_height
-            ),  # would comment out these three to test without the lower CS coils
-            z_cs_0 + (2.0 * cs_height),  # ''
-            z_cs_0,  # ''
+            z_cs_u - refs.CS_SEP * cs_height * 2.0,
+            z_cs_0 + (4.0 * cs_height),
+            z_cs_0 + (2.0 * cs_height),
+            z_cs_0,
         ]
-        x_cs = [x_cs_u, x_cs_u, x_cs_0, x_cs_0, x_cs_0]  # and the last 3 here
+        x_cs = [x_cs_u, x_cs_u, x_cs_0, x_cs_0, x_cs_0]
 
         for i, (x, z) in enumerate(zip(x_cs, z_cs, strict=False)):
             coil_u = Coil(
@@ -285,7 +279,6 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
     def _make_fix_to_free_opt_problem(
         self,
         eq: Equilibrium,
-        # lcfs_coords: Coordinates
     ) -> UnconstrainedTikhonovCurrentGradientCOP:
         """
         Create the optimisation problem for the equilibrium.
@@ -299,8 +292,6 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
             "gamma": 1e-8,
         }
         opt_config = {**defaults, **self.build_config.get("optimisation", {})}
-
-        # constraint_config = opt_config.get("constraint", {})
 
         eq_targets = build_reference_constraint_set(self.params)
         return UnconstrainedTikhonovCurrentGradientCOP(
@@ -338,16 +329,12 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
 
     @staticmethod
     def plot_opt_setup(
-        # lcfs_discr_coords: Coordinates,
         coilset: CoilSet,
         fbe_opt_problem,
-        # tf_cl_wire: BluemiraWire,
     ):
         _, ax = plt.subplots()
         fbe_opt_problem.targets.plot(ax=ax)
         coilset.plot(ax=ax, label=True)
-        # ax.plot(lcfs_discr_coords.x, lcfs_discr_coords.z, color="black")
-        # plot_2d(tf_cl_wire, ax=ax)
         plt.show()
 
     def run(self) -> Equilibrium:
@@ -359,17 +346,12 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
         :
             The optimised equilibrium
         """
-        # lcfs_parameterisation = self._create_lcfs_parameterisation()
-        # lcfs_wire = lcfs_parameterisation.create_shape()
-
         self.profiles = BetaIpProfile(
             self.params.beta_p.value,
             self.params.I_p.value,
             R_0=self.params.R_0.value,
             B_0=self.params.B_0.value,
         )
-
-        # lcfs_discr_coords = self.lcfs_wire.discretise(byedges=True, ndiscr=200)
 
         ref_coilset = self._make_reference_coilset()
         eq_grid = self._make_grid()
@@ -380,10 +362,8 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
 
         if self.build_config.get("plot_setup", False):
             self.plot_opt_setup(
-                # lcfs_discr_coords,
                 ref_coilset,
                 fbe_opt_problem,
-                # self.tf_cl_wire
             )
 
         iterator_program = self._make_iterative_solver(eq, fbe_opt_problem)
@@ -393,7 +373,6 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
             _, ax = plt.subplots()
             eq.plot(ax=ax)
             eq.coilset.plot(ax=ax, label=True)
-            # ax.plot(lcfs_discr_coords.x, lcfs_discr_coords.z, color="black")
             fbe_opt_problem.targets.plot(ax=ax)
             plt.show()
 
