@@ -255,7 +255,7 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
             "grid_scale_x": 2.0,
             "grid_scale_z": 2.0,
             "nx": 65,
-            "nz": 65,
+            "nz": 129,
         }
         grid_settings = {**defaults, **self.build_config.get("grid", {})}
 
@@ -356,7 +356,9 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
         ref_coilset = self._make_reference_coilset()
         eq_grid = self._make_grid()
 
-        eq = Equilibrium(ref_coilset, grid=eq_grid, profiles=self.profiles)
+        eq = Equilibrium(
+            ref_coilset, grid=eq_grid, profiles=self.profiles, force_symmetry=True
+        )
 
         fbe_opt_problem = self._make_fix_to_free_opt_problem(eq)
 
@@ -391,7 +393,9 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
         :
             The equilibrium read in
         """
-        eq = Equilibrium.from_eqdsk(self.file_path, qpsi_positive=False, from_cocos=3)
+        eq = Equilibrium.from_eqdsk(
+            self.file_path, qpsi_positive=False, from_cocos=3, force_symmetry=True
+        )
         self._update_params_from_eq(eq)
         return eq
 

@@ -15,7 +15,7 @@
     },
     "grid": {
       "nx": 100,
-      "nz": 100
+      "nz": 200
     },
     "solver": {
       "plot": true,
