@@ -1,7 +1,7 @@
 {
   "params": "$path:params.json",
   "radial_build": {
-    "run_mode": "read",
+    "run_mode": "run",
     "input_in_dat_path": "$path_expand:../data/PROCESS/st_regression.IN.DAT",
     "read_dir": "$path_expand:../data/PROCESS/run_dir",
     "run_dir": "$path_expand:../data/PROCESS/run_dir",
