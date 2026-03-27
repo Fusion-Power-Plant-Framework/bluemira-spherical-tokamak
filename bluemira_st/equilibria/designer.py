@@ -121,20 +121,21 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
         delta = self.params.delta.value
         # blanket thickness
         tk_bb = self.params.tk_bb.value
-        # Plasma current
+        # plasma current
         I_p = self.params.I_p.value  # noqa: N806
 
         # minor radius
         R_a = R_0 / A  # noqa: N806
-        # Shafranov shift,
+        # shafranov shift
         shaf_shift = refs.REF_SHAF_SHIFT * R_a
 
-        # Null coords
+        # null coords
         R_x = R_0 - delta * R_a  # noqa: N806
         Z_x = kappa * R_a  # noqa: N806
 
-        # Reference scaling values, put into separate file
+        # reference scaling values
         rx_p1 = refs.REF_X_P1
+        rx_p2 = refs.REF_X_P2
         rz_p1 = refs.REF_Z_P1
         rz_p2 = refs.REF_Z_P2
         pf_scales = np.array([
@@ -144,7 +145,9 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
             refs.REF_HEIGHT_PF4,
             refs.REF_HEIGHT_PF5,
         ])
-        pf_heights = pf_scales * I_p
+        pf_heights = (
+            pf_scales * I_p * 0.5
+        )  # 0.5 is a new addition, makes the coils same size as paper
         pf_As = [  # noqa: N806
             refs.REF_ASPECTRATIO_PF1,
             refs.REF_ASPECTRATIO_PF2,
@@ -153,14 +156,15 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
             refs.REF_ASPECTRATIO_PF5,
         ]
 
-        z_p1 = Z_x + (rz_p1 * Z_x)
-        z_p2 = z_p1 + (rz_p2 * Z_x)
         x_p1 = R_x + (rx_p1 * (R_a**2))
+        x_p2 = x_p1 + (rx_p2 * R_a)
         x_p3 = R_0 + R_a + tk_bb
         x_p4 = x_p3
         x_p5 = x_p4 + shaf_shift
+        z_p1 = Z_x + (rz_p1 * Z_x)
+        z_p2 = z_p1 + (rz_p2 * Z_x)
 
-        x_c = [x_p1, R_0, x_p3, x_p4, x_p5]
+        x_c = [x_p1, x_p2, x_p3, x_p4, x_p5]
         z_c = [z_p1, z_p2, z_p2, Z_x, Z_x * (1 / 3)]
 
         coils = []
@@ -198,20 +202,24 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
 
         cs_height = rh_cs * Z_x * 0.5
         cs_width = cs_height / rA_cs
+        # z and x coords for the upper two CS coils near the null
         x_cs_u = rx_cs_u * R_0
         z_cs_u = Z_x + 0.5 * cs_height
 
-        x_cs_0 = x_cs_u - 2.0 * cs_width
+        x_cs_0 = x_cs_u * 0.8
         z_cs_0 = cs_height
 
         z_cs = [
             z_cs_u,
             z_cs_u - refs.REF_CS_SEP * cs_height * 2.0,
-            z_cs_0 + (4.0 * cs_height),
-            z_cs_0 + (2.0 * cs_height),
-            z_cs_0,
+            z_cs_0
+            + (
+                4.0 * cs_height
+            ),  # would comment out these three to test without the lower CS coils
+            z_cs_0 + (2.0 * cs_height),  # ''
+            z_cs_0,  # ''
         ]
-        x_cs = [x_cs_u, x_cs_u, x_cs_0, x_cs_0, x_cs_0]
+        x_cs = [x_cs_u, x_cs_u, x_cs_0, x_cs_0, x_cs_0]  # and the last 3 here
 
         for i, (x, z) in enumerate(zip(x_cs, z_cs, strict=False)):
             coil_u = Coil(

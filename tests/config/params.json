@@ -1,0 +1,134 @@
+{
+  "n_PF": {
+    "value": 10,
+    "unit": "dimensionless",
+    "source": "Input",
+    "long_name": "Number of PF coils"
+  },
+  "n_TF": {
+    "value": 10,
+    "unit": "dimensionless",
+    "source": "Input",
+    "long_name": "Number of TF coils"
+  },
+  "R_0": {
+    "value": 3.6,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Major radius"
+  },
+  "z_0": {
+    "value": 0,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "z-coordinate of the plasma centre radius"
+  },
+  "A": {
+    "value": 1.8,
+    "unit": "dimensionless",
+    "source": "Input",
+    "long_name": "Plasma aspect ratio"
+  },
+  "I_p": {
+    "value": 22.76,
+    "unit": "megaampere",
+    "source": "Input",
+    "long_name": "Plasma current"
+  },
+  "B_0": {
+    "value": 2.45,
+    "unit": "tesla",
+    "source": "Input",
+    "long_name": "Toroidal field at R_0"
+  },
+  "l_i": {
+    "value": 0.23,
+    "unit": "dimensionless",
+    "source": "Input",
+    "long_name": "Normalised internal plasma inductance"
+  },
+  "beta_p": {
+    "value": 2.98,
+    "unit": "dimensionless",
+    "source": "Input",
+    "long_name": "Ratio of plasma pressure to poloidal magnetic pressure"
+  },
+  "delta": {
+    "value": 0.51,
+    "unit": "dimensionless",
+    "source": "Input",
+    "long_name": "Last closed surface plasma triangularity"
+  },
+  "delta_95": {
+    "value": 0,
+    "unit": "dimensionless",
+    "source": "Input",
+    "long_name": "95th percentile plasma triangularity"
+  },
+  "kappa": {
+    "value": 3.06,
+    "unit": "dimensionless",
+    "source": "Input",
+    "long_name": "Last closed surface plasma elongation"
+  },
+  "kappa_95": {
+    "value": 0,
+    "unit": "dimensionless",
+    "source": "Input",
+    "long_name": "95th percentile plasma elongation"
+  },
+  "q_95": {
+    "value": 2.92,
+    "unit": "dimensionless",
+    "source": "Input",
+    "long_name": "Plasma safety factor at the 95th percentile flux surface"
+  },
+  "shaf_shift": {
+    "value": 0,
+    "unit": "meter",
+    "source": "equilibria",
+    "long_name": "Shafranov shift of plasma (geometric=>magnetic)"
+  },
+  "tf_cl_ib_x": {
+    "value": 0,
+    "unit": "meter",
+    "source": "PROCESS",
+    "long_name": "TF coil center line inboard x-coordinate"
+  },
+  "tf_cl_ob_x": {
+    "value": 0,
+    "unit": "meter",
+    "source": "PROCESS",
+    "long_name": "TF coil center line outboard x-coordinate"
+  },
+  "tf_wp_depth": {
+    "value": 0,
+    "unit": "meter",
+    "source": "PROCESS",
+    "long_name": "Total TF coil thickness in y-direction"
+  },
+  "tf_wp_width": {
+    "value": 0,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Total TF coil thickness in z-direction"
+  },
+  "tf_pf_gap": {
+    "value": 0.5,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "TF coil to PF coils gap"
+  },
+  "TF_ripple_limit": {
+    "value": 0.6,
+    "unit": "percent",
+    "source": "Input",
+    "long_name": "TF coil ripple limit"
+  },
+  "tk_bb": {
+    "value": 1.5,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Thickness of the vaccuum vessel"
+  }
+}

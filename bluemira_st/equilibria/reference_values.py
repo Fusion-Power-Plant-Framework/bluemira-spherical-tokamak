@@ -1,6 +1,6 @@
 """
 Reference scaling values for isoflux, PF and CS coils.
-based on openSTEP data from EB-CC/_src/equilibrium.mat.
+Based on openSTEP data from EB-CC/_src/coilset.mat and equilibrium.mat.
 """
 
 # Shafranov shift

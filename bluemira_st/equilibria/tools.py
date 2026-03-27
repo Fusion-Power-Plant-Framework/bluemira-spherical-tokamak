@@ -50,11 +50,11 @@ def build_reference_constraint_set(
     rshaf_shift = REF_SHAF_SHIFT
     rz_p1_raw = REF_Z_P1_RAW
 
-    # Minor radius
+    # minor radius
     R_a = R_0 / A  # noqa: N806
     shaf_shift = rshaf_shift * R_a
 
-    # Null coords
+    # null coords
     Z_x = kappa * R_a  # noqa: N806
     R_x = R_0 - delta * R_a  # noqa: N806
 
