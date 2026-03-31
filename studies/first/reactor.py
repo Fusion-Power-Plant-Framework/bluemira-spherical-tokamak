@@ -21,11 +21,15 @@ from bluemira_st.build_routines import (
     build_plasma,
     build_reference_equilibrium,
     build_tf_coils,
+    build_bb,
+    build_is
 )
 from bluemira_st.params import BluemiraSTParams
 from bluemira_st.pf_coil.manager import PFCoil
 from bluemira_st.radial_build.run_process import radial_build
 from bluemira_st.tf_coil.manager import TFCoil
+
+from bluemira_st.inboard_shield.manager import IS
 
 
 class MyReactor(Reactor):
@@ -34,6 +38,7 @@ class MyReactor(Reactor):
     plasma: Plasma
     tf_coil: TFCoil
     blanket: BB
+    inboard_shield: IS
     # Models
     # equilibria: EquilibriumManager
     pf_coil: PFCoil
@@ -84,6 +89,13 @@ def main(build_config: str | Path | dict) -> MyReactor:
         ref_fbe=ref_fbe,
     )
 
+    reactor.inboard_shield = build_is(
+        reactor_config.params_for("inboard_shield"),
+        reactor_config.config_for("inboard_shield"),
+        lcfs_wire,
+        mat_name="EUROFER_MAT",
+        ref_fbe=ref_fbe
+        )
     reactor.show_cad("xyz")
     reactor.show_cad("xz")
 
