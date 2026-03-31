@@ -9,7 +9,12 @@ import numpy as np
 from bluemira.base.designer import Designer
 from bluemira.base.parameter_frame import Parameter, ParameterFrame
 from bluemira.builders.tf_coils import EquispacedSelector, RippleConstrainedLengthGOP
-from bluemira.geometry.parameterisations import GeometryParameterisation, PrincetonD
+from bluemira.equilibria.coils._grouping import CoilSet
+from bluemira.geometry.parameterisations import (
+    GeometryParameterisation,
+    PictureFrame,
+    PrincetonD,
+)
 from bluemira.geometry.tools import make_polygon
 from bluemira.geometry.wire import BluemiraWire
 
@@ -99,12 +104,43 @@ class TFCoilDesigner(Designer[tuple[GeometryParameterisation, BluemiraWire]]):
         self,
         params: dict | ParameterFrame,
         build_config: dict,
-        initial_tf_cl: GeometryParameterisation,
+        coilset: CoilSet,
         lcfs_wire: BluemiraWire,
     ):
         super().__init__(params, build_config)
-        self.initial_tf_cl = initial_tf_cl
+        self.initial_tf_cl = self._build_initial_tf_cl(coilset)
         self.lcfs_wire = lcfs_wire
+
+    def _build_initial_tf_cl(self, coilset: CoilSet) -> PictureFrame:
+        x_min = self.params.tf_cl_ib_x.value
+        ri = self.params.r_tf_inner.value
+        ro = self.params.r_tf_outer.value
+        offset = self.params.g_tf_pf.value
+        x_max, z_min, z_max = self._get_coilset_extrema(coilset)
+        x_max += offset
+        z_min -= offset
+        z_max += offset
+        return PictureFrame({
+            "x1": {"value": x_min, "fixed": True},
+            "x2": {
+                "value": x_max,
+                "fixed": False,
+                "lower_bound": x_max,
+                "upper_bound": x_max * 1.5,
+            },
+            "z1": {"value": z_max, "fixed": True},
+            "z2": {"value": z_min, "fixed": True},
+            "ri": {"value": ri, "fixed": True},
+            "ro": {"value": ro, "fixed": True},
+        })
+
+    @staticmethod
+    def _get_coilset_extrema(coilset: CoilSet):
+        x, z = [], []
+        for coil in coilset.coils:
+            x.extend(coil.x_boundary)
+            z.extend(coil.z_boundary)
+        return max(x), min(z), max(z)
 
     def _build_wp_xz(self) -> BluemiraWire:
         width = self.params.tf_wp_width.value / 2
