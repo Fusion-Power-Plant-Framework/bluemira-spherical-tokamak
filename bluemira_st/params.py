@@ -53,7 +53,6 @@ class BluemiraSTParams(ParameterFrame):
 
     tk_sol_ib: Parameter[float]
     tk_sol_ob: Parameter[float]
-    tk_bb_ib: Parameter[float]
     tk_bb_ob: Parameter[float]
     tk_cr_vv: Parameter[float]
     tk_cs: Parameter[float]
@@ -61,7 +60,3 @@ class BluemiraSTParams(ParameterFrame):
     tk_tf_nose: Parameter[float]
     tk_tf_side: Parameter[float]
     tk_ts: Parameter[float]
-    tk_vv_bot: Parameter[float]
-    tk_vv_in: Parameter[float]
-    tk_vv_out: Parameter[float]
-    tk_vv_top: Parameter[float]

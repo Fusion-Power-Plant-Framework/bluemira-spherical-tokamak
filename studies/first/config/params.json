@@ -149,12 +149,6 @@
     "source": "Input",
     "long_name": "Central Solenoid inner radius"
   },
-  "tk_bb_ib": {
-    "value": 0.755,
-    "unit": "meter",
-    "source": "Input",
-    "long_name": "Inboard blanket thickness"
-  },
   "tk_bb_ob": {
     "value": 0.982,
     "unit": "meter",
@@ -208,29 +202,5 @@
     "unit": "meter",
     "source": "Input",
     "long_name": "TS thickness"
-  },
-  "tk_vv_bot": {
-    "value": 0.3,
-    "unit": "meter",
-    "source": "Input",
-    "long_name": "Lower vacuum vessel thickness"
-  },
-  "tk_vv_in": {
-    "value": 0.6,
-    "unit": "meter",
-    "source": "Input",
-    "long_name": "Inboard vacuum vessel thickness"
-  },
-  "tk_vv_out": {
-    "value": 0.3,
-    "unit": "meter",
-    "source": "Input",
-    "long_name": "Outboard vacuum vessel thickness"
-  },
-  "tk_vv_top": {
-    "value": 0.3,
-    "unit": "meter",
-    "source": "Input",
-    "long_name": "Upper vacuum vessel thickness"
   }
 }
