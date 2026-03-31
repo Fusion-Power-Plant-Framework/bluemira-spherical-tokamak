@@ -36,9 +36,6 @@ def radial_build(params: BluemiraSTParams, build_config: dict) -> ParameterFrame
         "tf_wp_depth": {"recv": True, "send": False},
         # NONE mappings, changed to in/out mappings
         "l_i": {"recv": True, "send": True},
-        "tk_vv_bot": {"recv": True, "send": True},
-        "tk_vv_out": {"recv": True, "send": True},
-        "tk_vv_top": {"recv": True, "send": True},
         "tk_ts": {"recv": True, "send": True},
         "q_95": {"recv": True, "send": True},
     })

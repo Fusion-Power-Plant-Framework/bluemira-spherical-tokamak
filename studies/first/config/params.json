@@ -108,7 +108,7 @@
     "long_name": "Total TF coil thickness in y-direction"
   },
   "tf_wp_width": {
-    "value": 0.6,
+    "value": 0.0,
     "unit": "meter",
     "source": "Input",
     "long_name": "Total TF coil thickness in z-direction"
@@ -120,7 +120,7 @@
     "long_name": "TF coil ripple limit"
   },
   "g_cs_tf": {
-    "value": 0.05,
+    "value": 0.0,
     "unit": "meter",
     "source": "Input",
     "long_name": "Gap between CS and TF"
@@ -168,13 +168,13 @@
     "long_name": "Central Solenoid radial thickness"
   },
   "tk_sol_ib": {
-    "value": 0.225,
+    "value": 0.1,
     "unit": "meter",
     "source": "Input",
     "long_name": "Inboard SOL thickness"
   },
   "tk_sol_ob": {
-    "value": 0.225,
+    "value": 0.1,
     "unit": "meter",
     "source": "Input",
     "long_name": "Outboard SOL thickness"
