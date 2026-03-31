@@ -16,6 +16,8 @@ from bluemira_st.tf_coil.builder import TFCoilBuilder
 from bluemira_st.tf_coil.designer import TFCoilDesigner
 from bluemira_st.tf_coil.manager import TFCoil
 
+from bluemira_st.inboard_shield.builder import ISBuilder
+from bluemira_st.inboard_shield.manager import IS
 
 def build_reference_equilibrium(
     params: dict | ParameterFrame,
@@ -99,3 +101,13 @@ def build_pf_coils(
     """
     component = build_pf_coils_component(params, build_config, coilset)
     return PFCoil(component, coilset)
+
+def build_is(
+        params: dict | ParameterFrame,
+        build_config: dict,
+        mat_name: str,
+        ref_fbe: Equilibrium
+        ):
+    """Build the inboard shield component."""
+    is_comp = IS(ISBuilder(params, build_config, mat_name, ref_fbe).build())
+    return is_comp
