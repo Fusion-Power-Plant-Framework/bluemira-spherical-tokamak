@@ -24,7 +24,6 @@ def radial_build(params: BluemiraSTParams, build_config: dict) -> ParameterFrame
         "R_0": {"recv": True, "send": True},
         "B_0": {"recv": True, "send": True},
         "kappa": {"recv": True, "send": True},
-        "tk_tf_nose": {"recv": True, "send": True},
         "tk_cs": {"recv": True, "send": True},
         "g_vv_ts": {"recv": True, "send": True},
         # OUT mappings, restating defaults
