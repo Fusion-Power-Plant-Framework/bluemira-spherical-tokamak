@@ -5,7 +5,6 @@
 
 from dataclasses import dataclass
 
-import numpy as np
 from bluemira.base.designer import Designer
 from bluemira.base.parameter_frame import Parameter, ParameterFrame
 from bluemira.builders.tf_coils import EquispacedSelector, RippleConstrainedLengthGOP
@@ -13,69 +12,9 @@ from bluemira.equilibria.coils._grouping import CoilSet
 from bluemira.geometry.parameterisations import (
     GeometryParameterisation,
     PictureFrame,
-    PrincetonD,
 )
 from bluemira.geometry.tools import make_polygon
 from bluemira.geometry.wire import BluemiraWire
-
-
-@dataclass
-class TFInitialShapeDesignerParams(ParameterFrame):
-    """
-    Parameter frame for the initial TF center-line designer.
-    """
-
-    tf_cl_ib_x: Parameter[float]
-    tf_cl_ob_x: Parameter[float]
-
-
-class TFInitialShapeDesigner(Designer[PrincetonD]):
-    """
-    Designer to create the initial TF coil centreline.
-
-    Parameters
-    ----------
-    params:
-        The parameters for the designer
-    build_config:
-        The config for the designer
-    """
-
-    params: TFInitialShapeDesignerParams
-    param_cls: type[TFInitialShapeDesignerParams] = TFInitialShapeDesignerParams
-
-    def __init__(
-        self,
-        params,
-        build_config,
-        lcfs_boundary: BluemiraWire,
-    ):
-        super().__init__(params, build_config)
-        self.lcfs_boundary = lcfs_boundary
-
-    def run(self) -> PrincetonD:
-        """
-        Run the InitialTFCentrelineDesigner.
-
-        Returns
-        -------
-        :
-            The initial TF coil centreline
-        """
-        lcfs_coords = self.lcfs_boundary.discretise(byedges=True, ndiscr=200)
-        lcfs_z_max = np.min(lcfs_coords.z)
-        lcfs_z_min = np.max(lcfs_coords.z)
-        cl_ib_x = self.params.tf_cl_ib_x.value
-        cl_ob_x = self.params.tf_cl_ob_x.value
-        return PrincetonD({
-            "x1": {"value": cl_ib_x, "fixed": True},
-            "dz": {"value": (lcfs_z_max + lcfs_z_min) / 2, "fixed": True},
-            "x2": {
-                "value": cl_ob_x,
-                "lower_bound": cl_ob_x * 0.9,
-                "upper_bound": cl_ob_x * 1.1,
-            },
-        })
 
 
 @dataclass

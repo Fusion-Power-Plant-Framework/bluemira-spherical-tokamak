@@ -2,13 +2,12 @@ from bluemira.base.parameter_frame import ParameterFrame
 from bluemira.builders.plasma import Plasma, PlasmaBuilder
 from bluemira.equilibria.coils._grouping import CoilSet
 from bluemira.equilibria.equilibrium import Equilibrium
-from bluemira.geometry.parameterisations import PrincetonD
 from bluemira.geometry.tools import interpolate_bspline
 from bluemira.geometry.wire import BluemiraWire
 
 from bluemira_st.equilibria.designer import ReferenceFreeBoundaryEquilibriumDesigner
 from bluemira_st.tf_coil.builder import TFCoilBuilder
-from bluemira_st.tf_coil.designer import TFCoilDesigner, TFInitialShapeDesigner
+from bluemira_st.tf_coil.designer import TFCoilDesigner
 from bluemira_st.tf_coil.manager import TFCoil
 
 
@@ -46,19 +45,6 @@ def build_plasma(
     lcfs_wire = interpolate_bspline({"x": lcfs_loop.x, "z": lcfs_loop.z}, closed=True)
     builder = PlasmaBuilder(params, build_config, lcfs_wire)
     return Plasma(builder.build())
-
-
-def build_initial_tf_centerline(
-    params: dict | ParameterFrame, build_config: dict, lcfs_wire: BluemiraWire
-) -> PrincetonD:
-    """Build the initial TF coil shapes from an equilibrium.
-
-    Returns
-    -------
-    :
-        The inboard and outboard TF coil shapes
-    """
-    return TFInitialShapeDesigner(params, build_config, lcfs_wire).run()
 
 
 def build_tf_coils(
