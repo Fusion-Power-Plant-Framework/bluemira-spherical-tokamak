@@ -76,7 +76,8 @@ def build_bb(
         build_config: dict,
         lcfs_wire: BluemiraWire,
         mat_name: str,
-        ref_fbe: Equilibrium):
+        ref_fbe: Equilibrium
+        ):
     """Build the breeder blanket component."""
-    bb = BB(BBBuilder(params, lcfs_wire, mat_name, ref_fbe).build())
+    bb = BB(BBBuilder(params, build_config, lcfs_wire, mat_name, ref_fbe).build())
     return bb
