@@ -13,10 +13,7 @@ from bluemira.geometry.coordinates import Coordinates
 from bluemira.builders.tools import get_n_sectors
 
 from bluemira.geometry.tools import (
-    offset_wire,
-    sweep_shape,
     boolean_cut,
-    boolean_fuse,
     revolve_shape,
     make_polygon,
     interpolate_bspline,
@@ -38,9 +35,6 @@ class BBBuilderParams(ParameterFrame):
     # thicknesses
     tk_bb: Parameter[float]
     n_TF: Parameter[int]
-    shield_thickness: Parameter[float]
-    inboard_plasma_gap: Parameter[float]
-
 
 class BBBuilder(Builder):
     """Builder for the breeder blanket."""
@@ -53,24 +47,31 @@ class BBBuilder(Builder):
     def __init__(
         self,
         params: BBBuilderParams,
+        build_config: dict,
         lcfs_wire: BluemiraWire,
         material_name: str,
         ref_fbe: Equilibrium,
+        
+
     ):
         super().__init__(params, {"material": {self.BB: material_name}})
         self.lcfs_wire = lcfs_wire
         self.ref_fbe = ref_fbe
+        
+
 
     def build(self,
-              degree: float = 360.0
                ) -> Component:
         """Build the breeder blanket component."""
         # pass in fbe - to be removed once blanket design more mature
         # pass in required flux surfaces only.
         ref_fbe = self.ref_fbe
-        #lcfs = self.ref_fbe.lcfs() if self.ref_fbe else self.lcfs_wire
+        n_sectors = self.build_config.get("n_sectors", 1)
 
-        sector_degree, n_sectors = get_n_sectors(self.params.n_TF.value, degree)
+        sector_degree = 360.0 / self.params.n_TF.value
+        #lcfs = self.ref_fbe.lcfs() if self.ref_fbe else self.lcfs_wire
+    
+        #sector_degree, n_sectors = get_n_sectors(self.params.n_TF.value, degree)
 
         o_points,x_points = ref_fbe.get_OX_points()
         x_point_coords = np.array([[xp.x, xp.z] for xp in x_points])
@@ -78,7 +79,7 @@ class BBBuilder(Builder):
             raise ValueError("No X points found in the plasma boundary, cannot build blanket.")
         
         # get lcfs flux surface 
-        lcfs_surface = ref_fbe.get_flux_surface(0.999)
+        lcfs_surface = ref_fbe.get_LCFS()
         # get flux surface just outside the LCFS
         blanket_inner_surface = ref_fbe.get_flux_surface(1.05)
         # create parameter to extend wire from x point to blanket inner surface
@@ -144,43 +145,4 @@ class BBBuilder(Builder):
         pc_xyz = PhysicalComponent(self.BB, bb, mat)
         apply_component_display_options(pc_xyz, color=BLUE_PALETTE["BB"][0])
 
-
-        # make inboard shield geometry
-        # create vertical wire joining lower and upper x points 
-        shield_wire_coords = Coordinates({"x":[x_point_coords[0][0],x_point_coords[0][0]],
-                                    "z":[x_point_coords[0][1],x_point_coords[1][1]]})
-        # find min x of lcfs
-        # this probably should be done in a more robust way
-        lcfs_min = np.min(lcfs_surface[0])
-        shield_wire_outer = make_polygon(shield_wire_coords, label="Shield wire outer") 
-        # translate shield wire in x direction so that it is just outside the lcfs
-        shield_wire_outer.translate((-(x_point_coords[0][0]-lcfs_min+self.params.inboard_plasma_gap.value), 0, 0))
-        shield_wire_inner =shield_wire_outer.deepcopy()
-        shield_wire_inner.translate((self.params.shield_thickness.value, 0, 0))
-        shield_top_cap_wire = make_polygon([(shield_wire_outer.start_point(), shield_wire_inner.start_point())], label="Shield top cap wire")
-        shield_bottom_cap_wire = make_polygon([(shield_wire_outer.end_point(), shield_wire_inner.end_point())], label="Shield bottom cap wire")
-        shield_loop = BluemiraWire([shield_wire_outer, shield_top_cap_wire, shield_wire_inner, shield_bottom_cap_wire], label="Shield loop")
-        shield_face = BluemiraFace(shield_loop, label="Shield face")
-        shield_xyz = revolve_shape(shield_face, base=(0, 0, 0), direction=(0, 0, 1), degree=sector_degree * n_sectors, label="shield revolved")
-        shield_xz = shield_face
-        pc_2_xz = PhysicalComponent("Inboard shield",shield_xz,mat)
-        pc_2_xyz = PhysicalComponent("Inboard shield",shield_xyz,mat)
-        apply_component_display_options(pc_2_xyz, color=BLUE_PALETTE["BB"][0])
-        apply_component_display_options(pc_2_xz, color=BLUE_PALETTE["BB"][0])
-
-        # component group for blanket and shield
-        xz_group = Component("XZ_Group")
-        pc_xz.parent = xz_group
-        pc_2_xz.parent = xz_group
-
-        xyz_group = Component("XYZ_Group")
-        pc_xyz.parent = xyz_group
-        pc_2_xyz.parent = xyz_group
-
-        # Build the component tree
-        # return component group
-        return self.component_tree(
-            xz=[xz_group],
-            xy=[],
-            xyz=[xyz_group]
-        )
+        return self.component_tree(xz=[pc_xz], xy=[], xyz=[pc_xyz])
