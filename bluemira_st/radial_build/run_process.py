@@ -16,24 +16,31 @@ def radial_build(params: BluemiraSTParams, build_config: dict) -> ParameterFrame
             "template_in_dat": build_config["input_in_dat_path"],
         },
     )
-    # the params we are interested in obtained from PROCESS
+    # the params we are interested in obtaining from PROCESS
     # they must be defined bluemira side
     # in order to be read
     solver.modify_mappings({
-        "n_TF": {"recv": True, "send": False},
-        "R_0": {"recv": True, "send": False},
-        "A": {"recv": True, "send": False},
+        # OUT mappings changed to in/out mappings
+        "R_0": {"recv": True, "send": True},
+        "B_0": {"recv": True, "send": True},
+        "kappa": {"recv": True, "send": True},
+        "tk_tf_nose": {"recv": True, "send": True},
+        "tk_cs": {"recv": True, "send": True},
+        "g_vv_ts": {"recv": True, "send": True},
+        # OUT mappings, restating defaults
         "I_p": {"recv": True, "send": False},
-        "l_i": {"recv": True, "send": False},
-        "B_0": {"recv": True, "send": False},
         "beta_p": {"recv": True, "send": False},
-        "delta": {"recv": True, "send": False},
         "delta_95": {"recv": True, "send": False},
-        "kappa": {"recv": True, "send": False},
         "kappa_95": {"recv": True, "send": False},
-        "q_95": {"recv": True, "send": False},
         "tf_wp_width": {"recv": True, "send": False},
         "tf_wp_depth": {"recv": True, "send": False},
+        # NONE mappings, changed to in/out mappings
+        "l_i": {"recv": True, "send": True},
+        "tk_vv_bot": {"recv": True, "send": True},
+        "tk_vv_out": {"recv": True, "send": True},
+        "tk_vv_top": {"recv": True, "send": True},
+        "tk_ts": {"recv": True, "send": True},
+        "q_95": {"recv": True, "send": True},
     })
     new_params = solver.execute(run_mode)
 

@@ -6,15 +6,15 @@
     "long_name": "Number of PF coils"
   },
   "n_TF": {
-    "value": 10,
+    "value": 12,
     "unit": "dimensionless",
-    "source": "PROCESS",
+    "source": "Input",
     "long_name": "Number of TF coils"
   },
   "R_0": {
-    "value": 0,
+    "value": 4.5,
     "unit": "meter",
-    "source": "PROCESS",
+    "source": "Input",
     "long_name": "Major radius"
   },
   "z_0": {
@@ -24,9 +24,9 @@
     "long_name": "z-coordinate of the plasma centre radius"
   },
   "A": {
-    "value": 0,
+    "value": 1.8,
     "unit": "dimensionless",
-    "source": "PROCESS",
+    "source": "Input",
     "long_name": "Plasma aspect ratio"
   },
   "I_p": {
@@ -36,15 +36,15 @@
     "long_name": "Plasma current"
   },
   "B_0": {
-    "value": 0,
+    "value": 3.0,
     "unit": "tesla",
-    "source": "PROCESS",
+    "source": "Input",
     "long_name": "Toroidal field at R_0"
   },
   "l_i": {
-    "value": 0,
+    "value": 0.3,
     "unit": "dimensionless",
-    "source": "PROCESS",
+    "source": "Input",
     "long_name": "Normalised internal plasma inductance"
   },
   "beta_p": {
@@ -54,9 +54,9 @@
     "long_name": "Ratio of plasma pressure to poloidal magnetic pressure"
   },
   "delta": {
-    "value": 0,
+    "value": 0.5,
     "unit": "dimensionless",
-    "source": "PROCESS",
+    "source": "Input",
     "long_name": "Last closed surface plasma triangularity"
   },
   "delta_95": {
@@ -66,9 +66,9 @@
     "long_name": "95th percentile plasma triangularity"
   },
   "kappa": {
-    "value": 0,
+    "value": 2.8,
     "unit": "dimensionless",
-    "source": "PROCESS",
+    "source": "Input",
     "long_name": "Last closed surface plasma elongation"
   },
   "kappa_95": {
@@ -78,9 +78,9 @@
     "long_name": "95th percentile plasma elongation"
   },
   "q_95": {
-    "value": 0,
+    "value": 6.0,
     "unit": "dimensionless",
-    "source": "PROCESS",
+    "source": "Input",
     "long_name": "Plasma safety factor at the 95th percentile flux surface"
   },
   "shaf_shift": {
@@ -108,9 +108,9 @@
     "long_name": "Total TF coil thickness in y-direction"
   },
   "tf_wp_width": {
-    "value": 0,
+    "value": 0.6,
     "unit": "meter",
-    "source": "PROCESS",
+    "source": "Input",
     "long_name": "Total TF coil thickness in z-direction"
   },
   "TF_ripple_limit": {
