@@ -37,8 +37,6 @@ class BluemiraSTParams(ParameterFrame):
     # tf shape parameters
     tf_cl_ib_x: Parameter[float]
     tf_cl_ob_x: Parameter[float]
-    tf_wp_depth: Parameter[float]
-    tf_wp_width: Parameter[float]
 
     # tf opt params
     TF_ripple_limit: Parameter[float]
@@ -54,7 +52,6 @@ class BluemiraSTParams(ParameterFrame):
     tk_sol_ib: Parameter[float]
     tk_sol_ob: Parameter[float]
     tk_bb_ob: Parameter[float]
-    tk_cr_vv: Parameter[float]
     tk_cs: Parameter[float]
     tk_tf_front_ib: Parameter[float]
     tk_tf_nose: Parameter[float]

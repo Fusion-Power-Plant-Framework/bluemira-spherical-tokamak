@@ -101,20 +101,8 @@
     "source": "PROCESS",
     "long_name": "TF coil center line outboard x-coordinate"
   },
-  "tf_wp_depth": {
-    "value": 0,
-    "unit": "meter",
-    "source": "PROCESS",
-    "long_name": "Total TF coil thickness in y-direction"
-  },
-  "tf_wp_width": {
-    "value": 0.0,
-    "unit": "meter",
-    "source": "Input",
-    "long_name": "Total TF coil thickness in z-direction"
-  },
   "TF_ripple_limit": {
-    "value": 0.6,
+    "value": 1.0,
     "unit": "percent",
     "source": "Input",
     "long_name": "TF coil ripple limit"
@@ -126,13 +114,13 @@
     "long_name": "Gap between CS and TF"
   },
   "g_ts_tf": {
-    "value": 0.05,
+    "value": 0.01,
     "unit": "meter",
     "source": "Input",
     "long_name": "Gap between TS and TF"
   },
   "g_vv_bb": {
-    "value": 0.02,
+    "value": 0.01,
     "unit": "meter",
     "source": "Input",
     "long_name": "Gap between VV and BB"
@@ -150,16 +138,10 @@
     "long_name": "Central Solenoid inner radius"
   },
   "tk_bb_ob": {
-    "value": 0.982,
+    "value": 1.0,
     "unit": "meter",
     "source": "Input",
     "long_name": "Outboard blanket thickness"
-  },
-  "tk_cr_vv": {
-    "value": 0.15,
-    "unit": "meter",
-    "source": "Input",
-    "long_name": "Cryostat VV thickness"
   },
   "tk_cs": {
     "value": 0.25,
@@ -180,7 +162,7 @@
     "long_name": "Outboard SOL thickness"
   },
   "tk_tf_front_ib": {
-    "value": 0.06,
+    "value": 0.0,
     "unit": "meter",
     "source": "Input",
     "long_name": "TF coil inboard steel front plasma-facing"

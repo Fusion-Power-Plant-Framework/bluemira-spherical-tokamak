@@ -57,9 +57,6 @@ class ReferenceFreeBoundaryEquilibriumDesignerParams(ParameterFrame):
 
     tk_bb_ob: Parameter[float]
 
-    # tf shape parameters
-    tf_wp_width: Parameter[float]
-
 
 class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
     """
