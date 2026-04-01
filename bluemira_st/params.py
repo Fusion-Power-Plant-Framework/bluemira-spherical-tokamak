@@ -49,6 +49,8 @@ class BluemiraSTParams(ParameterFrame):
 
     r_cs_in: Parameter[float]
 
+    tf_wp_width: Parameter[float]
+    tf_wp_depth: Parameter[float]
     tk_sol_ib: Parameter[float]
     tk_sol_ob: Parameter[float]
     tk_bb_ob: Parameter[float]

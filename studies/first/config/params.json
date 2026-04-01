@@ -101,6 +101,18 @@
     "source": "PROCESS",
     "long_name": "TF coil center line outboard x-coordinate"
   },
+  "tf_wp_depth": {
+    "value": 0,
+    "unit": "meter",
+    "source": "PROCESS",
+    "long_name": "Total TF coil thickness in y-direction"
+  },
+  "tf_wp_width": {
+    "value": 0,
+    "unit": "meter",
+    "source": "PROCESS",
+    "long_name": "Total TF coil thickness in z-direction"
+  },
   "TF_ripple_limit": {
     "value": 0.6,
     "unit": "percent",
@@ -164,13 +176,13 @@
   "tk_tf_front_ib": {
     "value": 0.0,
     "unit": "meter",
-    "source": "Input",
+    "source": "PROCESS",
     "long_name": "TF coil inboard steel front plasma-facing"
   },
   "tk_tf_nose": {
     "value": 0.4,
     "unit": "meter",
-    "source": "Input",
+    "source": "PROCESS",
     "long_name": "TF coil inboard nose thickness"
   },
   "tk_tf_side": {
