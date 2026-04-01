@@ -48,14 +48,12 @@ class BBBuilder(Builder):
         self,
         params: BBBuilderParams,
         build_config: dict,
-        lcfs_wire: BluemiraWire,
         material_name: str,
         ref_fbe: Equilibrium,
         
 
     ):
         super().__init__(params, {"material": {self.BB: material_name}})
-        self.lcfs_wire = lcfs_wire
         self.ref_fbe = ref_fbe
         
 
@@ -69,17 +67,12 @@ class BBBuilder(Builder):
         n_sectors = self.build_config.get("n_sectors", 1)
 
         sector_degree = 360.0 / self.params.n_TF.value
-        #lcfs = self.ref_fbe.lcfs() if self.ref_fbe else self.lcfs_wire
-    
-        #sector_degree, n_sectors = get_n_sectors(self.params.n_TF.value, degree)
 
         o_points,x_points = ref_fbe.get_OX_points()
         x_point_coords = np.array([[xp.x, xp.z] for xp in x_points])
         if len(x_points) == 0:
             raise ValueError("No X points found in the plasma boundary, cannot build blanket.")
-        
-        # get lcfs flux surface 
-        lcfs_surface = ref_fbe.get_LCFS()
+
         # get flux surface just outside the LCFS
         blanket_inner_surface = ref_fbe.get_flux_surface(1.05)
         # create parameter to extend wire from x point to blanket inner surface
