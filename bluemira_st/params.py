@@ -37,12 +37,25 @@ class BluemiraSTParams(ParameterFrame):
     # tf shape parameters
     tf_cl_ib_x: Parameter[float]
     tf_cl_ob_x: Parameter[float]
-    tf_wp_depth: Parameter[float]
-    tf_wp_width: Parameter[float]
-    tf_pf_gap: Parameter[float]
 
     # tf opt params
     TF_ripple_limit: Parameter[float]
 
-    # Blanket thickness
-    tk_bb: Parameter[float]
+    # Radial build parameters
+    g_cs_tf: Parameter[float]
+    g_ts_tf: Parameter[float]
+    g_vv_bb: Parameter[float]
+    g_vv_ts: Parameter[float]
+
+    r_cs_in: Parameter[float]
+
+    tf_wp_width: Parameter[float]
+    tf_wp_depth: Parameter[float]
+    tk_sol_ib: Parameter[float]
+    tk_sol_ob: Parameter[float]
+    tk_bb_ob: Parameter[float]
+    tk_cs: Parameter[float]
+    tk_tf_front_ib: Parameter[float]
+    tk_tf_nose: Parameter[float]
+    tk_tf_side: Parameter[float]
+    tk_ts: Parameter[float]

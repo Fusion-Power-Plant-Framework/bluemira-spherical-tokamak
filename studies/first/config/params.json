@@ -6,15 +6,15 @@
     "long_name": "Number of PF coils"
   },
   "n_TF": {
-    "value": 10,
+    "value": 12,
     "unit": "dimensionless",
-    "source": "PROCESS",
+    "source": "Input",
     "long_name": "Number of TF coils"
   },
   "R_0": {
-    "value": 0,
+    "value": 4.5,
     "unit": "meter",
-    "source": "PROCESS",
+    "source": "Input",
     "long_name": "Major radius"
   },
   "z_0": {
@@ -24,9 +24,9 @@
     "long_name": "z-coordinate of the plasma centre radius"
   },
   "A": {
-    "value": 0,
+    "value": 1.8,
     "unit": "dimensionless",
-    "source": "PROCESS",
+    "source": "Input",
     "long_name": "Plasma aspect ratio"
   },
   "I_p": {
@@ -36,15 +36,15 @@
     "long_name": "Plasma current"
   },
   "B_0": {
-    "value": 0,
+    "value": 3.0,
     "unit": "tesla",
-    "source": "PROCESS",
+    "source": "Input",
     "long_name": "Toroidal field at R_0"
   },
   "l_i": {
-    "value": 0,
+    "value": 0.3,
     "unit": "dimensionless",
-    "source": "PROCESS",
+    "source": "Input",
     "long_name": "Normalised internal plasma inductance"
   },
   "beta_p": {
@@ -54,9 +54,9 @@
     "long_name": "Ratio of plasma pressure to poloidal magnetic pressure"
   },
   "delta": {
-    "value": 0,
+    "value": 0.5,
     "unit": "dimensionless",
-    "source": "PROCESS",
+    "source": "Input",
     "long_name": "Last closed surface plasma triangularity"
   },
   "delta_95": {
@@ -66,9 +66,9 @@
     "long_name": "95th percentile plasma triangularity"
   },
   "kappa": {
-    "value": 0,
+    "value": 2.8,
     "unit": "dimensionless",
-    "source": "PROCESS",
+    "source": "Input",
     "long_name": "Last closed surface plasma elongation"
   },
   "kappa_95": {
@@ -78,9 +78,9 @@
     "long_name": "95th percentile plasma elongation"
   },
   "q_95": {
-    "value": 0,
+    "value": 6.0,
     "unit": "dimensionless",
-    "source": "PROCESS",
+    "source": "Input",
     "long_name": "Plasma safety factor at the 95th percentile flux surface"
   },
   "shaf_shift": {
@@ -113,22 +113,88 @@
     "source": "PROCESS",
     "long_name": "Total TF coil thickness in z-direction"
   },
-  "tf_pf_gap": {
-    "value": 0.5,
-    "unit": "meter",
-    "source": "Input",
-    "long_name": "TF coil to PF coils gap"
-  },
   "TF_ripple_limit": {
     "value": 0.6,
     "unit": "percent",
     "source": "Input",
     "long_name": "TF coil ripple limit"
   },
-  "tk_bb": {
-    "value": 1.5,
+  "g_cs_tf": {
+    "value": 0.0,
     "unit": "meter",
     "source": "Input",
-    "long_name": "Thickness of the vaccuum vessel"
+    "long_name": "Gap between CS and TF"
+  },
+  "g_ts_tf": {
+    "value": 0.01,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Gap between TS and TF"
+  },
+  "g_vv_bb": {
+    "value": 0.01,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Gap between VV and BB"
+  },
+  "g_vv_ts": {
+    "value": 0.01,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Gap between VV and TS"
+  },
+  "r_cs_in": {
+    "value": 0.3,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Central Solenoid inner radius"
+  },
+  "tk_bb_ob": {
+    "value": 1.0,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Outboard blanket thickness"
+  },
+  "tk_cs": {
+    "value": 0.25,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Central Solenoid radial thickness"
+  },
+  "tk_sol_ib": {
+    "value": 0.1,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Inboard SOL thickness"
+  },
+  "tk_sol_ob": {
+    "value": 0.1,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Outboard SOL thickness"
+  },
+  "tk_tf_front_ib": {
+    "value": 0.0,
+    "unit": "meter",
+    "source": "PROCESS",
+    "long_name": "TF coil inboard steel front plasma-facing"
+  },
+  "tk_tf_nose": {
+    "value": 0.4,
+    "unit": "meter",
+    "source": "PROCESS",
+    "long_name": "TF coil inboard nose thickness"
+  },
+  "tk_tf_side": {
+    "value": 0.05,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "TF coil inboard case minimum side wall thickness"
+  },
+  "tk_ts": {
+    "value": 0.05,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "TS thickness"
   }
 }

@@ -44,7 +44,7 @@ def build_reference_constraint_set(
     A = params.A.value  # noqa: N806
     kappa = params.kappa.value
     delta = params.delta.value
-    tk_bb = params.tk_bb.value
+    tk_bb = params.tk_bb_ob.value
 
     # Reference values
     rshaf_shift = SHAF_SHIFT

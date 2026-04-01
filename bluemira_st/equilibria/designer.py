@@ -55,11 +55,7 @@ class ReferenceFreeBoundaryEquilibriumDesignerParams(ParameterFrame):
 
     n_PF: Parameter[int]
 
-    tk_bb: Parameter[float]
-
-    # tf shape parameters
-    tf_wp_width: Parameter[float]
-    tf_pf_gap: Parameter[float]
+    tk_bb_ob: Parameter[float]
 
 
 class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
@@ -119,8 +115,8 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
         kappa = self.params.kappa.value
         # triangularity
         delta = self.params.delta.value
-        # blanket thickness
-        tk_bb = self.params.tk_bb.value
+        # Outboard blanket thickness
+        tk_bb = self.params.tk_bb_ob.value
         # plasma current
         I_p = self.params.I_p.value  # noqa: N806
         # minor radius
