@@ -31,6 +31,9 @@ class TFCoilDesignerParams(ParameterFrame):
     # WP
     tf_wp_width: Parameter[float]
     tf_wp_depth: Parameter[float]
+    r_tf_in_centre: Parameter[float]
+    r_tf_corner_inner: Parameter[float]
+    r_tf_corner_outer: Parameter[float]
 
 
 class TFCoilDesigner(Designer[tuple[GeometryParameterisation, BluemiraWire]]):
@@ -51,9 +54,9 @@ class TFCoilDesigner(Designer[tuple[GeometryParameterisation, BluemiraWire]]):
         self.lcfs_wire = lcfs_wire
 
     def _build_initial_tf_cl(self, coilset: CoilSet) -> PictureFrame:
-        x_min = self.params.tf_cl_ib_x.value
-        ri = self.params.r_tf_inner.value
-        ro = self.params.r_tf_outer.value
+        x_min = self.params.r_tf_in_centre.value
+        ri = self.params.r_tf_corner_inner.value
+        ro = self.params.r_tf_corner_outer.value
         offset = self.params.g_tf_pf.value
         x_max, z_min, z_max = self._get_coilset_extrema(coilset)
         x_max += offset

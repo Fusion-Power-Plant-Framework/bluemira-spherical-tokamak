@@ -40,6 +40,9 @@ class BluemiraSTParams(ParameterFrame):
 
     # tf opt params
     TF_ripple_limit: Parameter[float]
+    r_tf_in_centre: Parameter[float]
+    r_tf_corner_inner: Parameter[float]
+    r_tf_corner_outer: Parameter[float]
 
     # Radial build parameters
     g_cs_tf: Parameter[float]
