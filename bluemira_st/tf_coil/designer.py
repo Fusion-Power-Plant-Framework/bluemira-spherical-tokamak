@@ -5,6 +5,7 @@
 
 from dataclasses import dataclass
 
+import numpy as np
 from bluemira.base.designer import Designer
 from bluemira.base.parameter_frame import Parameter, ParameterFrame
 from bluemira.builders.tf_coils import EquispacedSelector, RippleConstrainedLengthGOP
@@ -34,6 +35,7 @@ class TFCoilDesignerParams(ParameterFrame):
     r_tf_in_centre: Parameter[float]
     r_tf_corner_inner: Parameter[float]
     r_tf_corner_outer: Parameter[float]
+    g_pf_tf: Parameter[float]
 
 
 class TFCoilDesigner(Designer[tuple[GeometryParameterisation, BluemiraWire]]):
@@ -57,7 +59,7 @@ class TFCoilDesigner(Designer[tuple[GeometryParameterisation, BluemiraWire]]):
         x_min = self.params.r_tf_in_centre.value
         ri = self.params.r_tf_corner_inner.value
         ro = self.params.r_tf_corner_outer.value
-        offset = self.params.g_tf_pf.value
+        offset = self.params.g_pf_tf.value
         x_max, z_min, z_max = self._get_coilset_extrema(coilset)
         x_max += offset
         z_min -= offset
@@ -79,10 +81,10 @@ class TFCoilDesigner(Designer[tuple[GeometryParameterisation, BluemiraWire]]):
     @staticmethod
     def _get_coilset_extrema(coilset: CoilSet):
         x, z = [], []
-        for coil in coilset.coils:
+        for coil in coilset._coils:  # noqa: SLF001
             x.extend(coil.x_boundary)
             z.extend(coil.z_boundary)
-        return max(x), min(z), max(z)
+        return np.max(x), np.min(z), np.max(z)
 
     def _build_wp_xz(self) -> BluemiraWire:
         width = self.params.tf_wp_width.value / 2

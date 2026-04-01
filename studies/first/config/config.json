@@ -1,14 +1,14 @@
 {
   "params": "$path:params.json",
   "radial_build": {
-    "run_mode": "run",
+    "run_mode": "read",
     "input_in_dat_path": "$path_expand:../data/PROCESS/st_regression.IN.DAT",
     "read_dir": "$path_expand:../data/PROCESS/run_dir",
     "run_dir": "$path_expand:../data/PROCESS/run_dir",
     "plot": false
   },
   "reference_fbe": {
-    "plot_setup": true,
+    "plot_setup": false,
     "plot": true,
     "coilset": {
       "coil_discretisation": 0.1
@@ -32,28 +32,10 @@
   "tf_coils": {
     "params": {},
     "designer": {
-      "runmode": "run",
-      "param_class": "PrincetonD",
-      "var_dict": {
-        "x1": { "value": 3.0, "fixed": true },
-        "x2": { "value": 15, "lower_bound": 12 }
-      }
+      "runmode": "run"
     },
     "builder": {
-      "params": {
-        "tf_wp_width": {
-          "value": 0.6,
-          "unit": "m",
-          "source": "Input",
-          "long_name": "Width of TF coil winding pack"
-        },
-        "tf_wp_depth": {
-          "value": 0.8,
-          "unit": "m",
-          "source": "Input",
-          "long_name": "Depth of TF coil winding pack"
-        }
-      }
+      "params": {}
     }
   }
 }
