@@ -74,10 +74,9 @@ def build_tf_coils(
 def build_bb(
         params: dict | ParameterFrame,
         build_config: dict,
-        lcfs_wire: BluemiraWire,
         mat_name: str,
         ref_fbe: Equilibrium
         ):
     """Build the breeder blanket component."""
-    bb = BB(BBBuilder(params, build_config, lcfs_wire, mat_name, ref_fbe).build())
+    bb = BB(BBBuilder(params, build_config, mat_name, ref_fbe).build())
     return bb
