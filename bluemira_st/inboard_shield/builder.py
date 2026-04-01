@@ -44,12 +44,10 @@ class ISBuilder(Builder):
         self,
         params: ISBuilderParams,
         build_config: dict,
-        lcfs_wire: BluemiraWire,
         material_name: str,
         ref_fbe: Equilibrium,
     ):
         super().__init__(params, {"material": {self.IS: material_name}})
-        self.lcfs_wire = lcfs_wire
         self.ref_fbe = ref_fbe
 
     def build(self,
