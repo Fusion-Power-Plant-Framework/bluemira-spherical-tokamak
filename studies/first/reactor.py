@@ -10,8 +10,8 @@ from pathlib import Path
 from bluemira.base.reactor import Reactor
 from bluemira.base.reactor_config import ReactorConfig
 from bluemira.builders.plasma import Plasma
+from bluemira.geometry.tools import interpolate_bspline
 
-from bluemira.bluemira.geometry.tools import interpolate_bspline
 from bluemira_st.build_routines import (
     build_plasma,
     build_reference_equilibrium,
