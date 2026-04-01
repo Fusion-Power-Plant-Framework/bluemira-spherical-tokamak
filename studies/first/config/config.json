@@ -42,11 +42,10 @@
     "problem_settings": {
       "ripple_selector": {
         "cls": "bluemira.builders.tf_coils::EquispacedSelector",
-        "args": { "n_rip_points": 10 }
+        "args": { "n_rip_points": 20, "x_frac": 0.5 }
       },
-      "n_koz_points": 50,
-      "nx": 1,
-      "ny": 1
+      "nx": 3,
+      "ny": 3
     },
     "optimisation_settings": {
       "algorithm_name": "SLSQP",
