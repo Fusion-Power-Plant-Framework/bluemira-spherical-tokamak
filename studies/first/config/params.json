@@ -102,7 +102,7 @@
     "long_name": "TF coil center line outboard x-coordinate"
   },
   "TF_ripple_limit": {
-    "value": 1.0,
+    "value": 0.6,
     "unit": "percent",
     "source": "Input",
     "long_name": "TF coil ripple limit"
