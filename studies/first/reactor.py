@@ -92,7 +92,6 @@ def main(build_config: str | Path | dict) -> MyReactor:
     reactor.inboard_shield = build_is(
         reactor_config.params_for("inboard_shield"),
         reactor_config.config_for("inboard_shield"),
-        lcfs_wire,
         mat_name="EUROFER_MAT",
         ref_fbe=ref_fbe
         )
