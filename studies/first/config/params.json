@@ -196,5 +196,29 @@
     "unit": "meter",
     "source": "Input",
     "long_name": "TS thickness"
+  },
+  "r_tf_in_centre": {
+    "value": 0.0,
+    "unit": "meter",
+    "source": "PROCESS",
+    "long_name": "Inboard radius of the TF coil WP centre"
+  },
+  "r_tf_corner_inner": {
+    "value": 1.0,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Radius of the TF coil inner corner (poloidal plane)"
+  },
+  "r_tf_corner_outer": {
+    "value": 1.0,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Radius of the TF coil outer corner (poloidal plane)"
+  },
+  "g_pf_tf": {
+    "value": 0.2,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Gap between PF and TF coils"
   }
 }

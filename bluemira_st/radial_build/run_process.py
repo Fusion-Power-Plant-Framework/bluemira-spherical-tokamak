@@ -46,6 +46,4 @@ def radial_build(params: BluemiraSTParams, build_config: dict) -> ParameterFrame
         solver.plot_radial_build(show=True)
 
     params.update_from_frame(new_params)
-    params._set_param("tf_cl_ib_x", new_params.r_tf_in_centre)  # noqa: SLF001
-    params._set_param("tf_cl_ob_x", new_params.r_tf_out_centre)  # noqa: SLF001
     return params

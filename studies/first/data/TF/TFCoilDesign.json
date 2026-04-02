@@ -1,0 +1,79 @@
+{
+  "x1": {
+    "value": 0.8751303550378526,
+    "lower_bound": 0.3,
+    "upper_bound": 0.5,
+    "fixed": true,
+    "description": "Inner limb radius"
+  },
+  "x2": {
+    "value": 10.702348087971883,
+    "lower_bound": 9.383943894555347,
+    "upper_bound": 14.075915841833021,
+    "fixed": false,
+    "description": "Outer limb radius"
+  },
+  "z1": {
+    "value": 11.379647496026418,
+    "lower_bound": 8,
+    "upper_bound": 10.5,
+    "fixed": true,
+    "description": "Upper limb height"
+  },
+  "z2": {
+    "value": -11.379647496026418,
+    "lower_bound": -10.5,
+    "upper_bound": -8,
+    "fixed": true,
+    "description": "Lower limb height"
+  },
+  "ri": {
+    "value": 1.0,
+    "lower_bound": 0,
+    "upper_bound": 2,
+    "fixed": true,
+    "description": "Inboard corner radius"
+  },
+  "ro": {
+    "value": 1.0,
+    "lower_bound": 1,
+    "upper_bound": 5,
+    "fixed": true,
+    "description": "Outboard corner radius"
+  },
+  "x3": {
+    "value": 2.5,
+    "lower_bound": 2.4,
+    "upper_bound": 2.6,
+    "fixed": true,
+    "description": "Curve start radius"
+  },
+  "z1_peak": {
+    "value": 11,
+    "lower_bound": 6,
+    "upper_bound": 12,
+    "fixed": true,
+    "description": "Upper limb curve height"
+  },
+  "z2_peak": {
+    "value": -11,
+    "lower_bound": -12,
+    "upper_bound": -6,
+    "fixed": true,
+    "description": "Lower limb curve height"
+  },
+  "x4": {
+    "value": 1.1,
+    "lower_bound": 1,
+    "upper_bound": 1.3,
+    "fixed": true,
+    "description": "Middle limb radius"
+  },
+  "z3": {
+    "value": 6.5,
+    "lower_bound": 6,
+    "upper_bound": 8,
+    "fixed": true,
+    "description": "Taper angle stop height"
+  }
+}

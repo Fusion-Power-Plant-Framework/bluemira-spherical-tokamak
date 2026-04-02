@@ -1,14 +1,14 @@
 {
   "params": "$path:params.json",
   "radial_build": {
-    "run_mode": "run",
+    "run_mode": "read",
     "input_in_dat_path": "$path_expand:../data/PROCESS/st_regression.IN.DAT",
     "read_dir": "$path_expand:../data/PROCESS/run_dir",
     "run_dir": "$path_expand:../data/PROCESS/run_dir",
     "plot": false
   },
   "reference_fbe": {
-    "plot_setup": true,
+    "plot_setup": false,
     "plot": true,
     "coilset": {
       "coil_discretisation": 0.1
@@ -30,30 +30,26 @@
   },
   "plasma": {},
   "tf_coils": {
-    "params": {},
-    "designer": {
-      "runmode": "run",
-      "param_class": "PrincetonD",
-      "var_dict": {
-        "x1": { "value": 3.0, "fixed": true },
-        "x2": { "value": 15, "lower_bound": 12 }
-      }
+    "run_mode": "run",
+    "file_path": "$path_expand:../data/TF/TFCoilDesign.json",
+    "plot": true,
+    "material": {
+      "Winding Pack": "Toroidal_Field_Coil_2015",
+      "Casing": "Toroidal_Field_Coil_2015",
+      "Insulation": "Toroidal_Field_Coil_2015"
     },
-    "builder": {
-      "params": {
-        "tf_wp_width": {
-          "value": 0.6,
-          "unit": "m",
-          "source": "Input",
-          "long_name": "Width of TF coil winding pack"
-        },
-        "tf_wp_depth": {
-          "value": 0.8,
-          "unit": "m",
-          "source": "Input",
-          "long_name": "Depth of TF coil winding pack"
-        }
-      }
+    "problem_class": "bluemira.builders.tf_coils::RippleConstrainedLengthGOP",
+    "problem_settings": {
+      "ripple_selector": {
+        "cls": "bluemira.builders.tf_coils::EquispacedSelector",
+        "args": { "n_rip_points": 20, "x_frac": 0.5 }
+      },
+      "nx": 3,
+      "ny": 3
+    },
+    "optimisation_settings": {
+      "algorithm_name": "SLSQP",
+      "conditions": { "max_eval": 200, "ftol_rel": 1e-6 }
     }
   }
 }

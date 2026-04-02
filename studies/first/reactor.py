@@ -10,6 +10,7 @@ from pathlib import Path
 from bluemira.base.reactor import Reactor
 from bluemira.base.reactor_config import ReactorConfig
 from bluemira.builders.plasma import Plasma
+from bluemira.geometry.tools import interpolate_bspline
 
 from bluemira_st.build_routines import (
     build_plasma,
@@ -57,6 +58,8 @@ def main(build_config: str | Path | dict) -> MyReactor:
     reactor.tf_coil = build_tf_coils(
         reactor_config.params_for("tf_coils"),
         reactor_config.config_for("tf_coils"),
+        ref_fbe.coilset,
+        interpolate_bspline(ref_fbe.get_LCFS(), closed=True),
     )
 
     reactor.show_cad()
@@ -64,6 +67,7 @@ def main(build_config: str | Path | dict) -> MyReactor:
 
     return reactor
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     build_config_path = Path(Path(__file__).parent, "config/config.json").resolve()
     reactor = main(build_config_path)

@@ -65,6 +65,5 @@ class TFCoilBuilder(Builder):
     def build_xyz(self) -> PhysicalComponent:
         """Build the xyz Component of the TF coils."""
         wp_xs = deepcopy(self.tf_wp_xs_wire)
-        wp_xs.translate((self.cl_wire.bounding_box.x_min, 0, 0))
         volume = sweep_shape(wp_xs, self.cl_wire)
         return PhysicalComponent("Winding pack", volume)
