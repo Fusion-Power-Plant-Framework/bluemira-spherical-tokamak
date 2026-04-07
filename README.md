@@ -18,6 +18,11 @@ source ~/.miniforge-init.sh
 conda activate bluemira-{{cookiecutter.project_name}}
 ```
 
+Install PROCESS in your bluemira environment by running the following:
+```shell
+pip install -e .['process']
+```
+
 ## Running reactor designs
 
 The example study can be run as shown:
@@ -29,3 +34,13 @@ python studies/first/reactor.py
 ## Running tests
 
 A test directory is setup (currently empty) once test have been created they can be run with `pytest`.
+
+## Updates
+
+To update to the latest version of bluemira, delete your current environment using:
+
+```
+conda env remove -n bluemira-bluemira_st
+```
+
+and follow the usage guidelines for installing bluemira and PROCESS.

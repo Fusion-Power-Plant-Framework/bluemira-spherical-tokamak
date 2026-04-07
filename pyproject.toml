@@ -7,7 +7,7 @@ name = "bluemira_st"
 dynamic = ["version"]
 description = 'A demonstration project for a spherical tokamak in Bluemira.'
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = "MIT"
 keywords = []
 authors = [{ name = "The Bluemira Team"}]
@@ -35,6 +35,7 @@ docs = [
   "mkdocs-literate-nav",
 ]
 lint = ["ruff", "mypy"]
+process = ["process @ git+https://github.com/ukaea/process@v3.3.0"]
 
 [project.urls]
 Documentation = "https://github.com/Fusion-power-plant-framework/bluemira_st#readme"
@@ -45,6 +46,9 @@ Source = "https://github.com/Fusion-power-plant-framework/bluemira_st"
 source = "vcs"
 [tool.hatch.build.hooks.vcs]
 version-file = "bluemira_st/_version.py"
+
+[tool.hatch.metadata]
+allow-direct-references = true
 
 # env: default
 [tool.hatch.envs.default]
@@ -72,14 +76,14 @@ all    = ["style", "typing"]
 [tool.hatch.envs.test]
 features = ["test"]
 [[tool.hatch.envs.test.matrix]]
-python = ["3.10", "3.11", "3.12"]
+python = ["3.11", "3.12"]
 [tool.hatch.envs.test.scripts]
 tests      = "pytest {args:tests}"
 tests-cov  = "pytest --cov bluemira_st  --cov-report html:htmlcov_bluemira_st --cov-report xml {args:tests}"
 tests-cov-private  = "pytest --private --cov bluemira_st --cov-report html:htmlcov --cov-report xml {args:tests}"
 
 [tool.ruff]
-target-version = "py310"
+target-version = "py311"
 line-length = 89
 output-format= "concise"
 
