@@ -20,7 +20,7 @@ conda activate bluemira-{{cookiecutter.project_name}}
 
 Install PROCESS in your bluemira environment by running the following:
 ```shell
-pip install -e.['process']
+pip install -e .['process']
 ```
 
 ## Running reactor designs
