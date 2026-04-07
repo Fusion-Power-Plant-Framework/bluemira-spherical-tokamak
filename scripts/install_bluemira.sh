@@ -17,7 +17,7 @@
 
 # cd $tmp_dir
 INSTALL_CONDA=false
-PYTHON_VERSION="3.10"
+PYTHON_VERSION="3.11"
 TAG=false
 while getopts "i p:t:" flag
 do
