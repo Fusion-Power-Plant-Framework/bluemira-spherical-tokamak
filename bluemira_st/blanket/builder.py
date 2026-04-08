@@ -68,43 +68,6 @@ class BBBuilder(Builder):
 
         # get flux surface just outside the LCFS
         blanket_inner_surface = ref_fbe.get_flux_surface(1.05)
-        # create parameter to extend wire from x point to blanket inner surface
-        x_width = (self.params.g_p_bb.value + self.params.tk_bb_ob.value) * 2
-        x_point_wire_coords_upper = Coordinates({
-            "x": [
-                x_point_coords[1][0] + self.params.g_p_bb.value,
-                x_point_coords[1][0] + self.params.g_p_bb.value + x_width,
-            ],
-            "z": [x_point_coords[1][1], x_point_coords[1][1]],
-        })
-        x_point_wire_coords_lower = Coordinates({
-            "x": [
-                x_point_coords[0][0] + self.params.g_p_bb.value,
-                x_point_coords[0][0] + self.params.g_p_bb.value + x_width,
-            ],
-            "z": [x_point_coords[0][1], x_point_coords[0][1]],
-        })
-
-        x_point_wire_lower = make_polygon(
-            x_point_wire_coords_lower, label="X-point wire 2"
-        )
-
-        # reverse x-point wire coordinates so wire directions are consistent
-        # for creating faces etc.
-        rev_coords_x_point = Coordinates({
-            "x": list(reversed(x_point_wire_coords_upper.x)),
-            "z": list(reversed(x_point_wire_coords_upper.z)),
-        })
-
-        # reverse blanket outer surface wire coords
-        rev_coords = Coordinates({
-            "x": list(reversed(blanket_inner_surface.x)),
-            "z": list(reversed(blanket_inner_surface.z)),
-        })
-
-        x_point_wire_upper = make_polygon(
-            rev_coords_x_point, label="reversed X-point wire"
-        )
 
         blanket_inner_surface_wire = interpolate_bspline(
             Coordinates({"x": blanket_inner_surface.x, "z": blanket_inner_surface.z}),
@@ -113,7 +76,10 @@ class BBBuilder(Builder):
         )
         # copy blanket inner surface wire and split in the same way as inner surface wire
         blanket_outer_surface_wire = interpolate_bspline(
-            Coordinates({"x": rev_coords.x, "z": rev_coords.z}),
+            Coordinates({
+                "x": blanket_inner_surface.x[::-1],
+                "z": blanket_inner_surface.z[::-1],
+            }),
             closed=False,
             label="Blanket outer surface wire",
         )
@@ -153,43 +119,52 @@ class BBBuilder(Builder):
         blanket_face = BluemiraFace(blanket_loop, label="Blanket face")
 
         # Boolean cut for blanket face with x-point wires
-        cut_box_top_wire = x_point_wire_upper.deepcopy()
-        cut_box_bottom_wire = x_point_wire_lower.deepcopy()
-        cut_box_top_wire.translate((0, 0, lower_cap_wire.bounding_box.z_max))
-        cut_box_bottom_wire.translate((0, 0, upper_cap_wire.bounding_box.z_min))
-        # create wires to make closed loops for boolean cut faces.
-        cut_box_left_1 = make_polygon(
-            [(x_point_wire_upper.start_point(), cut_box_top_wire.start_point())],
-            label="Cut box top left",
+        # create parameter to extend wire from x point to blanket inner surface
+
+        x_cut_offset = 10.0
+        z_cut_offset = 10.0
+        upper_cut_box = BluemiraFace(
+            make_polygon(
+                {
+                    "x": [
+                        x_point_coords[1][0],
+                        x_point_coords[1][0] + x_cut_offset,
+                        x_point_coords[1][0] + x_cut_offset,
+                        x_point_coords[1][0],
+                    ],
+                    "z": [
+                        x_point_coords[1][1],
+                        x_point_coords[1][1],
+                        x_point_coords[1][1] + z_cut_offset,
+                        x_point_coords[1][1] + z_cut_offset,
+                    ],
+                },
+                closed=True,
+            )
         )
-        cut_box_right_1 = make_polygon(
-            [(x_point_wire_upper.end_point(), cut_box_top_wire.end_point())],
-            label="Cut box bottom left",
+        lower_cut_box = BluemiraFace(
+            make_polygon(
+                {
+                    "x": [
+                        x_point_coords[0][0],
+                        x_point_coords[0][0] + x_cut_offset,
+                        x_point_coords[0][0] + x_cut_offset,
+                        x_point_coords[0][0],
+                    ],
+                    "z": [
+                        x_point_coords[0][1],
+                        x_point_coords[0][1],
+                        x_point_coords[0][1] - z_cut_offset,
+                        x_point_coords[0][1] - z_cut_offset,
+                    ],
+                },
+                closed=True,
+            )
         )
-        cut_box_left_2 = make_polygon(
-            [(x_point_wire_lower.start_point(), cut_box_bottom_wire.start_point())],
-            label="Cut box top right",
-        )
-        cut_box_right_2 = make_polygon(
-            [(x_point_wire_lower.end_point(), cut_box_bottom_wire.end_point())],
-            label="Cut box bottom right",
-        )
-        # cutting boxes for boolean cut of flux surfaces sued to create blanket shape.
-        upper_cut_box_wire = BluemiraWire(
-            [cut_box_top_wire, cut_box_right_1, x_point_wire_upper, cut_box_left_1],
-            label="Cut box wire",
-        )
-        upper_cut_box_face = BluemiraFace(upper_cut_box_wire)
-        lower_cut_box_wire = BluemiraWire(
-            [cut_box_bottom_wire, cut_box_right_2, x_point_wire_lower, cut_box_left_2],
-            label="Cut box wire",
-        )
-        lower_cut_box_face = BluemiraFace(lower_cut_box_wire)
+
         # Boolean cut for blanket wires
-        blanket_face_cut = boolean_cut(
-            blanket_face, [upper_cut_box_face, lower_cut_box_face]
-        )
-        blanket_face_final = blanket_face_cut[1]
+        blanket_face_cut = boolean_cut(blanket_face, [upper_cut_box, lower_cut_box])
+        blanket_face_final = blanket_face_cut[0]
         bb = revolve_shape(
             blanket_face_final,
             base=(0, 0, 0),
