@@ -12,8 +12,7 @@ from bluemira.equilibria.equilibrium import Equilibrium
 from bluemira.geometry.coordinates import Coordinates
 from bluemira.geometry.face import BluemiraFace
 from bluemira.geometry.coordinates import Coordinates
-from bluemira.builders.tools import get_n_sectors
-
+from bluemira.geometry.face import BluemiraFace
 from bluemira.geometry.tools import (
     boolean_cut,
     interpolate_bspline,
@@ -33,6 +32,7 @@ class BBBuilderParams(ParameterFrame):
     fw_psi_n: Parameter[float]
 
 
+
 class BBBuilder(Builder):
     """Builder for the breeder blanket."""
 
@@ -40,20 +40,15 @@ class BBBuilder(Builder):
     param_cls: type[BBBuilderParams] = BBBuilderParams
     params: BBBuilderParams
 
-
     def __init__(
         self,
         params: BBBuilderParams,
         build_config: dict,  # noqa: ARG002
         material_name: str,
         ref_fbe: Equilibrium,
-        
-
     ):
         super().__init__(params, {"material": {self.BB: material_name}})
         self.ref_fbe = ref_fbe
-        
-
 
     def build(
         self,
@@ -180,7 +175,7 @@ class BBBuilder(Builder):
         )
         bb_xz = blanket_face_final
         mat = self.get_material(self.BB)
-        pc_xz = PhysicalComponent(self.BB,bb_xz, mat)
+        pc_xz = PhysicalComponent(self.BB, bb_xz, mat)
         pc_xyz = PhysicalComponent(self.BB, bb, mat)
         apply_component_display_options(pc_xyz, color=BLUE_PALETTE["BB"][0])
 
