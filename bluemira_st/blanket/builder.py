@@ -32,7 +32,6 @@ class BBBuilderParams(ParameterFrame):
     fw_psi_n: Parameter[float]
 
 
-
 class BBBuilder(Builder):
     """Builder for the breeder blanket."""
 
