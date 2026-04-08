@@ -101,4 +101,10 @@ def main(build_config: str | Path | dict) -> MyReactor:
 
 if __name__ == "__main__":
     build_config_path = Path(Path(__file__).parent, "config/config.json").resolve()
+
+    establish_material_cache([
+        "bluemira_st.materials",
+        "matproplib",
+    ])
+
     reactor = main(build_config_path)

@@ -1,4 +1,4 @@
-"""Materials for the LAR example."""
+"""Materials for the ST example."""
 
 from bluemira.materials.neutronics import make_KALOS_ACB_mat
 from matproplib.conditions import OperationalConditions
@@ -10,6 +10,9 @@ from matproplib.library.steel import SS316_L
 from matproplib.library.tungsten import PlanseeTungsten
 from matproplib.material import material, mixture
 from matproplib.properties.group import props
+
+from bluemira.base.look_and_feel import bluemira_warn
+from bluemira.materials.neutronics import make_KALOS_ACB_mat
 
 EUROFER_MAT = material(
     name="eurofer",
@@ -125,3 +128,7 @@ DIV_FW_MATERIAL = mixture(
     mix_condition=OperationalConditions(temperature=673.15, pressure=1e5),
     converters=OpenMCNeutronicConfig(material_id=302),
 )
+
+
+# This is a dummy placeholder material
+PF_MAT = SS316_L(name="Poloidal_Field_Coil")
