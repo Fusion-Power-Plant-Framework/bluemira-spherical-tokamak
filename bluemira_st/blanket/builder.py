@@ -60,8 +60,11 @@ class BBBuilder(Builder):
 
         sector_degree = 360.0 / self.params.n_TF.value
 
-        o_points, x_points = ref_fbe.get_OX_points()
-        x_point_coords = np.array([[xp.x, xp.z] for xp in x_points])
+        _, x_points = ref_fbe.get_OX_points()
+        # Only select the two "active" nulls
+        x_point_coords = np.array([[xp.x, xp.z] for xp in x_points[:2]])
+        # Sort them bottom to top
+        x_point_coords = x_point_coords[np.argsort(x_point_coords[:, 1])]
         if len(x_points) == 0:
             raise ValueError(
                 "No X points found in the plasma boundary, cannot build blanket."
