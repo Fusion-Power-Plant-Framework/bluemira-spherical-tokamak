@@ -27,6 +27,7 @@ class BBBuilderParams(ParameterFrame):
     # thicknesses
     tk_bb_ob: Parameter[float]
     n_TF: Parameter[int]
+    fw_psi_n: Parameter[float]
 
 
 class BBBuilder(Builder):
@@ -64,7 +65,7 @@ class BBBuilder(Builder):
         x_point_coords = x_point_coords[np.argsort(x_point_coords[:, 1])]
 
         # get flux surface just outside the LCFS
-        blanket_inner_surface = ref_fbe.get_flux_surface(1.05)
+        blanket_inner_surface = ref_fbe.get_flux_surface(self.params.fw_psi_n.value)
 
         blanket_inner_surface_wire = interpolate_bspline(
             Coordinates({"x": blanket_inner_surface.x, "z": blanket_inner_surface.z}),

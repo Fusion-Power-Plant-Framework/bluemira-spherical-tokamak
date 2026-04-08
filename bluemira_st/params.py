@@ -69,5 +69,7 @@ class BluemiraSTParams(ParameterFrame):
     tk_casing: Parameter[float]
     r_corner: Parameter[float]
 
+    # BB parameters
+    fw_psi_n: Parameter[float]
     # inboard  shield parameters
     shield_thickness: Parameter[float]

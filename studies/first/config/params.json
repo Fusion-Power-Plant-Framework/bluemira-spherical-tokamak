@@ -239,6 +239,12 @@
     "source": "Input",
     "long_name": "corner radius PF coil"
   },
+  "fw_psi_n": {
+    "value": 1.05,
+    "unit": "dimensionless",
+    "source": "Input",
+    "long_name": "Normalised psi boundary to fit FW to"
+  },
   "shield_thickness": {
     "value": 0.2,
     "unit": "meter",
