@@ -22,7 +22,7 @@ from bluemira.geometry.wire import BluemiraWire
 
 @dataclass
 class BBBuilderParams(ParameterFrame):
-    """Parameters for building a breeder blanket"""
+    """Parameters for building a breeder blanket."""
 
     # gaps
     g_p_bb: Parameter[float]
@@ -42,7 +42,7 @@ class BBBuilder(Builder):
     def __init__(
         self,
         params: BBBuilderParams,
-        build_config: dict,
+        build_config: dict,  # noqa: ARG002
         material_name: str,
         ref_fbe: Equilibrium,
     ):
@@ -65,10 +65,6 @@ class BBBuilder(Builder):
         x_point_coords = np.array([[xp.x, xp.z] for xp in x_points[:2]])
         # Sort them bottom to top
         x_point_coords = x_point_coords[np.argsort(x_point_coords[:, 1])]
-        if len(x_points) == 0:
-            raise ValueError(
-                "No X points found in the plasma boundary, cannot build blanket."
-            )
 
         # get flux surface just outside the LCFS
         blanket_inner_surface = ref_fbe.get_flux_surface(1.05)
@@ -93,7 +89,8 @@ class BBBuilder(Builder):
             x_point_wire_coords_lower, label="X-point wire 2"
         )
 
-        # reverse x-point wire coordinates so wire directions are consistent for creating faces etc.
+        # reverse x-point wire coordinates so wire directions are consistent
+        # for creating faces etc.
         rev_coords_x_point = Coordinates({
             "x": list(reversed(x_point_wire_coords_upper.x)),
             "z": list(reversed(x_point_wire_coords_upper.z)),
