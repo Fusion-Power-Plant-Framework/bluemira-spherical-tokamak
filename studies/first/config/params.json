@@ -226,5 +226,41 @@
     "unit": "dimensionless",
     "source": "Input",
     "long_name": "Normalised psi boundary to fit FW to"
+  },
+  "tk_pf_insulation": {
+    "value": 0.01,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "PF coil insulation thickness"
+  },
+  "tk_pf_casing": {
+    "value": 0.05,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "PF coil casing thickness"
+  },
+  "tk_cs_insulation": {
+    "value": 0.005,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Thickness of the CS coil insulation"
+  },
+  "tk_cs_casing": {
+    "value": 0.001,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Thickness of the CS coil casing"
+  },
+  "r_pf_corner": {
+    "value": 0,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "PF coil corner radius"
+  },
+  "r_cs_corner": {
+    "value": 0,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "CS coil corner radius"
   }
 }

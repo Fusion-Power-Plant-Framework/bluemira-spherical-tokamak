@@ -66,3 +66,11 @@ class BluemiraSTParams(ParameterFrame):
 
     # BB parameters
     fw_psi_n: Parameter[float]
+
+    # PF coil parameters
+    tk_pf_insulation: Parameter[float]
+    tk_pf_casing: Parameter[float]
+    tk_cs_insulation: Parameter[float]
+    tk_cs_casing: Parameter[float]
+    r_pf_corner: Parameter[float]
+    r_cs_corner: Parameter[float]
