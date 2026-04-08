@@ -64,11 +64,6 @@ class BluemiraSTParams(ParameterFrame):
     tk_tf_side: Parameter[float]
     tk_ts: Parameter[float]
 
-    # breeder blanket parameters
-    g_p_bb: Parameter[float]
-    g_bb_tf_min: Parameter[float]
-    tk_tf: Parameter[float]
-
     # pf coil parameters
     tk_insulation: Parameter[float]
     tk_casing: Parameter[float]
@@ -76,4 +71,3 @@ class BluemiraSTParams(ParameterFrame):
 
     # inboard  shield parameters
     shield_thickness: Parameter[float]
-    inboard_plasma_gap: Parameter[float]

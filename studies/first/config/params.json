@@ -220,7 +220,7 @@
     "unit": "meter",
     "source": "Input",
     "long_name": "Gap between PF and TF coils"
-   },
+  },
   "tk_insulation": {
     "value": 0.02,
     "unit": "meter",
@@ -239,34 +239,10 @@
     "source": "Input",
     "long_name": "corner radius PF coil"
   },
-  "g_bb_tf_min":{
-    "value":0.5,
-    "unit": "meter",
-    "source": "Input",
-    "long_name": "Minimum gap between the vacuum vessel and the TF coils"
-  },
-    "g_p_bb":{
-    "value": 0.6,
-    "unit": "meter",
-    "source": "input",
-    "long_name": "Gap between the plasma and the vacuum vessel"
-  },
-  "tk_tf": {
-    "value": 0.4,
-    "unit": "meter",
-    "source": "Input",
-    "long_name": "Thickness of the TF coil WP"
-  },
   "shield_thickness": {
     "value": 0.2,
     "unit": "meter",
     "source": "Input",
     "long_name": "Thickness of the shield"
-  },
-  "inboard_plasma_gap": {
-    "value": 0.3,
-    "unit": "meter",
-    "source": "Input",
-    "long_name": "Gap between the plasma and the inboard shield"
   }
 }

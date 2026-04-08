@@ -24,9 +24,6 @@ from bluemira.geometry.wire import BluemiraWire
 class BBBuilderParams(ParameterFrame):
     """Parameters for building a breeder blanket."""
 
-    # gaps
-    g_p_bb: Parameter[float]
-    g_bb_tf_min: Parameter[float]
     # thicknesses
     tk_bb_ob: Parameter[float]
     n_TF: Parameter[int]
