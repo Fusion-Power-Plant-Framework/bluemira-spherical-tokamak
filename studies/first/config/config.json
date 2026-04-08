@@ -52,7 +52,5 @@
       "conditions": { "max_eval": 200, "ftol_rel": 1e-6 }
     }
   },
-  "pf_coils": {
-    "plot": true
-  }
+  "pf_coils": {}
 }
