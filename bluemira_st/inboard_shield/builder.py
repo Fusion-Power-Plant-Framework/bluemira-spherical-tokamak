@@ -26,7 +26,7 @@ from bluemira.equilibria.equilibrium import Equilibrium
 @dataclass
 class ISBuilderParams(ParameterFrame):
     """Parameters for building an inboard shield"""
-    # thickness and gap for inboard shield
+    # thickness and position for inboard shield
     tk_rs: Parameter[float]
     dr_shld_inboard: Parameter[float]
     n_TF: Parameter[int]
