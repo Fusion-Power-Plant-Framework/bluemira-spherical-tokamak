@@ -27,8 +27,8 @@ from bluemira.equilibria.equilibrium import Equilibrium
 class ISBuilderParams(ParameterFrame):
     """Parameters for building an inboard shield"""
     # thickness and gap for inboard shield
-    shield_thickness: Parameter[float]
-    inboard_plasma_gap: Parameter[float]
+    tk_rs: Parameter[float]
+    dr_shld_inboard: Parameter[float]
     n_TF: Parameter[int]
 
 
@@ -59,27 +59,22 @@ class ISBuilder(Builder):
         ref_fbe = self.ref_fbe
         n_sectors = self.build_config.get("n_sectors", 1)
         sector_degree = 360.0 / self.params.n_TF.value
-
         o_points,x_points = ref_fbe.get_OX_points()
         x_point_coords = np.array([[xp.x, xp.z] for xp in x_points])
         if len(x_points) == 0:
             raise ValueError("No X points found in the plasma boundary, cannot build inboard shield.")
-        
-        # get lcfs flux surface 
-        lcfs_surface = ref_fbe.get_LCFS()
 
         # make inboard shield geometry
         # create vertical wire joining lower and upper x points 
         shield_wire_coords = Coordinates({"x":[x_point_coords[0][0],x_point_coords[0][0]],
                                     "z":[x_point_coords[0][1],x_point_coords[1][1]]})
-        # find min x of lcfs
-        # this probably should be done in a more robust way
-        lcfs_min = np.min(lcfs_surface[0])
-        shield_wire_outer = make_polygon(shield_wire_coords, label="Shield wire outer") 
-        # translate shield wire in x direction so that it is just outside the lcfs
-        shield_wire_outer.translate((-(x_point_coords[0][0]-lcfs_min+self.params.inboard_plasma_gap.value), 0, 0))
+        
+        shield_wire_outer = make_polygon(shield_wire_coords, label="Shield wire outer")
+        shield_wire_outer.translate(((-x_point_coords[0][0]+self.params.dr_shld_inboard.value),0,0))
         shield_wire_inner =shield_wire_outer.deepcopy()
-        shield_wire_inner.translate((self.params.shield_thickness.value, 0, 0))
+        shield_wire_inner.translate((self.params.tk_rs.value, 0, 0))
+
+
         shield_top_cap_wire = make_polygon([(shield_wire_outer.start_point(), shield_wire_inner.start_point())], label="Shield top cap wire")
         shield_bottom_cap_wire = make_polygon([(shield_wire_outer.end_point(), shield_wire_inner.end_point())], label="Shield bottom cap wire")
         shield_loop = BluemiraWire([shield_wire_outer, shield_top_cap_wire, shield_wire_inner, shield_bottom_cap_wire], label="Shield loop")
@@ -90,7 +85,5 @@ class ISBuilder(Builder):
 
         pc_xz = PhysicalComponent("Inboard shield",shield_xz,mat)
         pc_xyz = PhysicalComponent("Inboard shield",shield_xyz,mat)
-        
-        
 
         return self.component_tree(xz=[pc_xz], xy=[], xyz=[pc_xyz])
