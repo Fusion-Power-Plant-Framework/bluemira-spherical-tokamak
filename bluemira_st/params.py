@@ -74,3 +74,4 @@ class BluemiraSTParams(ParameterFrame):
     tk_cs_casing: Parameter[float]
     r_pf_corner: Parameter[float]
     r_cs_corner: Parameter[float]
+    g_tf_cs_internal: Parameter[float]

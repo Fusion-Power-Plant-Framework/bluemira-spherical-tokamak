@@ -70,12 +70,13 @@ def build_reference_constraint_set(
     x_point_u = FieldNullConstraint(R_x, Z_x)
     x_point_l = FieldNullConstraint(R_x, -Z_x)
 
-    x_values = np.array([R_x, R_x, R_in, R_out, R_leg1, R_leg1, R_leg2, R_leg2])
+    r_values = np.array([R_x, R_x, R_in, R_out, R_leg1, R_leg1, R_leg2, R_leg2])
     # Shift all x coords along to acount for TF coil
-    x_values += r_tf_in_centre
+    # R_x already includes r_tf_in_centre so is skipped
+    r_values[2:] += r_tf_in_centre
 
     isoflux = IsofluxConstraint(
-        x_values,
+        r_values,
         [Z_x, -Z_x, 0.0, 0.0, Z_leg, -Z_leg, Z_leg, -Z_leg],
         R_x,
         Z_x,

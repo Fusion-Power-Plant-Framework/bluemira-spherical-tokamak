@@ -58,6 +58,7 @@ class ReferenceFreeBoundaryEquilibriumDesignerParams(ParameterFrame):
     tk_bb_ob: Parameter[float]
 
     r_tf_in_centre: Parameter[float]
+    g_tf_cs_internal: Parameter[float]
 
 
 class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
@@ -216,7 +217,6 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
             z_cs_0,
         ]
         x_cs = np.array([x_cs_u, x_cs_u, x_cs_0, x_cs_0, x_cs_0])
-        # Shift along to account for TF coils on inboard side
         x_cs += r_tf_in_centre
 
         for i, (x, z) in enumerate(zip(x_cs, z_cs, strict=False)):
