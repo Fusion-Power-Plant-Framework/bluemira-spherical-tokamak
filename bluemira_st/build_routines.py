@@ -10,6 +10,9 @@ from bluemira_st.tf_coil.builder import TFCoilBuilder
 from bluemira_st.tf_coil.designer import TFCoilDesigner
 from bluemira_st.tf_coil.manager import TFCoil
 
+from bluemira_st.blanket.builder import BBBuilder
+from bluemira_st.blanket.manager import BB
+
 
 def build_reference_equilibrium(
     params: dict | ParameterFrame,
@@ -52,6 +55,7 @@ def build_tf_coils(
     build_config: dict,
     coilset: CoilSet,
     plasma_lcfs: BluemiraWire,
+
 ) -> TFCoil:
     """Build the TF coils from the initial TF coil shapes.
 
@@ -65,3 +69,14 @@ def build_tf_coils(
     ).execute()
     builder = TFCoilBuilder(params, build_config, tf_cl.create_shape(), tf_wp_xs)
     return TFCoil(builder.build())
+
+
+def build_bb(
+        params: dict | ParameterFrame,
+        build_config: dict,
+        mat_name: str,
+        ref_fbe: Equilibrium
+        ):
+    """Build the breeder blanket component."""
+    bb = BB(BBBuilder(params, build_config, mat_name, ref_fbe).build())
+    return bb

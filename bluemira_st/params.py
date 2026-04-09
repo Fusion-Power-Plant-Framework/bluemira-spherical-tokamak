@@ -63,3 +63,6 @@ class BluemiraSTParams(ParameterFrame):
     tk_tf_nose: Parameter[float]
     tk_tf_side: Parameter[float]
     tk_ts: Parameter[float]
+
+    # BB parameters
+    fw_psi_n: Parameter[float]

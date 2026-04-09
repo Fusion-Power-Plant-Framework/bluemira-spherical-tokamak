@@ -16,17 +16,23 @@ from bluemira_st.build_routines import (
     build_plasma,
     build_reference_equilibrium,
     build_tf_coils,
+    build_bb
 )
 from bluemira_st.params import BluemiraSTParams
 from bluemira_st.radial_build.run_process import radial_build
 from bluemira_st.tf_coil.manager import TFCoil
-
+from bluemira_st.blanket.manager import BB
+from bluemira.base.file import get_bluemira_root
+from bluemira.materials.cache import establish_material_cache
 
 class MyReactor(Reactor):
     """A simple reactor with two components."""
 
     plasma: Plasma
     tf_coil: TFCoil
+    blanket: BB
+    # Models
+    # equilibria: EquilibriumManager
 
 
 def main(build_config: str | Path | dict) -> MyReactor:
@@ -37,6 +43,12 @@ def main(build_config: str | Path | dict) -> MyReactor:
         n_sectors=reactor_config.global_params.n_TF.value,
     )
 
+    establish_material_cache([
+        Path(get_bluemira_root(), "examples", "design", "design_materials.py")
+        .resolve()
+        .as_posix(),
+        "matproplib",
+    ])
     radial_build(
         reactor_config.params_for("radial_build").global_params,
         reactor_config.config_for("radial_build"),
@@ -61,8 +73,14 @@ def main(build_config: str | Path | dict) -> MyReactor:
         ref_fbe.coilset,
         interpolate_bspline(ref_fbe.get_LCFS(), closed=True),
     )
+    reactor.blanket = build_bb(
+        reactor_config.params_for("blanket"),
+        reactor_config.config_for("blanket"),
+        mat_name="BB_BZ_MATERIAL",
+        ref_fbe=ref_fbe
+        )
 
-    reactor.show_cad()
+    reactor.show_cad("xyz")
     reactor.show_cad("xz")
 
     return reactor
