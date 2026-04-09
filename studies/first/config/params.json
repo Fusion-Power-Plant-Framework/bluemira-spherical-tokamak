@@ -221,34 +221,10 @@
     "source": "Input",
     "long_name": "Gap between PF and TF coils"
   },
-  "tk_insulation": {
-    "value": 0.02,
-    "unit": "meter",
-    "source": "Input",
-    "long_name": "Tokamak insulation thickness"
-  },
-  "tk_casing": {
-    "value": 0.04,
-    "unit": "meter",
-    "source": "Input",
-    "long_name": "Tokamak casing thickness"
-  },
-  "r_corner": {
-    "value": 0.12,
-    "unit": "meter",
-    "source": "Input",
-    "long_name": "corner radius PF coil"
-  },
   "fw_psi_n": {
     "value": 1.05,
     "unit": "dimensionless",
     "source": "Input",
     "long_name": "Normalised psi boundary to fit FW to"
-  },
-  "shield_thickness": {
-    "value": 0.2,
-    "unit": "meter",
-    "source": "Input",
-    "long_name": "Thickness of the shield"
   }
 }

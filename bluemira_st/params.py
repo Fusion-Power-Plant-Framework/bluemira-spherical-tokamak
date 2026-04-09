@@ -64,12 +64,5 @@ class BluemiraSTParams(ParameterFrame):
     tk_tf_side: Parameter[float]
     tk_ts: Parameter[float]
 
-    # pf coil parameters
-    tk_insulation: Parameter[float]
-    tk_casing: Parameter[float]
-    r_corner: Parameter[float]
-
     # BB parameters
     fw_psi_n: Parameter[float]
-    # inboard  shield parameters
-    shield_thickness: Parameter[float]
