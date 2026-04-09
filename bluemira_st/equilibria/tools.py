@@ -45,6 +45,8 @@ def build_reference_constraint_set(
     kappa = params.kappa.value
     delta = params.delta.value
     tk_bb = params.tk_bb_ob.value
+    # Inboard radius of the TF coil WP centre
+    r_tf_in_centre = params.r_tf_in_centre.value
 
     # Reference values
     rshaf_shift = SHAF_SHIFT
@@ -56,7 +58,7 @@ def build_reference_constraint_set(
 
     # null coords
     Z_x = kappa * R_a  # noqa: N806
-    R_x = R_0 - delta * R_a  # noqa: N806
+    R_x = (R_0 - delta * R_a) + r_tf_in_centre  # noqa: N806
 
     R_in = R_0 - R_a  # noqa: N806
     R_out = R_0 + R_a  # noqa: N806
@@ -68,8 +70,12 @@ def build_reference_constraint_set(
     x_point_u = FieldNullConstraint(R_x, Z_x)
     x_point_l = FieldNullConstraint(R_x, -Z_x)
 
+    x_values = np.array([R_x, R_x, R_in, R_out, R_leg1, R_leg1, R_leg2, R_leg2])
+    # Shift all x coords along to acount for TF coil
+    x_values += r_tf_in_centre
+
     isoflux = IsofluxConstraint(
-        [R_x, R_x, R_in, R_out, R_leg1, R_leg1, R_leg2, R_leg2],
+        x_values,
         [Z_x, -Z_x, 0.0, 0.0, Z_leg, -Z_leg, Z_leg, -Z_leg],
         R_x,
         Z_x,
