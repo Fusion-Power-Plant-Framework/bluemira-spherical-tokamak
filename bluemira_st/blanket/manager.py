@@ -1,6 +1,8 @@
 from bluemira.base.reactor import ComponentManager
 from bluemira.geometry.face import BluemiraFace
+
 from bluemira_st.blanket.builder import BBBuilder
+
 
 class BB(ComponentManager):
     """Breeding blanket component manager."""

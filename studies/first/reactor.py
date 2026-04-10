@@ -7,23 +7,24 @@
 # %%
 from pathlib import Path
 
+from bluemira.base.file import get_bluemira_root
 from bluemira.base.reactor import Reactor
 from bluemira.base.reactor_config import ReactorConfig
 from bluemira.builders.plasma import Plasma
 from bluemira.geometry.tools import interpolate_bspline
+from bluemira.materials.cache import establish_material_cache
 
+from bluemira_st.blanket.manager import BB
 from bluemira_st.build_routines import (
+    build_bb,
     build_plasma,
     build_reference_equilibrium,
     build_tf_coils,
-    build_bb
 )
 from bluemira_st.params import BluemiraSTParams
 from bluemira_st.radial_build.run_process import radial_build
 from bluemira_st.tf_coil.manager import TFCoil
-from bluemira_st.blanket.manager import BB
-from bluemira.base.file import get_bluemira_root
-from bluemira.materials.cache import establish_material_cache
+
 
 class MyReactor(Reactor):
     """A simple reactor with two components."""
@@ -77,8 +78,8 @@ def main(build_config: str | Path | dict) -> MyReactor:
         reactor_config.params_for("blanket"),
         reactor_config.config_for("blanket"),
         mat_name="BB_BZ_MATERIAL",
-        ref_fbe=ref_fbe
-        )
+        ref_fbe=ref_fbe,
+    )
 
     reactor.show_cad("xyz")
     reactor.show_cad("xz")

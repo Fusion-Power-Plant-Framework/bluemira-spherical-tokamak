@@ -1,5 +1,6 @@
 """Materials for the LAR example."""
 
+from bluemira.materials.neutronics import make_KALOS_ACB_mat
 from matproplib.conditions import OperationalConditions
 from matproplib.converters.neutronics import OpenMCNeutronicConfig
 from matproplib.library.beryllium import Be12Ti
@@ -10,22 +11,20 @@ from matproplib.library.tungsten import PlanseeTungsten
 from matproplib.material import material, mixture
 from matproplib.properties.group import props
 
-from bluemira.base.look_and_feel import bluemira_warn
-from bluemira.materials.neutronics import make_KALOS_ACB_mat    
 EUROFER_MAT = material(
-        name="eurofer",
-        elements={
-            "Fe": 0.9006,
-            "Cr": 0.0886,
-            "W182": 0.0108 * 0.266,
-            "W183": 0.0108 * 0.143,
-            "W184": 0.0108 * 0.307,
-            "W186": 0.0108 * 0.284,
-            "fraction_type": "mass",
-        },
-        properties=props(density=(7.78, "g/cm^3")),
-        converters=OpenMCNeutronicConfig(),
-    )()
+    name="eurofer",
+    elements={
+        "Fe": 0.9006,
+        "Cr": 0.0886,
+        "W182": 0.0108 * 0.266,
+        "W183": 0.0108 * 0.143,
+        "W184": 0.0108 * 0.307,
+        "W186": 0.0108 * 0.284,
+        "fraction_type": "mass",
+    },
+    properties=props(density=(7.78, "g/cm^3")),
+    converters=OpenMCNeutronicConfig(),
+)()
 SS316_LN_MAT = SS316_L()
 TUNGSTEN_MAT = PlanseeTungsten()
 
