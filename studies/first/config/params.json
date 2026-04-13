@@ -269,18 +269,11 @@
     "source": "Input",
     "long_name": "Gap between TF coils and internal CS coils"
   },
-    "dr_shld_inboard": {
-    "value": 1.8719999988243947,
-    "unit": "meter",
-    "source": "PROCESS",
-    "long_name": "radial position of the outer edge of inboard radiation shield from PROCESS"
-  },
-    "tk_tf_inboard":{
-    "value": 0.0,
-    "unit": "meter",
-    "source": "PROCESS",
-    "long_name": "TF coil inboard"
-
+  "tk_tf_inboard":{
+  "value": 0.0,
+  "unit": "meter",
+  "source": "PROCESS",
+  "long_name": "TF coil inboard"
   }, 
   "tk_vv_in": {
     "value": 0.0,
