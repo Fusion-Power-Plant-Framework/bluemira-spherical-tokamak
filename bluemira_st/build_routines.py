@@ -5,13 +5,12 @@ from bluemira.equilibria.equilibrium import Equilibrium
 from bluemira.geometry.tools import interpolate_bspline
 from bluemira.geometry.wire import BluemiraWire
 
+from bluemira_st.blanket.builder import BBBuilder
+from bluemira_st.blanket.manager import BB
 from bluemira_st.equilibria.designer import ReferenceFreeBoundaryEquilibriumDesigner
 from bluemira_st.tf_coil.builder import TFCoilBuilder
 from bluemira_st.tf_coil.designer import TFCoilDesigner
 from bluemira_st.tf_coil.manager import TFCoil
-
-from bluemira_st.blanket.builder import BBBuilder
-from bluemira_st.blanket.manager import BB
 
 
 def build_reference_equilibrium(
@@ -55,7 +54,6 @@ def build_tf_coils(
     build_config: dict,
     coilset: CoilSet,
     plasma_lcfs: BluemiraWire,
-
 ) -> TFCoil:
     """Build the TF coils from the initial TF coil shapes.
 
@@ -72,11 +70,10 @@ def build_tf_coils(
 
 
 def build_bb(
-        params: dict | ParameterFrame,
-        build_config: dict,
-        mat_name: str,
-        ref_fbe: Equilibrium
-        ):
+    params: dict | ParameterFrame,
+    build_config: dict,
+    mat_name: str,
+    ref_fbe: Equilibrium,
+):
     """Build the breeder blanket component."""
-    bb = BB(BBBuilder(params, build_config, mat_name, ref_fbe).build())
-    return bb
+    return BB(BBBuilder(params, build_config, mat_name, ref_fbe).build())

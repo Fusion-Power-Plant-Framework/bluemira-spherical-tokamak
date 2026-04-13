@@ -1,4 +1,4 @@
-name: bluemira_bluemira_st
+name: bluemira-st
 
 on:
   schedule:
@@ -14,35 +14,27 @@ jobs:
   linter:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
-          python-version: "3.10"
-      - name: Check Code Quality
-        shell: bash -l {0}
-        run: |
-          pip install pre-commit
-          pre-commit run --all-files
+          fetch-depth: 0
+
+      - name: Setup python and hatch
+        uses: Fusion-Power-Plant-Framework/fppf-actions/setup-hatch@deddef408d0061e542692a7bf97368449c5ee5b3
+
+      - name: Run Hatch linting tasks
+        uses: Fusion-Power-Plant-Framework/fppf-actions/hatch-lint@deddef408d0061e542692a7bf97368449c5ee5b3
 
   test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Checkout bluemira
-        working-directory: "/home/runner/work/"
-        uses: actions/checkout@v4
-        with:
-          repository: "Fusion-Power-Plant-Framework/bluemira"
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - name: Build bluemira
-        working-directory: "/home/runner/work/bluemira"
-        uses: Fusion-Power-Plant-Framework/bluemira/.github/workflows/build@develop
+        uses: Fusion-Power-Plant-Framework/fppf-actions/build-action@deddef408d0061e542692a7bf97368449c5ee5b3
         with:
-          os: ubuntu-latest
-          python-version: "3.10"
+          python-version: "3.11"
+          clone-bluemira: "true"
 
       - name: Run pytest
         shell: bash -l {0}
