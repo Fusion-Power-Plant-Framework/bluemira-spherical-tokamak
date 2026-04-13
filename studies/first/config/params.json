@@ -264,7 +264,7 @@
     "long_name": "CS coil corner radius"
   },
   "g_tf_cs_internal": {
-    "value": 0.001,
+    "value": 0.01,
     "unit": "meter",
     "source": "Input",
     "long_name": "Gap between TF coils and internal CS coils"

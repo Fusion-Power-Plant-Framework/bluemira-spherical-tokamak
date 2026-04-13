@@ -57,8 +57,12 @@ class ReferenceFreeBoundaryEquilibriumDesignerParams(ParameterFrame):
 
     tk_bb_ob: Parameter[float]
 
+    # Parameters to calculate internal CS coil placement
     r_tf_in_centre: Parameter[float]
+    tf_wp_width: Parameter[float]
     g_tf_cs_internal: Parameter[float]
+    tk_cs_casing: Parameter[float]
+    tk_cs_insulation: Parameter[float]
 
 
 class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
@@ -159,11 +163,8 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
         z_p1 = Z_x + (rz_p1 * Z_x)
         z_p2 = z_p1 + (rz_p2 * Z_x)
 
-        r_tf_in_centre = self.params.r_tf_in_centre.value
-
         x_c = np.array([x_p1, x_p2, x_p3, x_p4, x_p5])
         # Shift along to account for TF coils on inboard side
-        x_c += r_tf_in_centre
         z_c = [z_p1, z_p2, z_p2, Z_x, Z_x * (1 / 3)]
 
         coils = []
@@ -202,12 +203,21 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
         # CS coil dimensions
         cs_height = ref_h_cs * Z_x * 0.5
         cs_width = cs_height / ref_A_cs
-        # z and x coords for the CS coils near the null
-        x_cs_u = ref_x_cs_u * R_0
-        z_cs_u = Z_x + 0.5 * cs_height
 
-        x_cs_0 = x_cs_u * 0.8
+        # z and x coords for internal CS coils near the inboard
+        offset = (
+            self.params.g_tf_cs_internal.value
+            + 0.5 * self.params.tf_wp_width.value  # tf_wp_width is full width
+            + cs_width  # defined as half width
+            + self.params.tk_cs_insulation.value
+            + self.params.tk_cs_casing.value
+        )
+        x_cs_0 = self.params.r_tf_in_centre.value + offset
         z_cs_0 = cs_height
+
+        # z and x coords for the CS coils near the null
+        x_cs_u = (ref_x_cs_u * R_0) + offset
+        z_cs_u = Z_x + 0.5 * cs_height
 
         z_cs = [
             z_cs_u,
@@ -217,7 +227,6 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
             z_cs_0,
         ]
         x_cs = np.array([x_cs_u, x_cs_u, x_cs_0, x_cs_0, x_cs_0])
-        x_cs += r_tf_in_centre
 
         for i, (x, z) in enumerate(zip(x_cs, z_cs, strict=False)):
             coil_u = Coil(
