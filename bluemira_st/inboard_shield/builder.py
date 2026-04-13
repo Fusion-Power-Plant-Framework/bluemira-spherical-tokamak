@@ -19,17 +19,24 @@ from bluemira.display.palettes import BLUE_PALETTE
 from bluemira.builders.tools import apply_component_display_options
 from bluemira.geometry.wire import BluemiraWire
 from bluemira.equilibria.equilibrium import Equilibrium
-
-
+from bluemira_st.radial_build.run_process import radial_build
+from bluemira_st.params import BluemiraSTParams
+import numpy as np
 
 
 @dataclass
 class ISBuilderParams(ParameterFrame):
     """Parameters for building an inboard shield"""
-    # thickness and position for inboard shield
-    tk_rs: Parameter[float]
-    dr_shld_inboard: Parameter[float]
+    # radial build parameters
     n_TF: Parameter[int]
+    r_cs_in: Parameter[float]
+    tk_cs: Parameter[float]
+    tk_tf_inboard: Parameter[float]
+    g_ts_tf: Parameter[float]
+    tk_ts: Parameter[float]
+    g_vv_ts: Parameter[float]
+    tk_vv_in: Parameter[float]
+    tk_sh_in: Parameter[float]
 
 
 class ISBuilder(Builder):
@@ -50,12 +57,21 @@ class ISBuilder(Builder):
         super().__init__(params, {"material": {self.IS: material_name}})
         self.ref_fbe = ref_fbe
 
+    def radial_build_inboard_shield(self, build_config: dict) -> None:
+        radial_build_list = [self.params.r_cs_in.value, self.params.tk_cs.value, 
+                                self.params.tk_tf_inboard.value, self.params.g_ts_tf.value, 
+                                self.params.tk_ts.value, self.params.g_vv_ts.value, 
+                                self.params.tk_vv_in.value, self.params.tk_sh_in.value]
+        radial_build_to_shield = np.sum(radial_build_list)
+        return radial_build_to_shield
+    
     def build(self,
 
                ) -> Component:
         """Build the inboard shield component."""
         # pass in fbe - to be removed once shield design more mature
         # pass in required flux surfaces only.
+        radial_shield_position = self.radial_build_inboard_shield(self.build_config)
         ref_fbe = self.ref_fbe
         n_sectors = self.build_config.get("n_sectors", 1)
         sector_degree = 360.0 / self.params.n_TF.value
@@ -70,9 +86,9 @@ class ISBuilder(Builder):
                                     "z":[x_point_coords[0][1],x_point_coords[1][1]]})
         
         shield_wire_outer = make_polygon(shield_wire_coords, label="Shield wire outer")
-        shield_wire_outer.translate(((-x_point_coords[0][0]+self.params.dr_shld_inboard.value),0,0))
-        shield_wire_inner =shield_wire_outer.deepcopy()
-        shield_wire_inner.translate((self.params.tk_rs.value, 0, 0))
+        shield_wire_outer.translate(((-x_point_coords[0][0] + radial_shield_position),0,0))
+        shield_wire_inner = shield_wire_outer.deepcopy()
+        shield_wire_inner.translate((-self.params.tk_sh_in.value, 0, 0))
 
 
         shield_top_cap_wire = make_polygon([(shield_wire_outer.start_point(), shield_wire_inner.start_point())], label="Shield top cap wire")
