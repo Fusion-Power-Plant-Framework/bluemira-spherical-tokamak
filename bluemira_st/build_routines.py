@@ -80,8 +80,7 @@ def build_bb(
     ref_fbe: Equilibrium,
 ):
     """Build the breeder blanket component."""
-    bb = BB(BBBuilder(params, build_config, mat_name, ref_fbe).build())
-    return bb
+    return BB(BBBuilder(params, build_config, mat_name, ref_fbe).build())
 
 
 def build_pf_coils(
