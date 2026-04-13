@@ -164,7 +164,6 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
         z_p2 = z_p1 + (rz_p2 * Z_x)
 
         x_c = np.array([x_p1, x_p2, x_p3, x_p4, x_p5])
-        # Shift along to account for TF coils on inboard side
         z_c = [z_p1, z_p2, z_p2, Z_x, Z_x * (1 / 3)]
 
         coils = []
