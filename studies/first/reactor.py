@@ -16,19 +16,16 @@ from bluemira.materials.cache import establish_material_cache
 
 from bluemira_st.blanket.manager import BB
 from bluemira_st.build_routines import (
+    build_bb,
     build_pf_coils,
     build_plasma,
     build_reference_equilibrium,
     build_tf_coils,
-    build_bb,
 )
 from bluemira_st.params import BluemiraSTParams
 from bluemira_st.pf_coil.manager import PFCoil
 from bluemira_st.radial_build.run_process import radial_build
 from bluemira_st.tf_coil.manager import TFCoil
-from bluemira_st.blanket.manager import BB
-from bluemira.base.file import get_bluemira_root
-from bluemira.materials.cache import establish_material_cache
 
 
 class MyReactor(Reactor):
@@ -50,12 +47,6 @@ def main(build_config: str | Path | dict) -> MyReactor:
         n_sectors=reactor_config.global_params.n_TF.value,
     )
 
-    establish_material_cache([
-        Path(get_bluemira_root(), "examples", "design", "design_materials.py")
-        .resolve()
-        .as_posix(),
-        "matproplib",
-    ])
     radial_build(
         reactor_config.params_for("radial_build").global_params,
         reactor_config.config_for("radial_build"),
@@ -105,6 +96,9 @@ if __name__ == "__main__":
     establish_material_cache([
         "bluemira_st.materials",
         "matproplib",
+        Path(get_bluemira_root(), "examples", "design", "design_materials.py")
+        .resolve()
+        .as_posix(),
     ])
 
     reactor = main(build_config_path)
