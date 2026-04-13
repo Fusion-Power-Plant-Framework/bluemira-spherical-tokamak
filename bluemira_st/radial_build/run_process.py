@@ -38,14 +38,14 @@ def radial_build(params: BluemiraSTParams, build_config: dict) -> ParameterFrame
         "l_i": {"recv": True, "send": True},
         "q_95": {"recv": True, "send": True},
         # radial build specific mappings
-        "r_cs_in": {"recv": True, "send": True}, # dr_bore
-        "tk_cs": {"recv": True, "send": True}, # dr_cs
-        "tk_tf_inboard": {"recv": True, "send": True}, # dr_tf_inboard
-        "g_ts_tf": {"recv": True, "send": True}, # dr_tf_shld_gap
-        "tk_ts": {"recv": True, "send": True}, # dr_shld_thermal_inboard
-        "g_vv_ts": {"recv": True, "send": True}, #r_shld_vv_gap_inboard
-        "tk_vv_in": {"recv": True, "send": True}, # dr_vv_inboard
-        "tk_sh_in": {"recv": True, "send": True}, # dr_shld_inboard
+        "r_cs_in": {"recv": True, "send": False}, # dr_bore
+        "tk_cs": {"recv": True, "send": False}, # dr_cs
+        "tk_tf_inboard": {"recv": True, "send": False}, # dr_tf_inboard
+        "g_ts_tf": {"recv": True, "send": False}, # dr_tf_shld_gap
+        "tk_ts": {"recv": True, "send": False}, # dr_shld_thermal_inboard
+        "g_vv_ts": {"recv": True, "send": False}, #r_shld_vv_gap_inboard
+        "tk_vv_in": {"recv": True, "send": False}, # dr_vv_inboard
+        "tk_sh_in": {"recv": True, "send": False}, # dr_shld_inboard
     })
     new_params = solver.execute(run_mode)
 
