@@ -29,14 +29,27 @@ do
 done
 
 
-echo
-echo Cloning Bluemira...
-echo
-
 script_dir=$(dirname "$0")
-clone_loc=$script_dir"/../bluemira"
-git clone git@github.com:Fusion-Power-Plant-Framework/bluemira.git $clone_loc
-cd $clone_loc
+bluemira_loc=$script_dir"/../bluemira"
+
+if [ ! -d $bluemira_loc ] ; then
+    echo
+    echo Cloning Bluemira...
+    echo
+    git clone git@github.com:Fusion-Power-Plant-Framework/bluemira.git $bluemira_loc
+else
+    echo
+    echo Updating Bluemira...
+    echo
+    cd $bluemira_loc
+    git checkout main -q
+    git pull -q
+    echo
+    echo Finished
+    exit 0
+fi
+
+cd $bluemira_loc
 
 if [ "$TAG" = false ]; then
     echo
