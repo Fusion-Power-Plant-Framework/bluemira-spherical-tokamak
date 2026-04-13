@@ -44,7 +44,7 @@ def build_reference_constraint_set(
     A = params.A.value  # noqa: N806
     kappa = params.kappa.value
     delta = params.delta.value
-    tk_bb = params.tk_bb_ob.value
+    tk_bb_ob = params.tk_bb_ob.value
 
     # Reference values
     rshaf_shift = SHAF_SHIFT
@@ -58,13 +58,16 @@ def build_reference_constraint_set(
     Z_x = kappa * R_a  # noqa: N806
     R_x = R_0 - delta * R_a  # noqa: N806
 
+    # Inboard and outboard isoflux points
     R_in = R_0 - R_a  # noqa: N806
     R_out = R_0 + R_a  # noqa: N806
 
-    R_leg1 = R_0 + shaf_shift  # noqa: N806
     Z_leg = Z_x + rz_p1_raw  # noqa: N806
-    R_leg2 = R_0 + R_a + tk_bb  # noqa: N806
+    # The first and second points of the leg
+    R_leg1 = R_0 + shaf_shift  # noqa: N806
+    R_leg2 = R_0 + R_a + tk_bb_ob  # noqa: N806
 
+    # Constraints on the upper and lower nulls
     x_point_u = FieldNullConstraint(R_x, Z_x)
     x_point_l = FieldNullConstraint(R_x, -Z_x)
 

@@ -2,12 +2,16 @@ from bluemira.base.parameter_frame import ParameterFrame
 from bluemira.builders.plasma import Plasma, PlasmaBuilder
 from bluemira.equilibria.coils._grouping import CoilSet
 from bluemira.equilibria.equilibrium import Equilibrium
-from bluemira.geometry.tools import interpolate_bspline
+from bluemira.geometry.tools import (
+    interpolate_bspline,
+)
 from bluemira.geometry.wire import BluemiraWire
 
 from bluemira_st.blanket.builder import BBBuilder
 from bluemira_st.blanket.manager import BB
 from bluemira_st.equilibria.designer import ReferenceFreeBoundaryEquilibriumDesigner
+from bluemira_st.pf_coil.builder import build_pf_coils_component
+from bluemira_st.pf_coil.manager import PFCoil
 from bluemira_st.tf_coil.builder import TFCoilBuilder
 from bluemira_st.tf_coil.designer import TFCoilDesigner
 from bluemira_st.tf_coil.manager import TFCoil
@@ -77,3 +81,21 @@ def build_bb(
 ):
     """Build the breeder blanket component."""
     return BB(BBBuilder(params, build_config, mat_name, ref_fbe).build())
+
+
+def build_pf_coils(
+    params: dict | ParameterFrame,
+    build_config: dict,
+    coilset: CoilSet,
+) -> PFCoil:
+    """
+    Build the PF coils for the reactor,
+    based on the coilset from the free boundary equilibrium.
+
+    Returns
+    -------
+    :
+        PF coil component manager
+    """
+    component = build_pf_coils_component(params, build_config, coilset)
+    return PFCoil(component, coilset)

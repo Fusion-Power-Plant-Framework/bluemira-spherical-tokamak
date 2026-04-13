@@ -40,6 +40,11 @@ class TFCoilDesignerParams(ParameterFrame):
     r_tf_corner_outer: Parameter[float]
     g_pf_tf: Parameter[float]
 
+    # PF params for spacing
+    tk_pf_insulation: Parameter[float]
+    tk_pf_casing: Parameter[float]
+    r_pf_corner: Parameter[float]
+
 
 class TFCoilDesigner(Designer[tuple[GeometryParameterisation, BluemiraWire]]):
     """TF coil shape designer."""
@@ -74,7 +79,12 @@ class TFCoilDesigner(Designer[tuple[GeometryParameterisation, BluemiraWire]]):
         x_min = self.params.r_tf_in_centre.value
         ri = self.params.r_tf_corner_inner.value
         ro = self.params.r_tf_corner_outer.value
-        offset = self.params.g_pf_tf.value
+        offset = (
+            self.params.g_pf_tf.value
+            + self.params.tk_pf_casing.value
+            + self.params.tk_pf_insulation.value
+            + 0.5 * self.params.tf_wp_width.value
+        )
         x_max, z_min, z_max = self._get_coilset_extrema(self.coilset)
         x_max += offset
         z_min -= offset

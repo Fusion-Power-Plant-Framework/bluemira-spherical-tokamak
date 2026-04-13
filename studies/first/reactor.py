@@ -17,11 +17,13 @@ from bluemira.materials.cache import establish_material_cache
 from bluemira_st.blanket.manager import BB
 from bluemira_st.build_routines import (
     build_bb,
+    build_pf_coils,
     build_plasma,
     build_reference_equilibrium,
     build_tf_coils,
 )
 from bluemira_st.params import BluemiraSTParams
+from bluemira_st.pf_coil.manager import PFCoil
 from bluemira_st.radial_build.run_process import radial_build
 from bluemira_st.tf_coil.manager import TFCoil
 
@@ -34,6 +36,7 @@ class MyReactor(Reactor):
     blanket: BB
     # Models
     # equilibria: EquilibriumManager
+    pf_coil: PFCoil
 
 
 def main(build_config: str | Path | dict) -> MyReactor:
@@ -44,12 +47,6 @@ def main(build_config: str | Path | dict) -> MyReactor:
         n_sectors=reactor_config.global_params.n_TF.value,
     )
 
-    establish_material_cache([
-        Path(get_bluemira_root(), "examples", "design", "design_materials.py")
-        .resolve()
-        .as_posix(),
-        "matproplib",
-    ])
     radial_build(
         reactor_config.params_for("radial_build").global_params,
         reactor_config.config_for("radial_build"),
@@ -65,6 +62,12 @@ def main(build_config: str | Path | dict) -> MyReactor:
         reactor_config.params_for("plasma"),
         reactor_config.config_for("plasma"),
         ref_fbe,
+    )
+
+    reactor.pf_coil = build_pf_coils(
+        reactor_config.params_for("pf_coils"),
+        reactor_config.config_for("pf_coils"),
+        ref_fbe.coilset,
     )
 
     # Needs work: We need a "PictureFrame" shape
@@ -89,4 +92,13 @@ def main(build_config: str | Path | dict) -> MyReactor:
 
 if __name__ == "__main__":
     build_config_path = Path(Path(__file__).parent, "config/config.json").resolve()
+
+    establish_material_cache([
+        "bluemira_st.materials",
+        "matproplib",
+        Path(get_bluemira_root(), "examples", "design", "design_materials.py")
+        .resolve()
+        .as_posix(),
+    ])
+
     reactor = main(build_config_path)

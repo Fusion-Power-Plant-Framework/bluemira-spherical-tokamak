@@ -1,4 +1,4 @@
-"""Materials for the LAR example."""
+"""Materials for the ST example."""
 
 from bluemira.materials.neutronics import make_KALOS_ACB_mat
 from matproplib.conditions import OperationalConditions
@@ -125,3 +125,7 @@ DIV_FW_MATERIAL = mixture(
     mix_condition=OperationalConditions(temperature=673.15, pressure=1e5),
     converters=OpenMCNeutronicConfig(material_id=302),
 )
+
+
+# This is a dummy placeholder material
+PF_MAT = SS316_L(name="Poloidal_Field_Coil")
