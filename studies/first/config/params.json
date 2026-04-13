@@ -287,7 +287,6 @@
     "unit": "meter",
     "source": "PROCESS",
     "long_name": "VV inboard thickness"
-    
   },
   "tk_sh_in": {
     "value": 0.0,
