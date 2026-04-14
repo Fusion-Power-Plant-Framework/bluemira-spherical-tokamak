@@ -37,25 +37,24 @@ if [ ! -d $bluemira_loc ] ; then
     echo Cloning Bluemira...
     echo
     git clone git@github.com:Fusion-Power-Plant-Framework/bluemira.git $bluemira_loc
+    update=false
 else
-    echo
-    echo Updating Bluemira...
-    echo
-    cd $bluemira_loc
-    git checkout main -q
-    git pull -q
-    echo
-    echo Finished
-    exit 0
+    update=true
+    INSTALL_CONDA=false
 fi
 
 cd $bluemira_loc
 
-if [ "$TAG" = false ]; then
+if [ "$TAG" = false ] && [ "$update" = false ] ; then
     echo
     echo Getting latest version:
     latest_tag=$(git describe --tags $(git rev-list --tags --max-count=1))
     echo $latest_tag
+    echo
+elif [ "$update" = true ] ; then
+    echo
+    echo Checking out main
+    latest_tag="main"
     echo
 else
     echo
@@ -66,9 +65,20 @@ fi
 
 git checkout -q $latest_tag
 
-echo
-echo Installing...
-echo
+if [ "$update" = true ] ; then
+    echo
+    echo Removing old environment...
+    echo
+    conda remove -n bluemira-bluemira_st --all
+    echo
+    echo Updating Bluemira...
+    git pull -q
+    echo
+else
+    echo
+    echo Installing...
+    echo
+fi
 
 if [ "$INSTALL_CONDA" = true ] ; then
     set -- -e bluemira-bluemira_st -p $PYTHON_VERSION
@@ -77,7 +87,7 @@ if [ "$INSTALL_CONDA" = true ] ; then
     source ~/.miniforge-init.sh ""
 else
     source ~/.miniforge-init.sh ""
-    conda env create -f conda/environment.yml -n bluemira-bluemira_st
+    conda env create -f conda/environment.yml -n bluemira-bluemira_st -q
 fi
 
 conda activate bluemira-bluemira_st
