@@ -10,6 +10,8 @@ from bluemira.geometry.wire import BluemiraWire
 from bluemira_st.blanket.builder import BBBuilder
 from bluemira_st.blanket.manager import BB
 from bluemira_st.equilibria.designer import ReferenceFreeBoundaryEquilibriumDesigner
+from bluemira_st.inboard_shield.builder import ISBuilder
+from bluemira_st.inboard_shield.manager import IS
 from bluemira_st.pf_coil.builder import build_pf_coils_component
 from bluemira_st.pf_coil.manager import PFCoil
 from bluemira_st.tf_coil.builder import TFCoilBuilder
@@ -99,3 +101,13 @@ def build_pf_coils(
     """
     component = build_pf_coils_component(params, build_config, coilset)
     return PFCoil(component, coilset)
+
+
+def build_is(
+    params: dict | ParameterFrame,
+    build_config: dict,
+    mat_name: str,
+    ref_fbe: Equilibrium,
+):
+    """Build the inboard shield component."""
+    return IS(ISBuilder(params, build_config, mat_name, ref_fbe).build())

@@ -40,11 +40,11 @@ class BBBuilder(Builder):
     def __init__(
         self,
         params: BBBuilderParams,
-        build_config: dict,  # noqa: ARG002
+        build_config: dict,
         material_name: str,
         ref_fbe: Equilibrium,
     ):
-        super().__init__(params, {"material": {self.BB: material_name}})
+        super().__init__(params, {"material": {self.BB: material_name}, **build_config})
         self.ref_fbe = ref_fbe
 
     def build(

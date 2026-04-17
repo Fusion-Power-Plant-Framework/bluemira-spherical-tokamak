@@ -52,6 +52,9 @@ class BluemiraSTParams(ParameterFrame):
     g_pf_tf: Parameter[float]
 
     r_cs_in: Parameter[float]
+    tk_tf_inboard: Parameter[float]  # dr_tf_inboard
+    tk_vv_in: Parameter[float]  # dr_vv_inboard
+    tk_sh_in: Parameter[float]  # dr_shld_inboard
 
     tf_wp_width: Parameter[float]
     tf_wp_depth: Parameter[float]
