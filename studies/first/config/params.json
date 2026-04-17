@@ -269,12 +269,12 @@
     "source": "Input",
     "long_name": "Gap between TF coils and internal CS coils"
   },
-  "tk_tf_inboard":{
-  "value": 0.0,
-  "unit": "meter",
-  "source": "PROCESS",
-  "long_name": "TF coil inboard"
-  }, 
+  "tk_tf_inboard": {
+    "value": 0.0,
+    "unit": "meter",
+    "source": "PROCESS",
+    "long_name": "TF coil inboard"
+  },
   "tk_vv_in": {
     "value": 0.0,
     "unit": "meter",

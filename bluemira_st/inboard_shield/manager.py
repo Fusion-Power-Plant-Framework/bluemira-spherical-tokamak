@@ -1,6 +1,8 @@
 from bluemira.base.reactor import ComponentManager
 from bluemira.geometry.face import BluemiraFace
+
 from bluemira_st.inboard_shield.builder import ISBuilder
+
 
 class IS(ComponentManager):
     """Inboard Shield component manager."""

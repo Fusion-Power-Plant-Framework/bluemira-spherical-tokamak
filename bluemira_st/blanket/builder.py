@@ -11,8 +11,6 @@ from bluemira.display.palettes import BLUE_PALETTE
 from bluemira.equilibria.equilibrium import Equilibrium
 from bluemira.geometry.coordinates import Coordinates
 from bluemira.geometry.face import BluemiraFace
-from bluemira.geometry.coordinates import Coordinates
-from bluemira.geometry.face import BluemiraFace
 from bluemira.geometry.tools import (
     boolean_cut,
     interpolate_bspline,
@@ -42,11 +40,11 @@ class BBBuilder(Builder):
     def __init__(
         self,
         params: BBBuilderParams,
-        build_config: dict,  # noqa: ARG002
+        build_config: dict,
         material_name: str,
         ref_fbe: Equilibrium,
     ):
-        super().__init__(params, {"material": {self.BB: material_name}})
+        super().__init__(params, {"material": {self.BB: material_name}, **build_config})
         self.ref_fbe = ref_fbe
 
     def build(
