@@ -15,7 +15,7 @@ Once your bluemira environment is set up run this command everytime you want to 
 
 ```bash
 source ~/.miniforge-init.sh
-conda activate bluemira-{{cookiecutter.project_name}}
+conda activate bluemira-bluemira_st
 ```
 
 Install PROCESS in your bluemira environment by running the following:
