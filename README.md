@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/893984008.svg)](https://zenodo.org/badge/latestdoi/893984008)
+
 # Bluemira Spherical Tokamak Example
 
 This example build from the PROCESS Spherical Tokamak Regression test
