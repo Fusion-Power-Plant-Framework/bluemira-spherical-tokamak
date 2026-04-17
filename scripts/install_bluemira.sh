@@ -29,16 +29,32 @@ do
 done
 
 
-echo
-echo Cloning Bluemira...
-echo
-
 script_dir=$(dirname "$0")
-clone_loc=$script_dir"/../bluemira"
-git clone git@github.com:Fusion-Power-Plant-Framework/bluemira.git $clone_loc
-cd $clone_loc
+bluemira_loc=$script_dir"/../bluemira"
 
-if [ "$TAG" = false ]; then
+if [ ! -d $bluemira_loc ] ; then
+    echo
+    echo Cloning Bluemira...
+    echo
+    git clone git@github.com:Fusion-Power-Plant-Framework/bluemira.git $bluemira_loc
+    update=false
+else
+    update=true
+    echo Update can only run if no environment is active.
+    echo Is an environment activated?
+    select strictreply in "Yes/y" "No/n"; do
+    relaxedreply=${strictlyreply:-$REPLY}
+        case $relaxedreply in
+            No | no | n ) echo Continuing update...; break;;
+            Yes | yes | y ) echo Please run conda deactivate; exit;;
+        esac
+    done
+    echo
+fi
+
+cd $bluemira_loc
+
+if [ "$TAG" = false ] ; then
     echo
     echo Getting latest version:
     latest_tag=$(git describe --tags $(git rev-list --tags --max-count=1))
@@ -51,11 +67,22 @@ else
     echo
 fi
 
-git checkout -q $latest_tag
-
-echo
-echo Installing...
-echo
+if [ "$update" = true ] ; then
+    echo
+    echo Removing old environment...
+    echo
+    conda remove -n bluemira-bluemira_st --all
+    echo
+    echo Updating...
+    git checkout -q main
+    git pull -q
+    echo
+else
+    git checkout -q $latest_tag
+    echo
+    echo Installing...
+    echo
+fi
 
 if [ "$INSTALL_CONDA" = true ] ; then
     set -- -e bluemira-bluemira_st -p $PYTHON_VERSION
@@ -64,7 +91,7 @@ if [ "$INSTALL_CONDA" = true ] ; then
     source ~/.miniforge-init.sh ""
 else
     source ~/.miniforge-init.sh ""
-    conda env create -f conda/environment.yml -n bluemira-bluemira_st
+    conda env create -f conda/environment.yml -n bluemira-bluemira_st -q
 fi
 
 conda activate bluemira-bluemira_st
