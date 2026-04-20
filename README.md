@@ -2,7 +2,7 @@
 
 # Bluemira Spherical Tokamak Example
 
-This example build from the PROCESS Spherical Tokamak Regression test
+This example builds from the PROCESS Spherical Tokamak Regression test
 
 ## Usage
 
@@ -11,7 +11,7 @@ To set up your bluemira environment run the following:
 ```bash
 bash scripts/install_bluemira.sh -i
 ```
-If you have already have a conda installation you can remove `-i` and the conda step will be skipped.
+If you already have a conda installation you can remove `-i` and the conda step will be skipped.
 
 Once your bluemira environment is set up run this command everytime you want to activate the environment:
 
@@ -35,14 +35,18 @@ python studies/first/reactor.py
 
 ## Running tests
 
-A test directory is setup (currently empty) once test have been created they can be run with `pytest`.
+A test directory is setup (currently empty). Once tests have been created, they can be run with `pytest`.
 
 ## Updates
 
-To update to the latest version of bluemira, delete your current environment using:
+To update to the latest version of bluemira, your bluemira spherical tokamak environment will need to be removed. This is done within the install script, but requires that you are not currently in an activated environment. You can deactivate your environment by running:
 
-```
-conda env remove -n bluemira-bluemira_st
+```bash
+conda deactivate
 ```
 
-and follow the usage guidelines for installing bluemira and PROCESS.
+Then run the install script to complete the update:
+
+```bash
+bash scripts/install_bluemira.sh
+```
