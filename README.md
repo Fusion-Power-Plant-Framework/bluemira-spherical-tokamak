@@ -39,10 +39,14 @@ A test directory is setup (currently empty) once test have been created they can
 
 ## Updates
 
-To update to the latest version of bluemira, delete your current environment using:
+To update to the latest version of bluemira, your bluemira spherical tokamak environment will need to be removed. This is done within the install script, but requires that you are not currently in an activated environment. You can deactivate your environment by running:
 
-```
-conda env remove -n bluemira-bluemira_st
+```bash
+conda deactivate
 ```
 
-and follow the usage guidelines for installing bluemira and PROCESS.
+Then run the install script to complete the update:
+
+```bash
+bash scripts/install_bluemira.sh
+```
