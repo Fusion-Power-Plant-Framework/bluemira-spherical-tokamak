@@ -82,6 +82,10 @@ tests      = "pytest {args:tests}"
 tests-cov  = "pytest --cov bluemira_st  --cov-report html:htmlcov_bluemira_st --cov-report xml {args:tests}"
 tests-cov-private  = "pytest --private --cov bluemira_st --cov-report html:htmlcov --cov-report xml {args:tests}"
 
+# tool: pytest
+[tool.pytest.ini_options]
+addopts = "--ignore=bluemira/"
+
 [tool.ruff]
 target-version = "py311"
 line-length = 89
