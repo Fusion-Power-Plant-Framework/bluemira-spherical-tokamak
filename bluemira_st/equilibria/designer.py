@@ -311,7 +311,7 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
         )
 
     def _make_iterative_solver(
-        self, eq: Equilibrium, opt_problem: CoilsetOptimisationProblem
+        self, opt_problem: CoilsetOptimisationProblem
     ) -> PicardIterator:
         """
         Create the iterative solver for the equilibrium.
@@ -330,7 +330,6 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
         solver_config: dict = {**defaults, **self.build_config.get("solver", {})}
 
         return PicardIterator(
-            eq,
             opt_problem,
             fixed_coils=True,
             convergence=DudsonConvergence(solver_config["iter_err_max"]),
@@ -380,7 +379,7 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
                 fbe_opt_problem,
             )
 
-        iterator_program = self._make_iterative_solver(eq, fbe_opt_problem)
+        iterator_program = self._make_iterative_solver(fbe_opt_problem)
         _result = iterator_program()
 
         if self.build_config.get("plot", False):
