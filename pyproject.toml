@@ -35,7 +35,7 @@ docs = [
   "mkdocs-literate-nav",
 ]
 lint = ["ruff", "mypy"]
-process = ["process @ git+https://github.com/ukaea/process@v3.3.0"]
+process = ["process @ git+https://github.com/ukaea/process@v3.4.1"]
 
 [project.urls]
 Documentation = "https://github.com/Fusion-power-plant-framework/bluemira_st#readme"
