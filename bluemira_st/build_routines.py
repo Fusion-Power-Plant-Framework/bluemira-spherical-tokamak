@@ -72,7 +72,8 @@ def build_tf_coils(
         params, build_config, coilset, plasma_lcfs
     ).execute()
     builder = TFCoilBuilder(params, build_config, tf_cl.create_shape(), tf_wp_xs)
-    return TFCoil(builder.build())
+    
+    return TFCoil(builder.build(),builder._make_field_solver(), tf_cl)
 
 
 def build_bb(
