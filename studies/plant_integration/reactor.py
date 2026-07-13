@@ -28,6 +28,7 @@ from bluemira_st.params import BluemiraSTParams
 from bluemira_st.pf_coil.manager import PFCoil
 from bluemira_st.radial_build.run_process import radial_build
 from bluemira_st.tf_coil.manager import TFCoil
+#from bluemira_st.magnetostatics import blanket_magnetostatics
 
 
 class MyReactor(Reactor):
@@ -95,6 +96,10 @@ def main(build_config: str | Path | dict) -> MyReactor:
     )
     # reactor.show_cad("xyz")
     # reactor.show_cad("xz")
+    #points, fields = blanket_magnetostatics.extract_field_map(ref_fbe,reactor.tf_coil)
+    #blanket_polygon = blanket_magnetostatics.blanket_polygon(reactor.blanket.xz_face())
+    #data = blanket_magnetostatics.mask_and_export(points, fields, blanket_polygon)
+    #blanket_magnetostatics.plot_Bmap(data,"Bmag")
     reactor.save_cad(
         "xyz",
         n_sectors=12,
