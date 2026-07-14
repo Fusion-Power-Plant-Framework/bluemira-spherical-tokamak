@@ -98,7 +98,7 @@ def main(build_config: str | Path | dict) -> MyReactor:
     # reactor.show_cad("xz")
     #points, fields = blanket_magnetostatics.extract_field_map(ref_fbe,reactor.tf_coil)
     #blanket_polygon = blanket_magnetostatics.blanket_polygon(reactor.blanket.xz_face())
-    #data = blanket_magnetostatics.mask_and_export(points, fields, blanket_polygon)
+    #data = blanket_magnetostatics.mask_and_export(points, fields, blanket_polygon, filename="exported_field_map.csv")
     #blanket_magnetostatics.plot_Bmap(data,"Bmag")
     reactor.save_cad(
         "xyz",
