@@ -21,7 +21,7 @@ def radial_build(params: BluemiraSTParams, build_config: dict) -> ParameterFrame
     # in order to be read
     solver.modify_mappings({
         # OUT mappings changed to in/out mappings
-        "R_0": {"recv": True, "send": True},  # OM OptiSlang Sensitivty
+        "R_0": {"recv": True, "send": True},
         "B_0": {"recv": True, "send": True},
         "kappa": {"recv": True, "send": True},
         # OUT mappings, restating defaults
