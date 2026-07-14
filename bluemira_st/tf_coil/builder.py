@@ -15,7 +15,10 @@ from bluemira.geometry.tools import (
     sweep_shape,
 )
 from bluemira.geometry.wire import BluemiraWire
-
+from bluemira.magnetostatics.circuits import (
+    ArbitraryPlanarRectangularXSCircuit,
+    HelmholtzCage,
+)
 
 @dataclass
 class TFCoilBuilderParams(ParameterFrame):
@@ -23,8 +26,10 @@ class TFCoilBuilderParams(ParameterFrame):
 
     tf_wp_width: Parameter[float]
     tf_wp_depth: Parameter[float]
-
-
+    n_TF: Parameter[int]
+    B_0: Parameter[float]
+    R_0: Parameter[float]
+    z_0: Parameter[float]
 class TFCoilBuilder(Builder):
     """Build a 3D model of a TF Coil from a given centre line."""
 
@@ -67,3 +72,26 @@ class TFCoilBuilder(Builder):
         wp_xs = deepcopy(self.tf_wp_xs_wire)
         volume = sweep_shape(wp_xs, self.cl_wire)
         return PhysicalComponent("Winding pack", volume)
+    
+    def _make_field_solver(self) -> HelmholtzCage:
+        """
+        Make a magnetostatics solver for the field from the TF coils.
+
+        Returns
+        -------
+        :
+            The field solver
+        """
+        circuit = ArbitraryPlanarRectangularXSCircuit(
+            self.cl_wire.discretise(byedges=True, ndiscr=100),
+            breadth=0.5 * self.params.tf_wp_width.value,
+            depth=0.5 * self.params.tf_wp_depth.value,
+            current=1,
+        )
+        solver = HelmholtzCage(circuit, self.params.n_TF.value)
+        # single coil amp-turns
+        solver.set_current(
+            -self.params.B_0.value
+            / solver.field(self.params.R_0.value, 0, self.params.z_0.value)[1]
+        )
+        return solver
