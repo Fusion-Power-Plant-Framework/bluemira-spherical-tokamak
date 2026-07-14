@@ -1,11 +1,7 @@
-from bluemira.equilibria.equilibrium import Equilibrium
-from bluemira.geometry.coordinates import Coordinates
-import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-from bluemira.geometry.face import BluemiraFace
 from matplotlib.path import Path
-import numpy as np
+
 
 def extract_field_map(eq, tf_coil, stride=1):
     """
