@@ -37,6 +37,7 @@ def radial_build(params: BluemiraSTParams, build_config: dict) -> ParameterFrame
         "l_i": {"recv": True, "send": True},
         "q_95": {"recv": True, "send": True},
         # radial build specific mappings
+        "tk_bb_ob": {"recv": True, "send": True},  # dr_blkt_outboard
         "r_cs_in": {"recv": True, "send": False},  # dr_bore
         "tk_cs": {"recv": True, "send": False},  # dr_cs
         "tk_tf_inboard": {"recv": True, "send": False},  # dr_tf_inboard

@@ -1,0 +1,124 @@
+# SPDX-FileCopyrightText: 2024-present The Bluemira Team
+#
+# SPDX-License-Identifier: MIT
+
+"""The reactor design example."""
+
+# %%
+from pathlib import Path
+
+from bluemira.base.file import get_bluemira_root
+from bluemira.base.reactor import Reactor
+from bluemira.base.reactor_config import ReactorConfig
+from bluemira.builders.plasma import Plasma
+from bluemira.geometry.tools import interpolate_bspline
+from bluemira.materials.cache import establish_material_cache
+
+from bluemira_st.blanket.manager import BB
+from bluemira_st.build_routines import (
+    build_bb,
+    build_is,
+    build_pf_coils,
+    build_plasma,
+    build_reference_equilibrium,
+    build_tf_coils,
+)
+from bluemira_st.inboard_shield.manager import IS
+from bluemira_st.params import BluemiraSTParams
+from bluemira_st.pf_coil.manager import PFCoil
+from bluemira_st.radial_build.run_process import radial_build
+from bluemira_st.tf_coil.manager import TFCoil
+#from bluemira_st.magnetostatics import blanket_magnetostatics
+
+
+class MyReactor(Reactor):
+    """A simple reactor with two components."""
+
+    plasma: Plasma
+    tf_coil: TFCoil
+    blanket: BB
+    inboard_shield: IS
+    # Models
+    # equilibria: EquilibriumManager
+    pf_coil: PFCoil
+
+
+def main(build_config: str | Path | dict) -> MyReactor:
+    """Reactor function."""
+    reactor_config = ReactorConfig(build_config, BluemiraSTParams)
+    reactor = MyReactor(
+        "Bluemira Spherical Tokamak Example",
+        n_sectors=reactor_config.global_params.n_TF.value,
+    )
+
+    radial_build(
+        reactor_config.params_for("radial_build").global_params,
+        reactor_config.config_for("radial_build"),
+    )
+
+    ref_fbe = build_reference_equilibrium(
+        reactor_config.params_for("reference_fbe").global_params,
+        reactor_config.config_for("reference_fbe"),
+    )
+
+    # Fine (it'll just digest whatever it gets from the reference equilibrium)
+    reactor.plasma = build_plasma(
+        reactor_config.params_for("plasma"),
+        reactor_config.config_for("plasma"),
+        ref_fbe,
+    )
+
+    reactor.pf_coil = build_pf_coils(
+        reactor_config.params_for("pf_coils"),
+        reactor_config.config_for("pf_coils"),
+        ref_fbe.coilset,
+    )
+
+    # Needs work: We need a "PictureFrame" shape
+    reactor.tf_coil = build_tf_coils(
+        reactor_config.params_for("tf_coils"),
+        reactor_config.config_for("tf_coils"),
+        ref_fbe.coilset,
+        interpolate_bspline(ref_fbe.get_LCFS(), closed=True),
+    )
+    reactor.blanket = build_bb(
+        reactor_config.params_for("blanket"),
+        reactor_config.config_for("blanket"),
+        mat_name="BB_BZ_MATERIAL",
+        ref_fbe=ref_fbe,
+    )
+
+    reactor.inboard_shield = build_is(
+        reactor_config.params_for("inboard_shield"),
+        reactor_config.config_for("inboard_shield"),
+        mat_name="EUROFER_MAT",
+        ref_fbe=ref_fbe,
+    )
+    # reactor.show_cad("xyz")
+    # reactor.show_cad("xz")
+    #points, fields = blanket_magnetostatics.extract_field_map(ref_fbe,reactor.tf_coil)
+    #blanket_polygon = blanket_magnetostatics.blanket_polygon(reactor.blanket.xz_face())
+    #data = blanket_magnetostatics.mask_and_export(points, fields, blanket_polygon, filename="exported_field_map.csv")
+    #blanket_magnetostatics.plot_Bmap(data,"Bmag")
+    reactor.save_cad(
+        "xyz",
+        n_sectors=12,
+        cad_format="stp",
+        filename="st_reactor_full.stp",
+        directory=Path(__file__).parent,
+    )
+    return reactor
+
+
+if __name__ == "__main__":
+    build_config_path = Path(Path(__file__).parent, "config/config.json").resolve()
+
+    establish_material_cache([
+        "bluemira_st.materials",
+        "matproplib",
+        Path(get_bluemira_root(), "examples", "design", "design_materials.py")
+        .resolve()
+        .as_posix(),
+    ])
+
+    reactor = main(build_config_path)
