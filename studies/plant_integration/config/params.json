@@ -1,0 +1,290 @@
+{
+  "n_PF": {
+    "value": 10,
+    "unit": "dimensionless",
+    "source": "Input",
+    "long_name": "Number of PF coils"
+  },
+  "n_TF": {
+    "value": 12,
+    "unit": "dimensionless",
+    "source": "Input",
+    "long_name": "Number of TF coils"
+  },
+  "R_0": {
+    "value": 4.5,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Major radius"
+  },
+  "z_0": {
+    "value": 0,
+    "unit": "meter",
+    "source": "PROCESS",
+    "long_name": "z-coordinate of the plasma centre radius"
+  },
+  "A": {
+    "value": 1.8,
+    "unit": "dimensionless",
+    "source": "Input",
+    "long_name": "Plasma aspect ratio"
+  },
+  "I_p": {
+    "value": 0,
+    "unit": "megaampere",
+    "source": "PROCESS",
+    "long_name": "Plasma current"
+  },
+  "B_0": {
+    "value": 3.0,
+    "unit": "tesla",
+    "source": "Input",
+    "long_name": "Toroidal field at R_0"
+  },
+  "l_i": {
+    "value": 0.3,
+    "unit": "dimensionless",
+    "source": "Input",
+    "long_name": "Normalised internal plasma inductance"
+  },
+  "beta_p": {
+    "value": 0,
+    "unit": "dimensionless",
+    "source": "PROCESS",
+    "long_name": "Ratio of plasma pressure to poloidal magnetic pressure"
+  },
+  "delta": {
+    "value": 0.5,
+    "unit": "dimensionless",
+    "source": "Input",
+    "long_name": "Last closed surface plasma triangularity"
+  },
+  "delta_95": {
+    "value": 0,
+    "unit": "dimensionless",
+    "source": "PROCESS",
+    "long_name": "95th percentile plasma triangularity"
+  },
+  "kappa": {
+    "value": 2.8,
+    "unit": "dimensionless",
+    "source": "Input",
+    "long_name": "Last closed surface plasma elongation"
+  },
+  "kappa_95": {
+    "value": 0,
+    "unit": "dimensionless",
+    "source": "PROCESS",
+    "long_name": "95th percentile plasma elongation"
+  },
+  "q_95": {
+    "value": 6.0,
+    "unit": "dimensionless",
+    "source": "Input",
+    "long_name": "Plasma safety factor at the 95th percentile flux surface"
+  },
+  "shaf_shift": {
+    "value": 1.0,
+    "unit": "meter",
+    "source": "equilibria",
+    "long_name": "Shafranov shift of plasma (geometric=>magnetic)"
+  },
+  "tf_cl_ib_x": {
+    "value": 0,
+    "unit": "meter",
+    "source": "PROCESS",
+    "long_name": "TF coil center line inboard x-coordinate"
+  },
+  "tf_cl_ob_x": {
+    "value": 0,
+    "unit": "meter",
+    "source": "PROCESS",
+    "long_name": "TF coil center line outboard x-coordinate"
+  },
+  "tf_wp_depth": {
+    "value": 0,
+    "unit": "meter",
+    "source": "PROCESS",
+    "long_name": "Total TF coil thickness in y-direction"
+  },
+  "tf_wp_width": {
+    "value": 0,
+    "unit": "meter",
+    "source": "PROCESS",
+    "long_name": "Total TF coil thickness in z-direction"
+  },
+  "TF_ripple_limit": {
+    "value": 0.6,
+    "unit": "percent",
+    "source": "Input",
+    "long_name": "TF coil ripple limit"
+  },
+  "g_cs_tf": {
+    "value": 0.0,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Gap between CS and TF"
+  },
+  "g_ts_tf": {
+    "value": 0.01,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Gap between TS and TF"
+  },
+  "g_vv_bb": {
+    "value": 0.01,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Gap between VV and BB"
+  },
+  "g_vv_ts": {
+    "value": 0.01,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Gap between VV and TS"
+  },
+  "r_cs_in": {
+    "value": 0.3,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Central Solenoid inner radius"
+  },
+  "tk_bb_ob": {
+    "value": 1.33287232882878738739317139195970973195157307823282738073282388720782833278322383277202887287323038728237820788232372827732808382872327327288828833283338883238233273278728,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Outboard blanket thickness"
+  },
+  "tk_cs": {
+    "value": 0.25,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Central Solenoid radial thickness"
+  },
+  "tk_sol_ib": {
+    "value": 0.1,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Inboard SOL thickness"
+  },
+  "tk_sol_ob": {
+    "value": 0.1,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Outboard SOL thickness"
+  },
+  "tk_tf_front_ib": {
+    "value": 0.0,
+    "unit": "meter",
+    "source": "PROCESS",
+    "long_name": "TF coil inboard steel front plasma-facing"
+  },
+  "tk_tf_nose": {
+    "value": 0.4,
+    "unit": "meter",
+    "source": "PROCESS",
+    "long_name": "TF coil inboard nose thickness"
+  },
+  "tk_tf_side": {
+    "value": 0.05,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "TF coil inboard case minimum side wall thickness"
+  },
+  "tk_ts": {
+    "value": 0.05,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "TS thickness"
+  },
+  "r_tf_in_centre": {
+    "value": 0.0,
+    "unit": "meter",
+    "source": "PROCESS",
+    "long_name": "Inboard radius of the TF coil WP centre"
+  },
+  "r_tf_corner_inner": {
+    "value": 1.0,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Radius of the TF coil inner corner (poloidal plane)"
+  },
+  "r_tf_corner_outer": {
+    "value": 1.0,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Radius of the TF coil outer corner (poloidal plane)"
+  },
+  "g_pf_tf": {
+    "value": 0.2,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Gap between PF and TF coils"
+  },
+  "fw_psi_n": {
+    "value": 1.05,
+    "unit": "dimensionless",
+    "source": "Input",
+    "long_name": "Normalised psi boundary to fit FW to"
+  },
+  "tk_pf_insulation": {
+    "value": 0.01,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "PF coil insulation thickness"
+  },
+  "tk_pf_casing": {
+    "value": 0.05,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "PF coil casing thickness"
+  },
+  "tk_cs_insulation": {
+    "value": 0.005,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Thickness of the CS coil insulation"
+  },
+  "tk_cs_casing": {
+    "value": 0.001,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Thickness of the CS coil casing"
+  },
+  "r_pf_corner": {
+    "value": 0,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "PF coil corner radius"
+  },
+  "r_cs_corner": {
+    "value": 0,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "CS coil corner radius"
+  },
+  "g_tf_cs_internal": {
+    "value": 0.01,
+    "unit": "meter",
+    "source": "Input",
+    "long_name": "Gap between TF coils and internal CS coils"
+  },
+  "tk_tf_inboard": {
+    "value": 0.0,
+    "unit": "meter",
+    "source": "PROCESS",
+    "long_name": "TF coil inboard"
+  },
+  "tk_vv_in": {
+    "value": 0.0,
+    "unit": "meter",
+    "source": "PROCESS",
+    "long_name": "VV inboard thickness"
+  },
+  "tk_sh_in": {
+    "value": 0.0,
+    "unit": "meter",
+    "source": "PROCESS",
+    "long_name": "Inboard shield thickness"
+  }
+}

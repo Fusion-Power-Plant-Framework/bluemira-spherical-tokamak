@@ -344,3 +344,7 @@ report.html
 .hatch
 */_version.py
 bluemira
+IN.DAT
+OUT.DAT
+MFILE.DAT
+SIG_TF.json
