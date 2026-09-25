@@ -20,6 +20,7 @@ from bluemira.magnetostatics.circuits import (
     HelmholtzCage,
 )
 
+
 @dataclass
 class TFCoilBuilderParams(ParameterFrame):
     """Parameters for building a TF coil."""
@@ -30,6 +31,8 @@ class TFCoilBuilderParams(ParameterFrame):
     B_0: Parameter[float]
     R_0: Parameter[float]
     z_0: Parameter[float]
+
+
 class TFCoilBuilder(Builder):
     """Build a 3D model of a TF Coil from a given centre line."""
 
@@ -72,7 +75,7 @@ class TFCoilBuilder(Builder):
         wp_xs = deepcopy(self.tf_wp_xs_wire)
         volume = sweep_shape(wp_xs, self.cl_wire)
         return PhysicalComponent("Winding pack", volume)
-    
+
     def _make_field_solver(self) -> HelmholtzCage:
         """
         Make a magnetostatics solver for the field from the TF coils.

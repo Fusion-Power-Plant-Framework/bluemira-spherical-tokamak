@@ -3,19 +3,18 @@
 # SPDX-License-Identifier: MIT
 """TFCoil component manager."""
 
-from bluemira.base.reactor import ComponentManager
 import numpy as np
 import numpy.typing as npt
-from bluemira.geometry.wire import BluemiraWire
+from bluemira.base.reactor import ComponentManager
 
 
 class TFCoil(ComponentManager):
     """TF Coil component manager."""
+
     def __init__(self, component, field_solver, centreline):
         super().__init__(component)
         self._field_solver = field_solver
         self._centreline = centreline
-
 
     def wp_volume(self) -> float:
         """Get winding pack volume."""

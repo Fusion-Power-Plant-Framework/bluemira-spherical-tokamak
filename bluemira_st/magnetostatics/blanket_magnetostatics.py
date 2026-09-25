@@ -27,7 +27,7 @@ def extract_field_map(eq, tf_coil, stride=1):
     # vacuum toroidal field from TF coils
     Bt = eq.Bt(x=R)
 
-    helmholtz_field = tf_coil.field(R,zeros,Z)
+    helmholtz_field = tf_coil.field(R, zeros, Z)
     Bt_helmholtz = helmholtz_field[1]
     print(np.shape(Bt))
     print(np.shape(Bt_helmholtz))
@@ -40,7 +40,7 @@ def extract_field_map(eq, tf_coil, stride=1):
         "Bz": Bz.ravel(),
         "Bp": Bp.ravel(),
         "Bt": Bt.ravel(),
-        "Bt_helmholtz": Bt_helmholtz.ravel()
+        "Bt_helmholtz": Bt_helmholtz.ravel(),
     }
 
     return points, fields
@@ -53,15 +53,15 @@ def blanket_polygon(face, resolution=400):
     x_b = boundary[0][:, 0]
     z_b = boundary[0][:, 2]
 
-    polygon = Path(
-        np.column_stack([x_b, z_b])
-    )
+    polygon = Path(np.column_stack([x_b, z_b]))
 
     return polygon
+
 
 def mask_and_export(points, fields, polygon, filename=None):
     """
     Filter field data inside polygon and compute |B|.
+
     Parameters
     ----------
     points : (N, 2)
@@ -73,7 +73,6 @@ def mask_and_export(points, fields, polygon, filename=None):
     -------
     data : dict
     """
-
     mask = polygon.contains_points(points)
 
     # Base data
@@ -84,15 +83,11 @@ def mask_and_export(points, fields, polygon, filename=None):
         "Bz": fields["Bz"][mask],
         "Bp": fields["Bp"][mask],
         "Bt": fields["Bt"][mask],
-        "Bt_helmholtz": fields["Bt_helmholtz"][mask]
+        "Bt_helmholtz": fields["Bt_helmholtz"][mask],
     }
 
     # Magnetic field magnitude
-    data["Bmag"] = np.sqrt(
-        data["Br"]**2 +
-        data["Bz"]**2 +
-        data["Bt_helmholtz"]**2
-    )
+    data["Bmag"] = np.sqrt(data["Br"] ** 2 + data["Bz"] ** 2 + data["Bt_helmholtz"] ** 2)
 
     # Export
     if filename is not None:
@@ -114,20 +109,20 @@ def mask_and_export(points, fields, polygon, filename=None):
 
 
 def plot_Bmap(data, data_field="Bmag"):
-    "plot magnetic field map in blanket region"
+    """Plot magnetic field map in blanket region"""
     plt.figure(figsize=(6, 6))
     sc = plt.scatter(
         data["R"],
         data["Z"],
         c=abs(data[str(data_field)]),
-        s=7,              # marker size
-        cmap="viridis"
+        s=7,  # marker size
+        cmap="viridis",
     )
 
     plt.colorbar(sc, label="|B| [T]")
     plt.xlabel("R [m]")
     plt.ylabel("Z [m]")
-    plt.title("Magnetic Field Magnitude in Blanket Region: "+str(data_field))
+    plt.title("Magnetic Field Magnitude in Blanket Region: " + str(data_field))
     plt.axis("equal")
 
     plt.show()
