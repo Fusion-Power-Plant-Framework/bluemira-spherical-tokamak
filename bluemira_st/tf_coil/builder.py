@@ -76,7 +76,7 @@ class TFCoilBuilder(Builder):
         volume = sweep_shape(wp_xs, self.cl_wire)
         return PhysicalComponent("Winding pack", volume)
 
-    def _make_field_solver(self) -> HelmholtzCage:
+    def make_field_solver(self) -> HelmholtzCage:
         """
         Make a magnetostatics solver for the field from the TF coils.
 

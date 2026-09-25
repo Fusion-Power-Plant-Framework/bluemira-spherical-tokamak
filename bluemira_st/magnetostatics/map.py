@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from bluemira.geometry.face import BluemiraFace
 from matplotlib.path import Path
 
 
@@ -29,8 +30,6 @@ def extract_field_map(eq, tf_coil, stride=1):
 
     helmholtz_field = tf_coil.field(R, zeros, Z)
     Bt_helmholtz = helmholtz_field[1]
-    print(np.shape(Bt))
-    print(np.shape(Bt_helmholtz))
 
     # Flatten
     points = np.column_stack([R.ravel(), Z.ravel()])
@@ -46,16 +45,9 @@ def extract_field_map(eq, tf_coil, stride=1):
     return points, fields
 
 
-def blanket_polygon(face, resolution=400):
-
-    boundary = face.discretise(resolution)
-    print(np.shape(boundary[0]))
-    x_b = boundary[0][:, 0]
-    z_b = boundary[0][:, 2]
-
-    polygon = Path(np.column_stack([x_b, z_b]))
-
-    return polygon
+def face_to_mpl_path(face: BluemiraFace, resolution: int = 400) -> Path:
+    boundary = face.discretise(resolution, byedges=True)[0]
+    return Path(np.column_stack([boundary[:, 0], boundary[:, 2]]))
 
 
 def mask_and_export(points, fields, polygon, filename=None):
@@ -108,8 +100,8 @@ def mask_and_export(points, fields, polygon, filename=None):
     return data
 
 
-def plot_Bmap(data, data_field="Bmag"):
-    """Plot magnetic field map in blanket region"""
+def plot_Bmap(data, data_field="Bmag", label=""):
+    """Plot magnetic field map."""
     plt.figure(figsize=(6, 6))
     sc = plt.scatter(
         data["R"],
@@ -122,7 +114,8 @@ def plot_Bmap(data, data_field="Bmag"):
     plt.colorbar(sc, label="|B| [T]")
     plt.xlabel("R [m]")
     plt.ylabel("Z [m]")
-    plt.title("Magnetic Field Magnitude in Blanket Region: " + str(data_field))
+    title = f"in {label} region" if label else ""
+    plt.title(f"Magnetic Field Magnitude {title}: {data_field}")
     plt.axis("equal")
 
     plt.show()

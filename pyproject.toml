@@ -167,3 +167,10 @@ tests = ["tests", "*/bluemira_st/tests"]
 [tool.coverage.report]
 "exclude_also" = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
 omit = ["bluemira_st/_version.py"]
+
+[tool.ruff.lint.pep8-naming]
+ignore-names = [
+    "R",
+    "Z",
+    "*B*"
+]
