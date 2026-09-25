@@ -8,7 +8,7 @@ from bluemira.geometry.tools import (
 from bluemira.geometry.wire import BluemiraWire
 
 from bluemira_st.blanket.builder import BBBuilder
-from bluemira_st.blanket.manager import BB
+from bluemira_st.blanket.manager import BreedingBlanket
 from bluemira_st.equilibria.designer import ReferenceFreeBoundaryEquilibriumDesigner
 from bluemira_st.inboard_shield.builder import ISBuilder
 from bluemira_st.inboard_shield.manager import IS
@@ -72,7 +72,8 @@ def build_tf_coils(
         params, build_config, coilset, plasma_lcfs
     ).execute()
     builder = TFCoilBuilder(params, build_config, tf_cl.create_shape(), tf_wp_xs)
-    return TFCoil(builder.build())
+
+    return TFCoil(builder.build(), builder.make_field_solver(), tf_cl)
 
 
 def build_bb(
@@ -82,7 +83,7 @@ def build_bb(
     ref_fbe: Equilibrium,
 ):
     """Build the breeder blanket component."""
-    return BB(BBBuilder(params, build_config, mat_name, ref_fbe).build())
+    return BreedingBlanket(BBBuilder(params, build_config, mat_name, ref_fbe).build())
 
 
 def build_pf_coils(
