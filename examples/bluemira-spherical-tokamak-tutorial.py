@@ -41,15 +41,14 @@ def _(mo):
     `bluemira` locally, the setup will be simpler. :)
     """)
 
+@app.cell(hide_code=True)
+def _():
+    import marimo as mo
+    return (mo,)
 
 @app.cell(hide_code=True)
 def _():
-    import os
-    import subprocess
-    import sys
     from pathlib import Path
-
-    import marimo as mo
     import marimo_cad as cad
     from fsspec.implementations.github import GithubFileSystem
 
@@ -60,17 +59,16 @@ def _():
     )
 
     INDAT_path = "github://studies/first/data/PROCESS/st_regression.IN.DAT"
-    MFILE_path = "github://examples/MFILE.DAT"
-    TF_path = "github://studies/first/data/TF/TFCoilDesign.json"
-    run_dir = "github://studies/first/data/PROCESS/run_dir"
     INDAT = bm_st.download(INDAT_path, "")
-    MFILE = bm_st.download(MFILE_path, "")
-    TF_json = bm_st.download(
-        TF_path,
-        "",
-    )
     local_indat_path = Path("st_regression.IN.DAT")
+    return (INDAT, MFILE)
 
+
+@app.cell(hide_code=True)
+def _():
+    import os
+    import subprocess
+    import sys
     subprocess.run(
         [sys.executable, "-m", "pip", "uninstall", "-y", "bluemira"],
         check=False,
@@ -152,7 +150,7 @@ def _():
         stdout=subprocess.DEVNULL,
         stderr=subprocess.STDOUT,
     )
-    return (mo, INDAT, MFILE)
+
 
 @app.cell(hide_code=True)
 def _():
