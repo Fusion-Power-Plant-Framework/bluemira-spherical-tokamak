@@ -14,6 +14,11 @@ def _(mo):
 
 @app.cell(hide_code=True)
 def _():
+    import os
+    import subprocess
+    import sys
+    from pathlib import Path
+
     import marimo as mo
     from fsspec.implementations.github import GithubFileSystem
 
@@ -35,10 +40,6 @@ def _():
         "",
     )
     local_indat_path = Path("st_regression.IN.DAT")
-
-    import os
-    import subprocess
-    import sys
 
     subprocess.run(
         [sys.executable, "-m", "pip", "uninstall", "-y", "bluemira"],
@@ -134,6 +135,7 @@ def _():
     return (mo, bbt_repo, bm_st, INDAT, MFILE)
 
 
+@app.cell()
 def _():
 
     import marimo_cad as cad
