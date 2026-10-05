@@ -34,11 +34,8 @@ def _(mo):
 def _(mo):
     mo.md(r"""
     ## Initial set-up
-    Run the next two cells to install `bluemira` on the server for this notebook and establish cache for the materials we need. This will
+    Run the below cells to install `bluemira` on the server for this notebook and establish cache for the materials we need. This will
     take a couple of minutes.
-
-    The code in the cell is unique for working in marimo notebooks. If you install
-    `bluemira` locally, the setup will be simpler. :)
     """)
 
 @app.cell(hide_code=True)
@@ -184,7 +181,7 @@ def _():
     from bluemira.builders.plasma import Plasma
     from bluemira.geometry.tools import interpolate_bspline
 
-    from bluemira_st.blanket.manager import BB
+    from bluemira_st.blanket.manager import BreedingBlanket
     from bluemira_st.build_routines import (
         build_bb,
         build_is,
@@ -200,7 +197,7 @@ def _():
     from bluemira_st.tf_coil.manager import TFCoil
 
     return (
-        BB,
+        BreedingBlanket,
         BluemiraSTParams,
         IS,
         PFCoil,
@@ -619,13 +616,13 @@ def _(mo):
 
 
 @app.cell
-def _(BB, IS, PFCoil, Plasma, Reactor, TFCoil):
+def _(BreedingBlanket, IS, PFCoil, Plasma, Reactor, TFCoil):
     class MyReactor(Reactor):
         """A simple reactor."""
 
         plasma: Plasma
         tf_coil: TFCoil
-        blanket: BB
+        blanket: BreedingBlanket
         inboard_shield: IS
         pf_coil: PFCoil
 
