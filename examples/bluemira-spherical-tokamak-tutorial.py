@@ -34,7 +34,7 @@ def _(mo):
 def _(mo):
     mo.md(r"""
     ## Initial set-up
-    Run the next cell to install `bluemira` on the server for this notebook. This will
+    Run the next two cells to install `bluemira` on the server for this notebook and establish cache for the materials we need. This will
     take a couple of minutes.
 
     The code in the cell is unique for working in marimo notebooks. If you install
@@ -53,7 +53,6 @@ def _():
     import marimo_cad as cad
     from fsspec.implementations.github import GithubFileSystem
 
-    bbt_repo = GithubFileSystem(org="josieapeters", repo="bluemira-bbt")
     bm_st = GithubFileSystem(
         org="Fusion-Power-Plant-Framework",
         repo="bluemira-spherical-tokamak",
@@ -61,11 +60,11 @@ def _():
     )
 
     INDAT_path = "github://studies/first/data/PROCESS/st_regression.IN.DAT"
-    MFILE_path = "github://examples/spherical_tokamak/MFILE.DAT"
+    MFILE_path = "github://examples/MFILE.DAT"
     TF_path = "github://studies/first/data/TF/TFCoilDesign.json"
     run_dir = "github://studies/first/data/PROCESS/run_dir"
     INDAT = bm_st.download(INDAT_path, "")
-    MFILE = bbt_repo.download(MFILE_path, "")
+    MFILE = bm_st.download(MFILE_path, "")
     TF_json = bm_st.download(
         TF_path,
         "",
@@ -153,7 +152,10 @@ def _():
         stdout=subprocess.DEVNULL,
         stderr=subprocess.STDOUT,
     )
+    return (mo, INDAT, MFILE)
 
+@app.cell(hide_code=True)
+def _():
     from bluemira.materials.cache import MaterialCache
 
     cache = MaterialCache.get_instance()
@@ -163,7 +165,7 @@ def _():
         Path("./design_materials.py").resolve().as_posix(),
     ])
 
-    return (mo, bbt_repo, bm_st, INDAT, MFILE)
+    return ()
 
 
 @app.cell(hide_code=True)
@@ -554,7 +556,7 @@ def _(mo):
     """)
 
 @app.cell(hide_code=True)
-def _(INDAT, params):
+def _(params):
     build_config = {
         "params": params,
         "radial_build": {
