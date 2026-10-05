@@ -49,7 +49,6 @@ def _():
 @app.cell(hide_code=True)
 def _():
     from pathlib import Path
-    import marimo_cad as cad
     from fsspec.implementations.github import GithubFileSystem
 
     bm_st = GithubFileSystem(
@@ -61,7 +60,10 @@ def _():
     INDAT_path = "github://studies/first/data/PROCESS/st_regression.IN.DAT"
     INDAT = bm_st.download(INDAT_path, "")
     local_indat_path = Path("st_regression.IN.DAT")
-    return (INDAT, MFILE)
+
+    TF_path = "github://studies/first/data/TF/TFCoilDesign.json"
+    TF_json = bm_st.download(TF_path, "", )
+    return (INDAT, TF_json)
 
 
 @app.cell(hide_code=True)
@@ -176,6 +178,7 @@ def _(mo):
 
 @app.cell()
 def _():
+    import marimo_cad as cad
     from bluemira.base.reactor import Reactor
     from bluemira.base.reactor_config import ReactorConfig
     from bluemira.builders.plasma import Plasma
