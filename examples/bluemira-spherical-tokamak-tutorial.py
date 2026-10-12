@@ -9,13 +9,6 @@ def _(mo):
     mo.md(r"""
     # Bluemira Spherical Tokamak Tutorial
     """)
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    # Bluemira Spherical Tokamak Tutorial
-    """)
     return
 
 
