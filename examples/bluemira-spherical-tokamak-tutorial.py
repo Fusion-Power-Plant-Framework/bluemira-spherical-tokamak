@@ -220,7 +220,7 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    <img style="float: right; margin: 10px" width="300" src="https://static0.srcdn.com/wordpress/wp-content/uploads/2025/02/christopher-lloyd-s-doc-brown-stares-at-the-camera-in-back-to-the-future.jpg?q=70&fit=crop&w=1568&h=1078&dpr=1">
+    <img style="float: right; margin: 10px" width="300" src="https://static0.srcdn.com/wordpress/wp-content/uploads/2025/02/christopher-lloyd-s-doc-brown-stares-at-the-camera-in-back-to-the-future.jpg?q=70&fit=crop&w=1568&h=1078&dpr=1" title="Universal Pictures">
 
     We've been approached by a client who needs us to help him **design a fusion reactor to power his time machine**. He seems a little chaotic but his enthusiasm is infectious and we agree to help him in a quest of scientific and engineering exploration.
 
@@ -865,7 +865,7 @@ def _():
 
         def __init__(self, params, lower_port_wire: BluemiraWire):
             super().__init__(params, {})
-            self.port_wire = lower_port_wire
+            self.lower_port_wire = lower_port_wire
 
         def build(self) -> Component:
             """Build component"""
@@ -877,8 +877,8 @@ def _():
 
         def build_xyz(self) -> PhysicalComponent:
             """Build Component xyz"""
-            port_inner = offset_wire(self.port_wire, -self.params.tk_wall.value)
-            port_xy = BluemiraFace([self.port_wire, port_inner])
+            port_inner = offset_wire(self.lower_port_wire, -self.params.tk_wall.value)
+            port_xy = BluemiraFace([self.lower_port_wire, port_inner])
             xyz_port = extrude_shape(port_xy, (0, 0, -self.params.z_height.value))
             tf_alpha = 360 / self.params.n_TF.value
             xyz_port.rotate((0, 0, 0), (0, 0, 1), tf_alpha / 2)
@@ -887,7 +887,109 @@ def _():
     class LowerPort(ComponentManager):
         """Lower port of the reactor"""
 
+    return (LowerPortBuilder, LowerPort)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+        Now we need to redefine our Reactor as having a Lower Port.
+    """)
     return
+
+
+@app.cell
+def _(BreedingBlanket, IS, PFCoil, Plasma, Reactor, TFCoil, LowerPort):
+    class MyReactorWithPort(Reactor):
+        """A simple reactor with a port."""
+
+        plasma: Plasma
+        tf_coil: TFCoil
+        blanket: BreedingBlanket
+        inboard_shield: IS
+        pf_coil: PFCoil
+        lower_port: LowerPort
+
+    return (MyReactorWithPort,)
+
+
+@app.cell(hide_code=True)
+def _(
+    BluemiraSTParams,
+    MyReactorWithPort,
+    ReactorConfig,
+    build_bb,
+    build_config,
+    build_is,
+    build_pf_coils,
+    build_plasma,
+    build_reference_equilibrium,
+    build_tf_coils,
+    interpolate_bspline,
+    radial_build,
+):
+    reactor_with_port_config = ReactorConfig(build_config, BluemiraSTParams)
+    reactor_with_port = MyReactorWithPort(
+        "Bluemira Spherical Tokamak with Port",
+        n_sectors=reactor_with_port_config.global_params.n_TF.value,
+    )
+
+    radial_build(
+        reactor_with_port_config.params_for("radial_build").global_params,
+        reactor_with_port_config.config_for("radial_build"),
+    )
+
+    ref_fbe = build_reference_equilibrium(
+        reactor_with_port_config.params_for("reference_fbe").global_params,
+        reactor_with_port_config.config_for("reference_fbe"),
+    )
+
+    reactor_with_port.plasma = build_plasma(
+        reactor_with_port_config.params_for("plasma"),
+        reactor_with_port_config.config_for("plasma"),
+        ref_fbe,
+    )
+
+    reactor_with_port.pf_coil = build_pf_coils(
+        reactor_with_port_config.params_for("pf_coils"),
+        reactor_with_port_config.config_for("pf_coils"),
+        ref_fbe.coilset,
+    )
+
+    reactor_with_port.tf_coil = build_tf_coils(
+        reactor_with_port_config.params_for("tf_coils"),
+        reactor_with_port_config.config_for("tf_coils"),
+        ref_fbe.coilset,
+        interpolate_bspline(ref_fbe.get_LCFS(), closed=True),
+    )
+    reactor_with_port.blanket = build_bb(
+        reactor_with_port_config.params_for("blanket"),
+        reactor_with_port_config.config_for("blanket"),
+        mat_name="BB_BZ_MATERIAL",
+        ref_fbe=ref_fbe,
+    )
+
+    reactor_with_port.inboard_shield = build_is(
+        reactor_with_port_config.params_for("inboard_shield"),
+        reactor_with_port_config.config_for("inboard_shield"),
+        mat_name="EUROFER_MAT",
+        ref_fbe=ref_fbe,
+    )
+    return (reactor_with_port,)
+
+
+@app.cell(hide_code=True)
+def _(
+    reactor_with_port,
+    LowerPortBuilder,
+):
+
+    reactor_with_port.lower_port = LowerPortBuilder(
+        reactor_with_port_config.params_for("lower_port"),
+        reactor_with_port_config.config_for("lower_port"),
+        ref_fbe=ref_fbe,
+    )
+    return (reactor_with_port,)
 
 
 @app.cell(hide_code=True)
