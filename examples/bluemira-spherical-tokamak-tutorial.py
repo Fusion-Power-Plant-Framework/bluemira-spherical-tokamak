@@ -814,7 +814,7 @@ def _():
 
 @app.cell
 def _():
-    # make it smaller?
+    # Have components overlap, encourage adjustment of spacing and design choices to make it fit together
     return
 
 
@@ -827,6 +827,25 @@ def _(mo):
     He needs a port in the tokamak to connect it to the Delorean that acts as the vessel for time travel.
 
     Ideally, this port will be on
+    """)
+    return
+
+
+@app.cell
+def _():
+    # Add classes etc for creating a port so it can be put on the Delorean
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+
+
+    Success! The time machine is working again, and all thanks to our tokamak design!
+    <img style="float: center; margin: 20px" width="400" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia2.firstshowing.net%2Ffirstshowing%2Fimg9%2Fbacktothefuture-delorean-firetrails-full.jpg&f=1&nofb=1&ipt=5c034498f7ce4aea741ea8c9bb46974455008c785b0fcd8682c9fc9f102e0fab&ipo=images
+">
+
     """)
     return
 
