@@ -10,6 +10,26 @@ def _(mo):
     # Bluemira Spherical Tokamak Tutorial
     """)
 
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    # Bluemira Spherical Tokamak Tutorial
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ### Contents
+    - What is Bluemira?
+    - Why do we need it / what does it help us do?
+    - How to use it; a scenario.
+    """)
+    return
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
@@ -20,6 +40,29 @@ def _(mo):
 
     ####If you'd like to learn more about `bluemira`, head to our [GitHub repo](https://github.com/Fusion-Power-Plant-Framework/bluemira) and/or read our [Nuclear Fusion paper](https://iopscience.iop.org/article/10.1088/1741-4326/aea584).
     """)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ### role in fusion system design strategies
+
+    ### key features
+
+    ### technical details
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    It is useful for ....
+
+    It helps us do... XYZ
+    """)
+    return
+
 
 @app.cell(hide_code=True)
 def _(mo):
@@ -38,14 +81,18 @@ def _(mo):
     take a couple of minutes.
     """)
 
+
 @app.cell(hide_code=True)
 def _():
     import marimo as mo
+
     return (mo,)
+
 
 @app.cell(hide_code=True)
 def _():
     from pathlib import Path
+
     from fsspec.implementations.github import GithubFileSystem
 
     bm_st = GithubFileSystem(
@@ -59,7 +106,10 @@ def _():
     local_indat_path = Path("st_regression.IN.DAT")
 
     TF_path = "github://studies/first/data/TF/TFCoilDesign.json"
-    TF_json = bm_st.download(TF_path, "", )
+    TF_json = bm_st.download(
+        TF_path,
+        "",
+    )
     return (INDAT, TF_json)
 
 
@@ -68,6 +118,7 @@ def _():
     import os
     import subprocess
     import sys
+
     subprocess.run(
         [sys.executable, "-m", "pip", "uninstall", "-y", "bluemira"],
         check=False,
@@ -168,6 +219,33 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+    ## Spherical Tokamak Scenario
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    <img style="float: right; margin: 10px" width="300" src="https://static0.srcdn.com/wordpress/wp-content/uploads/2025/02/christopher-lloyd-s-doc-brown-stares-at-the-camera-in-back-to-the-future.jpg?q=70&fit=crop&w=1568&h=1078&dpr=1">
+
+    We've been approached by a client who needs us to help him **design a fusion reactor to power his time machine**. He seems a little chaotic but his enthusiasm is infectious and we agree to help him in a quest of scientific and engineering exploration.
+
+    He has previously used nuclear fission, so we know his time travelling device works. However, he can't get his hands on any more Plutonium and would prefer a more powerful and safer device.
+
+    He has a couple of requirements,
+
+    1. **1.8 GW** of fusion power
+    2. As small a device as we can manage
+
+    From our new fusion expertise, we know that a Spherical Tokamak will be our best bet at achieving a small machine.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
     ## Import from `bluemira` and `bluemira spherical tokamak`.
     The next cell imports some modules we'll need for making our spherical tokamak.
     """)
@@ -224,10 +302,6 @@ def _(mo):
     """)
 
 
-@app.cell()
-def _():
-
-
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
@@ -236,6 +310,7 @@ def _(mo):
 
     The cell is "hidden" so that it collapses when you're not viewing it. Click to take a look to see what's in there.
     """)
+
 
 @app.cell(hide_code=True)
 def _():
@@ -546,12 +621,12 @@ def _():
     return (params,)
 
 
-
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
         Our parameters are then used as an input for the build_config below.
     """)
+
 
 @app.cell(hide_code=True)
 def _(params):
@@ -606,6 +681,14 @@ def _(params):
         },
     }
     return (build_config,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    Let's set up a basic reactor and iterate our way to a better design.
+    """)
+    return
 
 
 @app.cell(hide_code=True)
@@ -722,6 +805,37 @@ def _(reactor, cad, mo):
     viewer = cad.Viewer()
     viewer.render(reactor_shapes)
     mo.vstack([viewer])
+
+
+@app.cell
+def _():
+    # basic reactor set up
+    return
+
+
+@app.cell
+def _():
+    # try to get 1.8GW of power
+    return
+
+
+@app.cell
+def _():
+    # make it smaller?
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    <img style="float: left; margin: 20px" width="400" src="https://images.squarespace-cdn.com/content/v1/51b3dc8ee4b051b96ceb10de/79d5a0c3-d9d1-4759-85d7-73cb009c7f63/Screen+Shot+2023-04-17+at+1.00.35+PM.jpg?format=2500w">
+
+    The reactor is looking great, but in his haste, the Doc forgot to tell us another important requirement.
+    He needs a port in the tokamak to connect it to the Delorean that acts as the vessel for time travel.
+
+    Ideally, this port will be on
+    """)
+    return
 
 
 if __name__ == "__main__":
