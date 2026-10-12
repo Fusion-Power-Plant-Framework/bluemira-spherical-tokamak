@@ -834,7 +834,91 @@ def _(mo):
 @app.cell
 def _():
     # Add classes etc for creating a port so it can be put on the Delorean
+
+    from dataclasses import dataclass
+
+    from bluemira.base.builder import Builder
+    from bluemira.base.components import Component, PhysicalComponent
+    from bluemira.base.parameter_frame import Parameter, ParameterFrame
+    from bluemira.base.reactor import ComponentManager
+    from bluemira.display import plot_2d, plot_3d, show_cad
+    from bluemira.geometry.face import BluemiraFace
+    from bluemira.geometry.tools import extrude_shape, offset_wire
+    from bluemira.geometry.wire import BluemiraWire
+
+    @dataclass
+    class LowerPortBuilderParams(ParameterFrame):
+        """Parameters for the Lower port builder"""
+
+        n_TF: Parameter[int]
+
+        tk_wall: Parameter[float]
+        z_height: Parameter[float]
+
+    class LowerPortBuilder(Builder):
+        """Builder for the lower port of the reactor"""
+
+        params: LowerPortBuilderParams
+        param_cls: type[LowerPortBuilderParams] = LowerPortBuilderParams
+
+        LOWER_PORT: str = "LowerPort"
+
+        def __init__(self, params, lower_port_wire: BluemiraWire):
+            super().__init__(params, {})
+            self.port_wire = lower_port_wire
+
+        def build(self) -> Component:
+            """Build component"""
+            return self.component_tree(
+                xz=None,
+                xy=None,
+                xyz=[self.build_xyz()],
+            )
+
+        def build_xyz(self) -> PhysicalComponent:
+            """Build Component xyz"""
+            port_inner = offset_wire(self.port_wire, -self.params.tk_wall.value)
+            port_xy = BluemiraFace([self.port_wire, port_inner])
+            xyz_port = extrude_shape(port_xy, (0, 0, -self.params.z_height.value))
+            tf_alpha = 360 / self.params.n_TF.value
+            xyz_port.rotate((0, 0, 0), (0, 0, 1), tf_alpha / 2)
+            return PhysicalComponent(self.LOWER_PORT, xyz_port)
+
+    class LowerPort(ComponentManager):
+        """Lower port of the reactor"""
+
     return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+        Let's see what our reactor looks like with this new port added.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(reactor, cad, mo):
+    reactor_shapes = reactor._build_component_tree(
+        "xyz",
+        reactor._init_construction_param_values(
+            kwargs=dict(n_sectors=int(n_TFs.value)), c_params=None
+        ),
+    ).get_component_properties("shape", first=False)[0]
+
+    reactor_shapes = [
+        {
+            "shape": i._shape,
+            "color": "pink" if i.label == "LCFS" else "blue",
+            "name": i.label,
+        }
+        for i in reactor_shapes
+    ]
+
+    viewer = cad.Viewer()
+    viewer.render(reactor_shapes)
+    mo.vstack([viewer])
 
 
 @app.cell(hide_code=True)
