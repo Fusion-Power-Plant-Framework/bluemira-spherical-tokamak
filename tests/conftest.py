@@ -1,3 +1,6 @@
+from contextlib import suppress
+from unittest import mock
+
 import matplotlib as mpl
 import pytest
 
@@ -21,6 +24,20 @@ def pytest_configure(config):
     if not config.option.plotting_on:
         # We're not displaying plots so use a display-less backend
         mpl.use("Agg")
+        # Disable CAD viewer by mocking out every show_cad entry point.
+        # The ``_geometryapi`` dispatcher star-imports from the active backend
+        # (`_freecad.api` or `_cadquery`), which binds ``show_cad`` on
+        # ``_geometryapi`` at import time — patching the underlying backend
+        # alone does NOT propagate, so we mock all three module-level names.
+        with suppress(ImportError):
+            mock.patch("bluemira.codes._polyscope.ps").start()
+        for _name in (  # noqa: RUF052
+            "bluemira.codes.cadapi._freecad.api.show_cad",
+            "bluemira.codes.cadapi._cadquery.show_cad",
+            "bluemira.codes._geometryapi.show_cad",
+        ):
+            with suppress(ImportError, AttributeError):
+                mock.patch(_name).start()
 
 
 @pytest.fixture(autouse=True)
