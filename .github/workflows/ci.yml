@@ -46,6 +46,7 @@ jobs:
         env:
           PACKAGE: bluemira_st
         run: |
+          export BLUEMIRA_GEOMETRY_BACKEND="cadquery"
           pytest --cov=${PACKAGE} \
                  --cov-report html:htmlcov \
                  --cov-report xml \
