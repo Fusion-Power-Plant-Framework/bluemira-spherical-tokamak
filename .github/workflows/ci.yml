@@ -36,11 +36,17 @@ jobs:
           python-version: "3.11"
           clone-bluemira: "true"
 
+      - name: Install PROCESS
+        uses: ./.github/workflows/actions/process
+        with:
+          version: "v3.4.1"
+
       - name: Run pytest
         shell: bash -l {0}
         env:
           PACKAGE: bluemira_st
         run: |
+          export BLUEMIRA_GEOMETRY_BACKEND="cadquery"
           pytest --cov=${PACKAGE} \
                  --cov-report html:htmlcov \
                  --cov-report xml \
