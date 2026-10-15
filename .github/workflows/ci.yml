@@ -41,6 +41,9 @@ jobs:
         with:
           version: "v3.4.1"
 
+      - name: Setup headless graphics
+        uses: pyvista/setup-headless-display-action@c103a2ff45650d38cb71684b5dc6cdfeb9442c79 # v5.1.0
+
       - name: Run pytest
         shell: bash -l {0}
         env:

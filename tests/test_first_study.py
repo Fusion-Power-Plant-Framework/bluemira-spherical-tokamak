@@ -2,15 +2,6 @@ import runpy
 from pathlib import Path
 
 
-def _skip_polyscope():
-    try:
-        import polyscope  # noqa: F401, PLC0415
-    except ImportError:
-        return True
-    else:
-        return False
-
-
 def test_first_study():
     """
     Test that the simple reactor script works.
