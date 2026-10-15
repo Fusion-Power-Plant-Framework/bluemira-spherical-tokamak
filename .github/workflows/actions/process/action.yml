@@ -1,0 +1,30 @@
+name: Install Process
+
+inputs:
+  version:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout process
+      uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      with:
+        repository: "ukaea/process"
+        path: "./process"
+        ref: ${{ inputs.version }}
+
+    - name: Move process and install dependencies
+      id: deps
+      shell: bash -l {0}
+      run: |
+        mv process ../process
+
+    - name: Install process
+      working-directory: "/home/runner/work/"
+      shell: bash -l {0}
+      env:
+        REPO: ${{ github.event.repository.name }}
+      run: |
+        cd $REPO/process
+        pip install .
