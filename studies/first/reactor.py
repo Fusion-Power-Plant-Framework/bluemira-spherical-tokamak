@@ -14,7 +14,7 @@ from bluemira.builders.plasma import Plasma
 from bluemira.geometry.tools import interpolate_bspline
 from bluemira.materials.cache import establish_material_cache
 
-from bluemira_st.blanket.manager import BB
+from bluemira_st.blanket.manager import BreedingBlanket
 from bluemira_st.build_routines import (
     build_bb,
     build_is,
@@ -35,7 +35,7 @@ class MyReactor(Reactor):
 
     plasma: Plasma
     tf_coil: TFCoil
-    blanket: BB
+    blanket: BreedingBlanket
     inboard_shield: IS
     # Models
     # equilibria: EquilibriumManager
