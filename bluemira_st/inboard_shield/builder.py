@@ -127,7 +127,7 @@ class ISBuilder(Builder):
         shield_xz = shield_face
         mat = self.get_material(self.IS)
 
-        pc_xz = PhysicalComponent("Inboard shield", shield_xz, mat)
-        pc_xyz = PhysicalComponent("Inboard shield", shield_xyz, mat)
+        pc_xz = PhysicalComponent(self.IS, shield_xz, mat)
+        pc_xyz = PhysicalComponent(self.IS, shield_xyz, mat)
 
         return self.component_tree(xz=[pc_xz], xy=[], xyz=[pc_xyz])
