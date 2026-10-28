@@ -1,0 +1,557 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.25.1",
+    "script_metadata_hash": "ca07a812286fb58d5d0afd904f736b81"
+  },
+  "cells": [
+    {
+      "id": "Hbol",
+      "code_hash": "ccedbc277819cb1014b6305c01d49dad",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"bluemira-spherical-tokamak-tutorial\">Bluemira Spherical Tokamak Tutorial</h1></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "MJUe",
+      "code_hash": "87ce83748914b705286e318ccd00037e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"contents\">Contents</h3>\n<ul>\n<li>What is Bluemira?</li>\n<li>Why do we need it / what does it help us do?</li>\n<li>How to use it; a scenario.</li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "dfdb2368a4d8cefa0fae7c70f2755091",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"introduction\">Introduction</h2>\n<h3 id=\"bluemira-is-an-integrated-inter-disciplinary-design-tool-for-future-fusion-reactors-it-incorporates-several-modules-to-carry-out-a-range-of-typical-conceptual-fusion-reactor-design-activities\"><a href=\"https://github.com/Fusion-Power-Plant-Framework/bluemira\" rel=\"noopener noreferrer\" target=\"_blank\"><code>Bluemira</code></a> is an integrated inter-disciplinary design tool for future fusion reactors. It incorporates several modules to carry out a range of typical conceptual fusion reactor design activities.</h3>\n<h4 id=\"this-notebook-uses-our-spherical-tokamak-example\">This notebook uses our <a href=\"https://github.com/Fusion-Power-Plant-Framework/bluemira-spherical-tokamak\" rel=\"noopener noreferrer\" target=\"_blank\">Spherical Tokamak example</a>.</h4>\n<h4 id=\"if-youd-like-to-learn-more-about-bluemira-head-to-our-github-repo-andor-read-our-nuclear-fusion-paper\">If you'd like to learn more about <code>bluemira</code>, head to our <a href=\"https://github.com/Fusion-Power-Plant-Framework/bluemira\" rel=\"noopener noreferrer\" target=\"_blank\">GitHub repo</a> and/or read our <a href=\"https://iopscience.iop.org/article/10.1088/1741-4326/aea584\" rel=\"noopener noreferrer\" target=\"_blank\">Nuclear Fusion paper</a>.</h4></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "55f7394450bac49179b9fb56ddea6746",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"role-in-fusion-system-design-strategies\">role in fusion system design strategies</h3>\n<h3 id=\"key-features\">key features</h3>\n<h3 id=\"technical-details\">technical details</h3></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "6776c10363390ff436f2208d3950c455",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">It is useful for ....</span>\n<span class=\"paragraph\">It helps us do... XYZ</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "PKri",
+      "code_hash": "50c461e747c24cb1c93f9dc903415016",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"tutorial-structure\">Tutorial structure</h3>\n<span class=\"paragraph\">In this tutorial we will:</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Xref",
+      "code_hash": "cfd7760bfeb61cd9f5487ce64f19c569",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"initial-set-up\">Initial set-up</h2>\n<span class=\"paragraph\">Run the below cells to install <code>bluemira</code> on the server for this notebook and establish cache for the materials we need. This will\ntake a couple of minutes.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "SFPL",
+      "code_hash": "1d0db38904205bec4d6f6f6a1f6cec3e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "4dfa51583bc0116dc9e35cd6ae641f74",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "RGSE",
+      "code_hash": "a567a925bef16834a4925d2abc00bb88",
+      "outputs": [
+        {
+          "type": "error",
+          "ename": "exception",
+          "evalue": "Command '['/home/jpeters/.cache/uv/environments-v2/bluemira-spherical-tokamak-tutorial-4474c76c6a2aaa33/bin/python', '-m', 'pip', 'install', '--no-cache-dir', '--force-reinstall', '-q', 'git+https://github.com/josieapeters/bluemira-bbt.git@develop']' returned non-zero exit status 1.",
+          "traceback": null
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "<span class=\"codehilite\"><div class=\"highlight\"><pre><span></span><span class=\"gt\">Traceback (most recent call last):</span>\n  File <span class=\"nb\">\"/tmp/marimo_35615/__marimo__cell_RGSE_.py\"</span>, line <span class=\"m\">12</span>, in <span class=\"n\">&lt;module&gt;</span>\n<span class=\"w\">    </span><span class=\"n\">subprocess</span><span class=\"o\">.</span><span class=\"n\">run</span><span class=\"p\">(</span>\n  File <span class=\"nb\">\"/home/jpeters/miniforge/envs/bluemira-bluemira_st/lib/python3.12/subprocess.py\"</span>, line <span class=\"m\">571</span>, in <span class=\"n\">run</span>\n<span class=\"w\">    </span><span class=\"k\">raise</span> <span class=\"n\">CalledProcessError</span><span class=\"p\">(</span><span class=\"n\">retcode</span><span class=\"p\">,</span> <span class=\"n\">process</span><span class=\"o\">.</span><span class=\"n\">args</span><span class=\"p\">,</span>\n<span class=\"gr\">subprocess.CalledProcessError</span>: <span class=\"n\">Command '['/home/jpeters/.cache/uv/environments-v2/bluemira-spherical-tokamak-tutorial-4474c76c6a2aaa33/bin/python', '-m', 'pip', 'install', '--no-cache-dir', '--force-reinstall', '-q', 'git+https://github.com/josieapeters/bluemira-bbt.git@develop']' returned non-zero exit status 1.</span>\n</pre></div>\n</span>",
+          "mimetype": "application/vnd.marimo+traceback"
+        }
+      ]
+    },
+    {
+      "id": "Kclp",
+      "code_hash": "4c69741d60d1a581c35657840b79466a",
+      "outputs": [
+        {
+          "type": "error",
+          "ename": "exception",
+          "evalue": "No module named 'bluemira.materials'",
+          "traceback": null
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "<span class=\"codehilite\"><div class=\"highlight\"><pre><span></span><span class=\"gt\">Traceback (most recent call last):</span>\n  File <span class=\"nb\">\"/tmp/marimo_35615/__marimo__cell_Kclp_.py\"</span>, line <span class=\"m\">1</span>, in <span class=\"n\">&lt;module&gt;</span>\n<span class=\"w\">    </span><span class=\"kn\">from</span><span class=\"w\"> </span><span class=\"nn\">bluemira.materials.cache</span><span class=\"w\"> </span><span class=\"kn\">import</span> <span class=\"n\">MaterialCache</span>\n<span class=\"gr\">ModuleNotFoundError</span>: <span class=\"n\">No module named 'bluemira.materials'</span>\n</pre></div>\n</span>",
+          "mimetype": "application/vnd.marimo+traceback"
+        }
+      ]
+    },
+    {
+      "id": "emfo",
+      "code_hash": "091402b569ec4ac1d059265b8465d80e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"spherical-tokamak-scenario\">Spherical Tokamak Scenario</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Hstk",
+      "code_hash": "4e2bc9a80100dae05a0d61ec25fa26f6",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\"><img style=\"float: right; margin: 10px\" width=\"300\" src=\"https://static0.srcdn.com/wordpress/wp-content/uploads/2025/02/christopher-lloyd-s-doc-brown-stares-at-the-camera-in-back-to-the-future.jpg?q=70&fit=crop&w=1568&h=1078&dpr=1\" title=\"Universal Pictures\"></span>\n<span class=\"paragraph\">We've been approached by a client who needs us to help him <strong>design a fusion reactor to power his time machine</strong>. He seems a little chaotic but his enthusiasm is infectious and we agree to help him in a quest of scientific and engineering exploration.</span>\n<span class=\"paragraph\">He has previously used nuclear fission, so we know his time travelling device works. However, he can't get his hands on any more Plutonium and would prefer a more powerful and safer device.</span>\n<span class=\"paragraph\">He has a couple of requirements,</span>\n<ol>\n<li><strong>1.8 GW</strong> of fusion power</li>\n<li>As small a device as we can manage</li>\n</ol>\n<span class=\"paragraph\">From our new fusion expertise, we know that a Spherical Tokamak will be our best bet at achieving a small machine.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nWHF",
+      "code_hash": "2b5f6fb47e8524b5a6c31d2c545c687a",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"import-from-bluemira-and-bluemira-spherical-tokamak\">Import from <code>bluemira</code> and <code>bluemira spherical tokamak</code>.</h2>\n<span class=\"paragraph\">The next cell imports some modules we'll need for making our spherical tokamak.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "iLit",
+      "code_hash": "096cb9864f4e3d58bb4b81d859396da8",
+      "outputs": [
+        {
+          "type": "error",
+          "ename": "exception",
+          "evalue": "No module named 'bluemira.base'",
+          "traceback": null
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "<span class=\"codehilite\"><div class=\"highlight\"><pre><span></span><span class=\"gt\">Traceback (most recent call last):</span>\n  File <span class=\"nb\">\"/tmp/marimo_35615/__marimo__cell_iLit_.py\"</span>, line <span class=\"m\">2</span>, in <span class=\"n\">&lt;module&gt;</span>\n<span class=\"w\">    </span><span class=\"kn\">from</span><span class=\"w\"> </span><span class=\"nn\">bluemira.base.reactor</span><span class=\"w\"> </span><span class=\"kn\">import</span> <span class=\"n\">Reactor</span>\n<span class=\"gr\">ModuleNotFoundError</span>: <span class=\"n\">No module named 'bluemira.base'</span>\n</pre></div>\n</span>",
+          "mimetype": "application/vnd.marimo+traceback"
+        }
+      ]
+    },
+    {
+      "id": "ZHCJ",
+      "code_hash": "8789b60ffee84904883350e241160092",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ROlb",
+      "code_hash": "91b0746023b5e38b62f6945c2c366187",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"parameter-choices\">Parameter choices</h3>\n<span class=\"paragraph\">In the below cell is the full json dictionary of all our parameter values.</span>\n<span class=\"paragraph\">The cell is \"hidden\" so that it collapses when you're not viewing it. Click to take a look to see what's in there.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "qnkX",
+      "code_hash": "fb67952c59d8a43d7af1f676b0b6dea4",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "TqIu",
+      "code_hash": "fbe176a35a55f37b00c38b42e8962308",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<div style='display: flex;flex: 1;flex-direction: column;justify-content: flex-start;align-items: normal;flex-wrap: nowrap;gap: 0.5rem'><marimo-ui-element object-id='qnkX-0' random-id='a00fbb3a-61f5-48e1-a534-541413c3cf7e'><marimo-text data-initial-value='&quot;4.5&quot;' data-label='&quot;&#92;u003cspan class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&#92;u003e&#92;u003cspan class=&#92;&quot;paragraph&#92;&quot;&#92;u003e&#92;u003cmarimo-tex class=&#92;&quot;arithmatex&#92;&quot;&#92;u003e||({R_0}||)&#92;u003c/marimo-tex&#92;u003e (Major radius)&#92;u003c/span&#92;u003e&#92;u003c/span&#92;u003e&quot;' data-placeholder='&quot;&quot;' data-kind='&quot;text&quot;' data-full-width='false' data-disabled='false' data-debounce='true'></marimo-text></marimo-ui-element><marimo-ui-element object-id='qnkX-1' random-id='b143b63e-f69b-ffa1-154d-20b8c909dbe3'><marimo-text data-initial-value='&quot;1.8&quot;' data-label='&quot;&#92;u003cspan class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&#92;u003e&#92;u003cspan class=&#92;&quot;paragraph&#92;&quot;&#92;u003e&#92;u003cmarimo-tex class=&#92;&quot;arithmatex&#92;&quot;&#92;u003e||(A||)&#92;u003c/marimo-tex&#92;u003e (Aspect ratio)&#92;u003c/span&#92;u003e&#92;u003c/span&#92;u003e&quot;' data-placeholder='&quot;&quot;' data-kind='&quot;text&quot;' data-full-width='false' data-disabled='false' data-debounce='true'></marimo-text></marimo-ui-element><marimo-ui-element object-id='qnkX-2' random-id='602d6162-42e0-2ade-9907-be9ec56004b1'><marimo-text data-initial-value='&quot;0.5&quot;' data-label='&quot;&#92;u003cspan class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&#92;u003e&#92;u003cspan class=&#92;&quot;paragraph&#92;&quot;&#92;u003e&#92;u003cmarimo-tex class=&#92;&quot;arithmatex&#92;&quot;&#92;u003e||({&#92;&#92;delta}||)&#92;u003c/marimo-tex&#92;u003e (Triangularity)&#92;u003c/span&#92;u003e&#92;u003c/span&#92;u003e&quot;' data-placeholder='&quot;&quot;' data-kind='&quot;text&quot;' data-full-width='false' data-disabled='false' data-debounce='true'></marimo-text></marimo-ui-element><marimo-ui-element object-id='qnkX-3' random-id='23a8acd7-d548-2782-039e-69eb4656b46e'><marimo-text data-initial-value='&quot;12&quot;' data-label='&quot;&#92;u003cspan class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&#92;u003e&#92;u003cspan class=&#92;&quot;paragraph&#92;&quot;&#92;u003eNumber of Toroidal Field Coils&#92;u003c/span&#92;u003e&#92;u003c/span&#92;u003e&quot;' data-placeholder='&quot;&quot;' data-kind='&quot;text&quot;' data-full-width='false' data-disabled='false' data-debounce='true'></marimo-text></marimo-ui-element></div>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Vxnm",
+      "code_hash": "8c20c97b6bdea95ab2268aaff33be485",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "DnEU",
+      "code_hash": "188ad7445770085374f6f1b7d553760c",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Our parameters are then used as an input for the build_config below.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ulZA",
+      "code_hash": "861dd127131beb835017cf6e3bbf84db",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ecfG",
+      "code_hash": "f65b447ef57e2325a713cdcd77a5c1a7",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Let's set up a basic reactor and iterate our way to a better design.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Pvdt",
+      "code_hash": "7e768372d8f76d7c7d7429b01eec35a8",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"build-the-reactor\">Build the reactor</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ZBYS",
+      "code_hash": "d3da65adbdd3de93843fa6f5463fd3e0",
+      "outputs": [
+        {
+          "type": "error",
+          "ename": "exception",
+          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
+          "traceback": null
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "aLJB",
+      "code_hash": "bb45c791aaf7d912fff309bf8cd04c63",
+      "outputs": [
+        {
+          "type": "error",
+          "ename": "exception",
+          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
+          "traceback": null
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nHfw",
+      "code_hash": "1561dc4155b57174f1e7d2ec5f8edca4",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Let's view our reactor with our default input values.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "xXTn",
+      "code_hash": "463b7bce977c71a652233b6e8b0d2de5",
+      "outputs": [
+        {
+          "type": "error",
+          "ename": "exception",
+          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
+          "traceback": null
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "AjVT",
+      "code_hash": "98c7d4d88585346d23813aeb107c107a",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "pHFh",
+      "code_hash": "503c13bfa930bec5a732a948494d1a93",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "NCOB",
+      "code_hash": "fbd197e1e54f6025a6784c7606f5af69",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "aqbW",
+      "code_hash": "72478a6c4d0f2a3c9693ba729453486a",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\"><img style=\"float: left; margin: 20px\" width=\"400\" src=\"https://images.squarespace-cdn.com/content/v1/51b3dc8ee4b051b96ceb10de/79d5a0c3-d9d1-4759-85d7-73cb009c7f63/Screen+Shot+2023-04-17+at+1.00.35+PM.jpg?format=2500w\"></span>\n<span class=\"paragraph\">The reactor is looking great, but in his haste, the Doc forgot to tell us another important requirement.\nHe needs a port in the tokamak to connect it to the Delorean that acts as the vessel for time travel.</span>\n<span class=\"paragraph\">Ideally, this port will be on</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "TRpd",
+      "code_hash": "191016fcb182e309e6e39607c0abf5f3",
+      "outputs": [
+        {
+          "type": "error",
+          "ename": "exception",
+          "evalue": "No module named 'bluemira.base'",
+          "traceback": null
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "<span class=\"codehilite\"><div class=\"highlight\"><pre><span></span><span class=\"gt\">Traceback (most recent call last):</span>\n  File <span class=\"nb\">\"/tmp/marimo_35615/__marimo__cell_TRpd_.py\"</span>, line <span class=\"m\">5</span>, in <span class=\"n\">&lt;module&gt;</span>\n<span class=\"w\">    </span><span class=\"kn\">from</span><span class=\"w\"> </span><span class=\"nn\">bluemira.base.builder</span><span class=\"w\"> </span><span class=\"kn\">import</span> <span class=\"n\">Builder</span>\n<span class=\"gr\">ModuleNotFoundError</span>: <span class=\"n\">No module named 'bluemira.base'</span>\n</pre></div>\n</span>",
+          "mimetype": "application/vnd.marimo+traceback"
+        }
+      ]
+    },
+    {
+      "id": "TXez",
+      "code_hash": "cbb319250ffae6c6d266ecc7081ac881",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Now we need to redefine our Reactor as having a Lower Port.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "dNNg",
+      "code_hash": "c27c1451689802c4f124fa9b9bcbcc9b",
+      "outputs": [
+        {
+          "type": "error",
+          "ename": "exception",
+          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
+          "traceback": null
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "yCnT",
+      "code_hash": "2f757ff0c303e3bd257cb81703dafd7e",
+      "outputs": [
+        {
+          "type": "error",
+          "ename": "exception",
+          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
+          "traceback": null
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "wlCL",
+      "code_hash": "4e5baa6222bdf3eb4f280493bc612dbe",
+      "outputs": [
+        {
+          "type": "error",
+          "ename": "exception",
+          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
+          "traceback": null
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "kqZH",
+      "code_hash": "caac8e217a50566eb28d50cc4aec7f9e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Let's see what our reactor looks like with this new port added.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "wAgl",
+      "code_hash": "37314e26ed356622c2f30b2b590baa70",
+      "outputs": [
+        {
+          "type": "error",
+          "ename": "exception",
+          "evalue": "An ancestor raised an exception (ModuleNotFoundError): ",
+          "traceback": null
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "rEll",
+      "code_hash": "e03f1d1dfc0f08d981ebfcf0cd4a258d",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Success! The time machine is working again, and all thanks to our tokamak design!\n    <img style=\"float: center; margin: 20px\" width=\"400\" src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia2.firstshowing.net%2Ffirstshowing%2Fimg9%2Fbacktothefuture-delorean-firetrails-full.jpg&f=1&nofb=1&ipt=5c034498f7ce4aea741ea8c9bb46974455008c785b0fcd8682c9fc9f102e0fab&ipo=images\n\"></span></span>"
+          }
+        }
+      ],
+      "console": []
+    }
+  ]
+}

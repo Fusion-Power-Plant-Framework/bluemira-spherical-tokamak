@@ -1,6 +1,25 @@
+# /// script
+# dependencies = [
+#     "fsspec==2026.9.0",
+#     "marimo>=0.25.1",
+#     "marimo-cad==0.2.0",
+#     "matproplib==0.0.1",
+#     "nlopt==2.11.0",
+#     "periodictable==2.1.0",
+#     "pint==0.25.3",
+#     "pyside6==6.12.0",
+#     "rich==15.0.0",
+#     "seaborn==0.13.2",
+#     "vtk==9.7.1",
+#     "bluemira",
+# ]
+# [tool.uv.sources]
+# bluemira = { path = "../bluemira-bbt", editable = true }
+# ///
+
 import marimo
 
-__generated_with = "0.24.0"
+__generated_with = "0.25.2"
 app = marimo.App()
 
 
@@ -33,6 +52,7 @@ def _(mo):
 
     ####If you'd like to learn more about `bluemira`, head to our [GitHub repo](https://github.com/Fusion-Power-Plant-Framework/bluemira) and/or read our [Nuclear Fusion paper](https://iopscience.iop.org/article/10.1088/1741-4326/aea584).
     """)
+    return
 
 
 @app.cell(hide_code=True)
@@ -62,8 +82,8 @@ def _(mo):
     mo.md(r"""
     ### Tutorial structure
     In this tutorial we will:
-
     """)
+    return
 
 
 @app.cell(hide_code=True)
@@ -73,6 +93,7 @@ def _(mo):
     Run the below cells to install `bluemira` on the server for this notebook and establish cache for the materials we need. This will
     take a couple of minutes.
     """)
+    return
 
 
 @app.cell(hide_code=True)
@@ -94,6 +115,8 @@ def _():
         branch="main",
     )
 
+
+
     INDAT_path = "github://studies/first/data/PROCESS/st_regression.IN.DAT"
     INDAT = bm_st.download(INDAT_path, "")
     local_indat_path = Path("st_regression.IN.DAT")
@@ -103,7 +126,16 @@ def _():
         TF_path,
         "",
     )
-    return (INDAT, TF_json)
+
+    bm = GithubFileSystem(
+        org="Fusion-Power-Plant-Framework",
+        repo="bluemira",
+        branch="main",
+    )
+
+    designmat_path = "github://examples/design/design_materials.py"
+    designmat = bm.download(designmat_path, "")
+    local_designmat_path = Path("design_materials.py")
 
 
 @app.cell(hide_code=True)
@@ -194,19 +226,44 @@ def _():
         stderr=subprocess.STDOUT,
     )
 
+    subprocess.run(
+        [
+            "pip",
+            "install",
+            "-q",
+            "pint==0.25.3",
+        ],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.STDOUT,
+    )
+
 
 @app.cell(hide_code=True)
 def _():
+    # for running locally, rather than pushing. temporary. delete when published and reinstate previous two cells
+    import os
+    import subprocess
+    import sys
+
+    from pathlib import Path
+
+    local_indat_path = Path("../studies/first/data/PROCESS/st_regression.IN.DAT")
+    TF_json = Path("../studies/first/data/TF/TFCoilDesign.json")
+
+    return Path, TF_json, local_indat_path
+
+
+@app.cell(hide_code=True)
+def _(Path):
     from bluemira.materials.cache import MaterialCache
 
     cache = MaterialCache.get_instance()
     cache.load_from_package([
         "bluemira_st.materials",
         "matproplib",
-        Path("./design_materials.py").resolve().as_posix(),
+        local_designmat_path.resolve().as_posix(),
     ])
-
-    return ()
+    return
 
 
 @app.cell(hide_code=True)
@@ -242,9 +299,10 @@ def _(mo):
     ## Import from `bluemira` and `bluemira spherical tokamak`.
     The next cell imports some modules we'll need for making our spherical tokamak.
     """)
+    return
 
 
-@app.cell()
+@app.cell
 def _():
     import marimo_cad as cad
     from bluemira.base.reactor import Reactor
@@ -268,8 +326,8 @@ def _():
     from bluemira_st.tf_coil.manager import TFCoil
 
     return (
-        BreedingBlanket,
         BluemiraSTParams,
+        BreedingBlanket,
         IS,
         PFCoil,
         Plasma,
@@ -293,6 +351,7 @@ def _(mo):
     mo.md(r"""
 
     """)
+    return
 
 
 @app.cell(hide_code=True)
@@ -303,24 +362,31 @@ def _(mo):
 
     The cell is "hidden" so that it collapses when you're not viewing it. Click to take a look to see what's in there.
     """)
+    return
 
 
 @app.cell(hide_code=True)
 def _():
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
     major_radius = mo.ui.text(value="4.5", label="${R_0}$ (Major radius)")
     aspect_ratio = mo.ui.text(value="1.8", label="$A$ (Aspect ratio)")
     delta = mo.ui.text(value="0.5", label="${\delta}$ (Triangularity)")
     n_TFs = mo.ui.text(value="12", label="Number of Toroidal Field Coils")
-    return (major_radius, aspect_ratio, delta, n_TFs)
+    return aspect_ratio, delta, major_radius, n_TFs
 
 
-@app.cell()
-def _():
+@app.cell
+def _(aspect_ratio, delta, major_radius, mo, n_TFs):
     mo.vstack([major_radius, aspect_ratio, delta, n_TFs])
+    return
 
 
 @app.cell(hide_code=True)
-def _():
+def _(aspect_ratio, delta, major_radius, n_TFs):
     params = {
         "n_PF": {
             "value": 10,
@@ -617,12 +683,13 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-        Our parameters are then used as an input for the build_config below.
+    Our parameters are then used as an input for the build_config below.
     """)
+    return
 
 
 @app.cell(hide_code=True)
-def _(params):
+def _(TF_json, local_indat_path, params):
     build_config = {
         "params": params,
         "radial_build": {
@@ -689,6 +756,7 @@ def _(mo):
     mo.md(r"""
     ## Build the reactor
     """)
+    return
 
 
 @app.cell
@@ -705,7 +773,7 @@ def _(BreedingBlanket, IS, PFCoil, Plasma, Reactor, TFCoil):
     return (MyReactor,)
 
 
-@app.cell()
+@app.cell
 def _(
     BluemiraSTParams,
     MyReactor,
@@ -767,18 +835,19 @@ def _(
         mat_name="EUROFER_MAT",
         ref_fbe=ref_fbe,
     )
-    return (reactor,)
+    return reactor, ref_fbe
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-        Let's view our reactor with our default input values.
+    Let's view our reactor with our default input values.
     """)
+    return
 
 
 @app.cell(hide_code=True)
-def _(reactor, cad, mo):
+def _(cad, mo, n_TFs, reactor):
     reactor_shapes = reactor._build_component_tree(
         "xyz",
         reactor._init_construction_param_values(
@@ -798,6 +867,7 @@ def _(reactor, cad, mo):
     viewer = cad.Viewer()
     viewer.render(reactor_shapes)
     mo.vstack([viewer])
+    return (reactor_shapes,)
 
 
 @app.cell
@@ -887,19 +957,19 @@ def _():
     class LowerPort(ComponentManager):
         """Lower port of the reactor"""
 
-    return (LowerPortBuilder, LowerPort)
+    return LowerPort, LowerPortBuilder
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-        Now we need to redefine our Reactor as having a Lower Port.
+    Now we need to redefine our Reactor as having a Lower Port.
     """)
     return
 
 
 @app.cell
-def _(BreedingBlanket, IS, PFCoil, Plasma, Reactor, TFCoil, LowerPort):
+def _(BreedingBlanket, IS, LowerPort, PFCoil, Plasma, Reactor, TFCoil):
     class MyReactorWithPort(Reactor):
         """A simple reactor with a port."""
 
@@ -923,10 +993,10 @@ def _(
     build_is,
     build_pf_coils,
     build_plasma,
-    build_reference_equilibrium,
     build_tf_coils,
     interpolate_bspline,
     radial_build,
+    ref_fbe,
 ):
     reactor_with_port_config = ReactorConfig(build_config, BluemiraSTParams)
     reactor_with_port = MyReactorWithPort(
@@ -939,10 +1009,11 @@ def _(
         reactor_with_port_config.config_for("radial_build"),
     )
 
-    ref_fbe = build_reference_equilibrium(
-        reactor_with_port_config.params_for("reference_fbe").global_params,
-        reactor_with_port_config.config_for("reference_fbe"),
-    )
+
+    # ref_fbe = build_reference_equilibrium(
+    #     reactor_with_port_config.params_for("reference_fbe").global_params,
+    #     reactor_with_port_config.config_for("reference_fbe"),
+    # )
 
     reactor_with_port.plasma = build_plasma(
         reactor_with_port_config.params_for("plasma"),
@@ -975,41 +1046,36 @@ def _(
         mat_name="EUROFER_MAT",
         ref_fbe=ref_fbe,
     )
-    return (reactor_with_port,)
+    return reactor_with_port, reactor_with_port_config
 
 
 @app.cell(hide_code=True)
-def _(
-    reactor_with_port,
-    LowerPortBuilder,
-):
-
+def _(LowerPortBuilder, reactor_with_port, reactor_with_port_config, ref_fbe):
     reactor_with_port.lower_port = LowerPortBuilder(
         reactor_with_port_config.params_for("lower_port"),
         reactor_with_port_config.config_for("lower_port"),
         ref_fbe=ref_fbe,
     )
-    return (reactor_with_port,)
+    return
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-        Let's see what our reactor looks like with this new port added.
+    Let's see what our reactor looks like with this new port added.
     """)
     return
 
 
-@app.cell(hide_code=True)
-def _(reactor, cad, mo):
-    reactor_shapes = reactor._build_component_tree(
+@app.cell
+def _(n_TFs, reactor_shapes, reactor_with_port):
+    reactor_with_port_shapes = reactor_with_port._build_component_tree(
         "xyz",
-        reactor._init_construction_param_values(
+        reactor_with_port._init_construction_param_values(
             kwargs=dict(n_sectors=int(n_TFs.value)), c_params=None
         ),
     ).get_component_properties("shape", first=False)[0]
-
-    reactor_shapes = [
+    reactor_with_port_shapes = [
         {
             "shape": i._shape,
             "color": "pink" if i.label == "LCFS" else "blue",
@@ -1017,22 +1083,14 @@ def _(reactor, cad, mo):
         }
         for i in reactor_shapes
     ]
-
-    viewer = cad.Viewer()
-    viewer.render(reactor_shapes)
-    mo.vstack([viewer])
+    return (reactor_with_port_shapes,)
 
 
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-
-
-    Success! The time machine is working again, and all thanks to our tokamak design!
-    <img style="float: center; margin: 20px" width="400" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia2.firstshowing.net%2Ffirstshowing%2Fimg9%2Fbacktothefuture-delorean-firetrails-full.jpg&f=1&nofb=1&ipt=5c034498f7ce4aea741ea8c9bb46974455008c785b0fcd8682c9fc9f102e0fab&ipo=images
-">
-
-    """)
+@app.cell
+def _(cad, mo, reactor_with_port_shapes):
+    viewer2 = cad.Viewer()
+    viewer2.render(reactor_with_port_shapes)
+    mo.vstack([viewer2])
     return
 
 
