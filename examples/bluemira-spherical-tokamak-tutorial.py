@@ -28,7 +28,6 @@ def _(mo):
     mo.md(r"""
     # Bluemira Spherical Tokamak Tutorial
     """)
-    return
 
 
 @app.cell(hide_code=True)
@@ -39,7 +38,6 @@ def _(mo):
     - Why do we need it / what does it help us do?
     - How to use it; a scenario.
     """)
-    return
 
 
 @app.cell(hide_code=True)
@@ -52,7 +50,6 @@ def _(mo):
 
     ####If you'd like to learn more about `bluemira`, head to our [GitHub repo](https://github.com/Fusion-Power-Plant-Framework/bluemira) and/or read our [Nuclear Fusion paper](https://iopscience.iop.org/article/10.1088/1741-4326/aea584).
     """)
-    return
 
 
 @app.cell(hide_code=True)
@@ -64,7 +61,6 @@ def _(mo):
 
     ### technical details
     """)
-    return
 
 
 @app.cell(hide_code=True)
@@ -74,7 +70,6 @@ def _(mo):
 
     It helps us do... XYZ
     """)
-    return
 
 
 @app.cell(hide_code=True)
@@ -83,7 +78,6 @@ def _(mo):
     ### Tutorial structure
     In this tutorial we will:
     """)
-    return
 
 
 @app.cell(hide_code=True)
@@ -93,7 +87,6 @@ def _(mo):
     Run the below cells to install `bluemira` on the server for this notebook and establish cache for the materials we need. This will
     take a couple of minutes.
     """)
-    return
 
 
 @app.cell(hide_code=True)
@@ -114,8 +107,6 @@ def _():
         repo="bluemira-spherical-tokamak",
         branch="main",
     )
-
-
 
     INDAT_path = "github://studies/first/data/PROCESS/st_regression.IN.DAT"
     INDAT = bm_st.download(INDAT_path, "")
@@ -239,21 +230,6 @@ def _():
 
 
 @app.cell(hide_code=True)
-def _():
-    # for running locally, rather than pushing. temporary. delete when published and reinstate previous two cells
-    import os
-    import subprocess
-    import sys
-
-    from pathlib import Path
-
-    local_indat_path = Path("../studies/first/data/PROCESS/st_regression.IN.DAT")
-    TF_json = Path("../studies/first/data/TF/TFCoilDesign.json")
-
-    return Path, TF_json, local_indat_path
-
-
-@app.cell(hide_code=True)
 def _(Path):
     from bluemira.materials.cache import MaterialCache
 
@@ -263,7 +239,6 @@ def _(Path):
         "matproplib",
         local_designmat_path.resolve().as_posix(),
     ])
-    return
 
 
 @app.cell(hide_code=True)
@@ -271,7 +246,6 @@ def _(mo):
     mo.md(r"""
     ## Spherical Tokamak Scenario
     """)
-    return
 
 
 @app.cell(hide_code=True)
@@ -290,7 +264,6 @@ def _(mo):
 
     From our new fusion expertise, we know that a Spherical Tokamak will be our best bet at achieving a small machine.
     """)
-    return
 
 
 @app.cell(hide_code=True)
@@ -299,7 +272,6 @@ def _(mo):
     ## Import from `bluemira` and `bluemira spherical tokamak`.
     The next cell imports some modules we'll need for making our spherical tokamak.
     """)
-    return
 
 
 @app.cell
@@ -351,7 +323,6 @@ def _(mo):
     mo.md(r"""
 
     """)
-    return
 
 
 @app.cell(hide_code=True)
@@ -362,7 +333,6 @@ def _(mo):
 
     The cell is "hidden" so that it collapses when you're not viewing it. Click to take a look to see what's in there.
     """)
-    return
 
 
 @app.cell(hide_code=True)
@@ -374,7 +344,7 @@ def _():
 def _(mo):
     major_radius = mo.ui.text(value="4.5", label="${R_0}$ (Major radius)")
     aspect_ratio = mo.ui.text(value="1.8", label="$A$ (Aspect ratio)")
-    delta = mo.ui.text(value="0.5", label="${\delta}$ (Triangularity)")
+    delta = mo.ui.text(value="0.5", label=r"${\delta}$ (Triangularity)")
     n_TFs = mo.ui.text(value="12", label="Number of Toroidal Field Coils")
     return aspect_ratio, delta, major_radius, n_TFs
 
@@ -382,7 +352,6 @@ def _(mo):
 @app.cell
 def _(aspect_ratio, delta, major_radius, mo, n_TFs):
     mo.vstack([major_radius, aspect_ratio, delta, n_TFs])
-    return
 
 
 @app.cell(hide_code=True)
@@ -685,7 +654,6 @@ def _(mo):
     mo.md(r"""
     Our parameters are then used as an input for the build_config below.
     """)
-    return
 
 
 @app.cell(hide_code=True)
@@ -748,7 +716,6 @@ def _(mo):
     mo.md(r"""
     Let's set up a basic reactor and iterate our way to a better design.
     """)
-    return
 
 
 @app.cell(hide_code=True)
@@ -756,7 +723,6 @@ def _(mo):
     mo.md(r"""
     ## Build the reactor
     """)
-    return
 
 
 @app.cell
@@ -843,7 +809,6 @@ def _(mo):
     mo.md(r"""
     Let's view our reactor with our default input values.
     """)
-    return
 
 
 @app.cell(hide_code=True)
@@ -898,7 +863,6 @@ def _(mo):
 
     Ideally, this port will be on
     """)
-    return
 
 
 @app.cell
@@ -911,7 +875,6 @@ def _():
     from bluemira.base.components import Component, PhysicalComponent
     from bluemira.base.parameter_frame import Parameter, ParameterFrame
     from bluemira.base.reactor import ComponentManager
-    from bluemira.display import plot_2d, plot_3d, show_cad
     from bluemira.geometry.face import BluemiraFace
     from bluemira.geometry.tools import extrude_shape, offset_wire
     from bluemira.geometry.wire import BluemiraWire
@@ -965,7 +928,6 @@ def _(mo):
     mo.md(r"""
     Now we need to redefine our Reactor as having a Lower Port.
     """)
-    return
 
 
 @app.cell
@@ -1008,7 +970,6 @@ def _(
         reactor_with_port_config.params_for("radial_build").global_params,
         reactor_with_port_config.config_for("radial_build"),
     )
-
 
     # ref_fbe = build_reference_equilibrium(
     #     reactor_with_port_config.params_for("reference_fbe").global_params,
@@ -1056,7 +1017,6 @@ def _(LowerPortBuilder, reactor_with_port, reactor_with_port_config, ref_fbe):
         reactor_with_port_config.config_for("lower_port"),
         ref_fbe=ref_fbe,
     )
-    return
 
 
 @app.cell(hide_code=True)
@@ -1064,7 +1024,6 @@ def _(mo):
     mo.md(r"""
     Let's see what our reactor looks like with this new port added.
     """)
-    return
 
 
 @app.cell
@@ -1091,7 +1050,6 @@ def _(cad, mo, reactor_with_port_shapes):
     viewer2 = cad.Viewer()
     viewer2.render(reactor_with_port_shapes)
     mo.vstack([viewer2])
-    return
 
 
 if __name__ == "__main__":
