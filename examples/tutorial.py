@@ -102,7 +102,7 @@ def _():
     bm_st = GithubFileSystem(
         org="Fusion-Power-Plant-Framework",
         repo="bluemira-spherical-tokamak",
-        sha="d37de29",
+        sha="13e41d2",
     )
 
     # we download the design_materials.py script from bluemira by specifying a path to download from
@@ -927,7 +927,7 @@ def _(local_indat_path, params, port_height):
                     "value": 12,
                     "unit": "m^2",
                     "source": "Input",
-                    "long_name": "Minimum surface area of the upper port",
+                    "long_name": "Minimum surface area of the port",
                 },
                 "min_plasma_dist": {
                     "value": 1,
@@ -935,23 +935,23 @@ def _(local_indat_path, params, port_height):
                     "source": "Input",
                     "long_name": "Minimum distance between the tf and the plasma",
                 },
-                "g_tf_up": {
+                "g_tf_port": {
                     "value": 0.8,
                     "unit": "m",
                     "source": "Input",
-                    "long_name": "Gap between the TF coil (wp) and the upper port",
+                    "long_name": "Gap between the TF coil (wp) and the port",
                 },
-                "up_ob_inset": {
+                "port_ob_inset": {
                     "value": 2,
                     "unit": "m",
                     "source": "Input",
-                    "long_name": "Upper port outboard inset, inset from tf_r_max",
+                    "long_name": "Port outboard inset, inset from tf_r_max",
                 },
-                "up_ib_inset": {
+                "port_ib_inset": {
                     "value": 4,
                     "unit": "m",
                     "source": "Input",
-                    "long_name": "Upper port inboard inset, inset from tf_r_start",
+                    "long_name": "Port inboard inset, inset from tf_r_start",
                 },
             },
         },
@@ -963,7 +963,7 @@ def _(local_indat_path, params, port_height):
                 "Casing": "Poloidal_Field_Coil",
             },
         },
-        "lower_port": {
+        "port": {
             "params": {
                 "tk_wall": {
                     "value": 0.1,
@@ -1006,25 +1006,25 @@ def _(
     offset_wire,
 ):
     @dataclass
-    class LowerPortBuilderParams(ParameterFrame):
-        """Parameters for the Lower port builder"""
+    class PortBuilderParams(ParameterFrame):
+        """Parameters for the port builder"""
 
         n_TF: Parameter[int]
 
         tk_wall: Parameter[float]
         z_height: Parameter[float]
 
-    class LowerPortBuilder(Builder):
-        """Builder for the lower port of the reactor"""
+    class PortBuilder(Builder):
+        """Builder for the port of the reactor"""
 
-        params: LowerPortBuilderParams
-        param_cls: type[LowerPortBuilderParams] = LowerPortBuilderParams
+        params: PortBuilderParams
+        param_cls: type[PortBuilderParams] = PortBuilderParams
 
-        LOWER_PORT: str = "LowerPort"
+        PORT: str = "Port"
 
-        def __init__(self, params, lower_port_wire: BluemiraWire):
+        def __init__(self, params, port_wire: BluemiraWire):
             super().__init__(params, {})
-            self.lower_port_wire = lower_port_wire
+            self.port_wire = port_wire
 
         def build(self) -> Component:
             """Build component"""
@@ -1036,26 +1036,22 @@ def _(
 
         def build_xyz(self) -> PhysicalComponent:
             """Build Component xyz"""
-            port_inner = offset_wire(self.lower_port_wire, -self.params.tk_wall.value)
-            port_xy = BluemiraFace([self.lower_port_wire, port_inner])
+            port_inner = offset_wire(self.port_wire, -self.params.tk_wall.value)
+            port_xy = BluemiraFace([self.port_wire, port_inner])
             xyz_port = extrude_shape(port_xy, (0, 0, -self.params.z_height.value))
             tf_alpha = 360 / self.params.n_TF.value
             xyz_port.rotate((0, 0, 0), (0, 0, 1), tf_alpha / 2)
-            return PhysicalComponent(self.LOWER_PORT, xyz_port)
+            return PhysicalComponent(self.PORT, xyz_port)
 
-    class LowerPort(ComponentManager):
-        """Lower port of the reactor"""
+    class Port(ComponentManager):
+        """Port on the reactor"""
 
-    def build_lower_port(
-        reactor_config: ReactorConfig, up_silhouette: BluemiraWire
-    ) -> LowerPort:
-        """Build an upper port from a set of parameters."""
-        lower_port_builder = LowerPortBuilder(
-            reactor_config.params_for("lower_port"), up_silhouette
-        )
-        return LowerPort(lower_port_builder.build())
+    def build_port(reactor_config: ReactorConfig, up_silhouette: BluemiraWire) -> Port:
+        """Build a port from a set of parameters."""
+        port_builder = PortBuilder(reactor_config.params_for("port"), up_silhouette)
+        return Port(ort_builder.build())
 
-    return LowerPort, build_lower_port
+    return Port, build_port
 
 
 @app.cell(hide_code=True)
@@ -1140,7 +1136,7 @@ def _(mo):
 
 
 @app.cell
-def _(BreedingBlanket, IS, LowerPort, PFCoil, Plasma, Reactor, TFCoil):
+def _(BreedingBlanket, IS, Port, PFCoil, Plasma, Reactor, TFCoil):
     class STReactorWithPort(Reactor):
         """A spherical tokamak with a port."""
 
@@ -1149,7 +1145,7 @@ def _(BreedingBlanket, IS, LowerPort, PFCoil, Plasma, Reactor, TFCoil):
         blanket: BreedingBlanket
         inboard_shield: IS
         pf_coil: PFCoil
-        lower_port: LowerPort
+        port: Port
 
     return (STReactorWithPort,)
 
@@ -1171,18 +1167,16 @@ def _(
 
 
 @app.cell
-def _(build_lower_port, reactor_config_with_port, reactor_with_port):
-    reactor_with_port.lower_port = build_lower_port(
-        reactor_config_with_port,
-        reactor_with_port.tf_coil.upper_port_face,
-        #  ref_fbe=ref_fbe,
+def _(build_port, reactor_config_with_port, reactor_with_port):
+    reactor_with_port.port = build_port(
+        reactor_config_with_port, reactor_with_port.tf_coil.port_face
     )
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    We'll need a new configuration dictionary to build this new device with a port.
+
     """)
 
 

@@ -31,7 +31,7 @@ from bluemira.geometry.wire import BluemiraWire
 from matplotlib import pyplot as plt
 
 
-class ContractLengthByUpperPortGOP(GeomOptimisationProblem):
+class ContractLengthByPortGOP(GeomOptimisationProblem):
     """Geometry optimisation problem to minimise a shape's length."""
 
     def __init__(
@@ -75,54 +75,54 @@ class TFCoilDesignerParams(ParameterFrame):
 
     # Port params
     min_port_surface_area: Parameter[float]
-    """Minimum surface area of the upper port"""
+    """Minimum surface area of the port"""
     min_plasma_dist: Parameter[float]
     """Minimum distance between the tf and the plasma"""
-    g_tf_up: Parameter[float]
-    """Gap between the TF coil (wp) and the upper port"""
-    up_ob_inset: Parameter[float]
-    """Upper port outboard inset, inset from tf_r_max"""
-    up_ib_inset: Parameter[float]
-    """Upper port inboard inset, inset from tf_r_start"""
+    g_tf_port: Parameter[float]
+    """Gap between the TF coil (wp) and the port"""
+    port_ob_inset: Parameter[float]
+    """Port outboard inset, inset from tf_r_max"""
+    port_ib_inset: Parameter[float]
+    """Port inboard inset, inset from tf_r_start"""
 
 
-def upper_port_area_constraint(
+def port_area_constraint(
     geom: GeometryParameterisation,
     min_port_surface_area: float,
     n_TF: int,
-    total_g_tf_cl_up: float,
-    up_ob_inset: float,
-    up_ib_inset: float,
+    total_g_tf_cl_port: float,
+    port_ob_inset: float,
+    port_ib_inset: float,
 ):
-    """A constraint to maintain a minimum area of the upper port."""
+    """A constraint to maintain a minimum area of the port."""
     shape = geom.create_shape()
 
     tf_alpha = 360 / n_TF
 
-    up_r_start = shape.bounding_box.x_min + up_ib_inset
-    up_r_end = shape.bounding_box.x_max - up_ob_inset
+    port_r_start = shape.bounding_box.x_min + port_ib_inset
+    port_r_end = shape.bounding_box.x_max - port_ob_inset
 
-    up_ib_y = np.sin(np.radians(tf_alpha / 2)) * up_r_start - total_g_tf_cl_up
-    up_ob_y = np.sin(np.radians(tf_alpha / 2)) * up_r_end - total_g_tf_cl_up
+    port_ib_y = np.sin(np.radians(tf_alpha / 2)) * port_r_start - total_g_tf_cl_port
+    port_ob_y = np.sin(np.radians(tf_alpha / 2)) * port_r_end - total_g_tf_cl_port
 
-    up_wire = make_polygon(
+    port_wire = make_polygon(
         [
-            [up_r_start, up_ib_y, 0],
-            [up_r_end, up_ob_y, 0],
-            [up_r_end, -up_ob_y, 0],
-            [up_r_start, -up_ib_y, 0],
+            [port_r_start, port_ib_y, 0],
+            [port_r_end, port_ob_y, 0],
+            [port_r_end, -port_ob_y, 0],
+            [port_r_start, -port_ib_y, 0],
         ],
         closed=True,
     )
-    up_face = BluemiraFace(up_wire)
+    port_face = BluemiraFace(port_wire)
 
-    # we want up_face.area >= min_port_surface_area,
+    # we want port_face.area >= min_port_surface_area,
     # optimiser wants constraint =< 0,
     # therefore, we negate the constraint:
-    # -> -up_face.area <= -min_port_surface_area
-    # -> min_port_surface_area - up_face.area <= 0
+    # -> -port_face.area <= -min_port_surface_area
+    # -> min_port_surface_area - port_face.area <= 0
 
-    return min_port_surface_area - up_face.area, up_wire
+    return min_port_surface_area - port_face.area, port_wire
 
 
 def plasma_min_length_constraint(
@@ -178,16 +178,16 @@ class TFCoilDesigner(Designer[tuple[GeometryParameterisation, BluemiraWire]]):
             "ro": {"value": ro, "fixed": True},
         })
 
-    def _upper_port_silhouette(self, geom: GeometryParameterisation) -> BluemiraWire:
+    def _port_silhouette(self, geom: GeometryParameterisation) -> BluemiraWire:
         h_tf_wp_d = self.params.tf_wp_depth.value / 2
 
-        port_wire = upper_port_area_constraint(
+        port_wire = port_area_constraint(
             geom,
             min_port_surface_area=self.params.min_port_surface_area.value,
             n_TF=self.params.n_TF.value,
-            total_g_tf_cl_up=self.params.g_tf_up.value + h_tf_wp_d,
-            up_ob_inset=self.params.up_ob_inset.value,
-            up_ib_inset=self.params.up_ib_inset.value,
+            total_g_tf_cl_port=self.params.g_tf_port.value + h_tf_wp_d,
+            port_ob_inset=self.params.port_ob_inset.value,
+            port_ib_inset=self.params.port_ib_inset.value,
         )[1]
         tf = geom.create_shape()
         port_wire.translate((0, 0, tf.bounding_box.z_max))
@@ -257,15 +257,15 @@ class TFCoilDesigner(Designer[tuple[GeometryParameterisation, BluemiraWire]]):
         parameterisation = self._get_parameterisation()
         wp_cross_section = self._make_wp_xs(self.params.r_tf_in_centre.value)
 
-        geom_opt = ContractLengthByUpperPortGOP([
+        geom_opt = ContractLengthByPortGOP([
             {
-                "f_constraint": lambda geom: upper_port_area_constraint(
+                "f_constraint": lambda geom: port_area_constraint(
                     geom,
                     min_port_surface_area=self.params.min_port_surface_area.value,
                     n_TF=self.params.n_TF.value,
-                    total_g_tf_cl_up=self.params.g_tf_up.value + h_tf_wp_d,
-                    up_ob_inset=self.params.up_ob_inset.value,
-                    up_ib_inset=self.params.up_ib_inset.value,
+                    total_g_tf_cl_port=self.params.g_tf_port.value + h_tf_wp_d,
+                    port_ob_inset=self.params.port_ob_inset.value,
+                    port_ib_inset=self.params.port_ib_inset.value,
                 )[0],
                 "tolerance": np.array([1e-8]),
             },
@@ -307,7 +307,7 @@ class TFCoilDesigner(Designer[tuple[GeometryParameterisation, BluemiraWire]]):
 
         self._plot_post_opt(initial_geom, result)
 
-        return result.geom, self._upper_port_silhouette(result.geom)
+        return result.geom, self._port_silhouette(result.geom)
 
 
 class TFCoilBuilder(Builder):
@@ -380,8 +380,6 @@ class TFCoilBuilder(Builder):
 class TFCoil_with_port(ComponentManager):
     """TF coil component manager."""
 
-    def __init__(
-        self, component_tree: ComponentT, upper_port_face: BluemiraWire
-    ) -> None:
+    def __init__(self, component_tree: ComponentT, port_face: BluemiraWire) -> None:
         self._component = component_tree
-        self.upper_port_face = upper_port_face
+        self.port_face = port_face
