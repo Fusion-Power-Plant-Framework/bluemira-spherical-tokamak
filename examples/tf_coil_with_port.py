@@ -85,43 +85,44 @@ class TFCoilDesignerParams(ParameterFrame):
     up_ib_inset: Parameter[float]
     """Upper port inboard inset, inset from tf_r_start"""
 
-    def upper_port_area_constraint(
-        geom: GeometryParameterisation,
-        min_port_surface_area: float,
-        n_TF: int,
-        total_g_tf_cl_up: float,
-        up_ob_inset: float,
-        up_ib_inset: float,
-    ):
-        """A constraint to maintain a minimum area of the upper port."""
-        shape = geom.create_shape()
 
-        tf_alpha = 360 / n_TF
+def upper_port_area_constraint(
+    geom: GeometryParameterisation,
+    min_port_surface_area: float,
+    n_TF: int,
+    total_g_tf_cl_up: float,
+    up_ob_inset: float,
+    up_ib_inset: float,
+):
+    """A constraint to maintain a minimum area of the upper port."""
+    shape = geom.create_shape()
 
-        up_r_start = shape.bounding_box.x_min + up_ib_inset
-        up_r_end = shape.bounding_box.x_max - up_ob_inset
+    tf_alpha = 360 / n_TF
 
-        up_ib_y = np.sin(np.radians(tf_alpha / 2)) * up_r_start - total_g_tf_cl_up
-        up_ob_y = np.sin(np.radians(tf_alpha / 2)) * up_r_end - total_g_tf_cl_up
+    up_r_start = shape.bounding_box.x_min + up_ib_inset
+    up_r_end = shape.bounding_box.x_max - up_ob_inset
 
-        up_wire = make_polygon(
-            [
-                [up_r_start, up_ib_y, 0],
-                [up_r_end, up_ob_y, 0],
-                [up_r_end, -up_ob_y, 0],
-                [up_r_start, -up_ib_y, 0],
-            ],
-            closed=True,
-        )
-        up_face = BluemiraFace(up_wire)
+    up_ib_y = np.sin(np.radians(tf_alpha / 2)) * up_r_start - total_g_tf_cl_up
+    up_ob_y = np.sin(np.radians(tf_alpha / 2)) * up_r_end - total_g_tf_cl_up
 
-        # we want up_face.area >= min_port_surface_area,
-        # optimiser wants constraint =< 0,
-        # therefore, we negate the constraint:
-        # -> -up_face.area <= -min_port_surface_area
-        # -> min_port_surface_area - up_face.area <= 0
+    up_wire = make_polygon(
+        [
+            [up_r_start, up_ib_y, 0],
+            [up_r_end, up_ob_y, 0],
+            [up_r_end, -up_ob_y, 0],
+            [up_r_start, -up_ib_y, 0],
+        ],
+        closed=True,
+    )
+    up_face = BluemiraFace(up_wire)
 
-        return min_port_surface_area - up_face.area, up_wire
+    # we want up_face.area >= min_port_surface_area,
+    # optimiser wants constraint =< 0,
+    # therefore, we negate the constraint:
+    # -> -up_face.area <= -min_port_surface_area
+    # -> min_port_surface_area - up_face.area <= 0
+
+    return min_port_surface_area - up_face.area, up_wire
 
     def plasma_min_length_constraint(
         geom: GeometryParameterisation, boundary: BluemiraWire, min_distance: float
