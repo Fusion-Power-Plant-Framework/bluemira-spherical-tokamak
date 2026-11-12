@@ -1,22 +1,3 @@
-# /// script
-# dependencies = [
-#     "fsspec==2026.9.0",
-#     "marimo>=0.25.1",
-#     "marimo-cad==0.2.0",
-#     "matproplib==0.0.1",
-#     "nlopt==2.11.0",
-#     "periodictable==2.1.0",
-#     "pint==0.25.3",
-#     "pyside6==6.12.0",
-#     "rich==15.0.0",
-#     "seaborn==0.13.2",
-#     "vtk==9.7.1",
-#     "bluemira",
-# ]
-# [tool.uv.sources]
-# bluemira = { path = "../bluemira-bbt", editable = true }
-# ///
-
 import marimo
 
 __generated_with = "0.25.2"
@@ -858,8 +839,8 @@ def _(mo):
     mo.md(r"""
     <img style="float: left; margin: 20px" width="400" src="https://images.squarespace-cdn.com/content/v1/51b3dc8ee4b051b96ceb10de/79d5a0c3-d9d1-4759-85d7-73cb009c7f63/Screen+Shot+2023-04-17+at+1.00.35+PM.jpg?format=2500w">
 
-    The reactor is looking great, but in his haste, the Doc forgot to tell us another important requirement.
-    He needs a port in the tokamak to connect it to the Delorean that acts as the vessel for time travel.
+    The reactor is looking great, but in his haste, the client forgot to tell us another important requirement.
+    He needs a port in the tokamak to connect it to the car that acts as the vessel for time travel.
 
     Ideally, this port will be on
     """)
