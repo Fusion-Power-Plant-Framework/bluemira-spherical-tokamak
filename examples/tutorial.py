@@ -123,7 +123,7 @@ def _():
     bm_st = GithubFileSystem(
         org="Fusion-Power-Plant-Framework",
         repo="bluemira-spherical-tokamak",
-        sha="73fd6ef",
+        sha="cabb647",
     )
 
     # we download the design_materials.py script from bluemira by specifying a path to download from
@@ -743,7 +743,7 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    First we specify a Reactor object of all the components we'd like in our device. s
+    First we specify a Reactor object of all the components we'd like in our device.
     """)
 
 
@@ -896,9 +896,12 @@ def _(mo):
     He needs a port in the tokamak to connect it to the various wires and cables in his car that acts as the vessel for time travel.
 
     Ideally, this port will be lower down so minimal amounts of cable are required to link everything up.
+    """)
 
-    ---
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
     Below are some more parameters for you to play with that link to defining the size and placement of our port.
     """)
 
@@ -963,7 +966,7 @@ def _(local_indat_path, params, port_height):
             },
             "params": {
                 "min_port_surface_area": {
-                    "value": float(min_port_s_a.vlue),
+                    "value": float(min_port_s_a.value),
                     "unit": "m^2",
                     "source": "Input",
                     "long_name": "Minimum surface area of the port",
@@ -1111,8 +1114,9 @@ def _(mo):
 def _():
     TF_w_port_path = "github://examples/tf_coil_with_port.py"
     TF_w_port = bm_st.download(TF_w_port_path, "")
+    from tf_coil_with_port import build_tf_coils_for_port
 
-    return TFCoil_with_port
+    return build_tf_coils_for_port
 
 
 @app.cell(hide_code=True)
