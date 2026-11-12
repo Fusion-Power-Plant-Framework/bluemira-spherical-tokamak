@@ -123,7 +123,7 @@ def _():
     bm_st = GithubFileSystem(
         org="Fusion-Power-Plant-Framework",
         repo="bluemira-spherical-tokamak",
-        sha="6d38bcb",
+        sha="6792b06",
     )
 
     # we download the design_materials.py script from bluemira by specifying a path to download from
@@ -362,7 +362,9 @@ def _(mo):
     mo.md(r"""
     ### Parameters and Configuration
 
-    Here are a few parameters you will have learned about this week, run the next few cells (up until before the next section) to create and visualise your reactor. You can come back and change these parameters, and see how it affects your design!
+    Here are a few parameters you will have learned about this week, run the next few cells (up until before the next section) to create and visualise your reactor.
+    You can come back and change these parameters, and see how it affects your design!
+    Hit the play icon to bring up boxes to change the value.
     """)
 
 
@@ -908,7 +910,7 @@ def _(mo):
 
 @app.cell
 def _(mo):
-    port_height = mo.ui.text(value="-10", label="Port height (m)")
+    port_height = mo.ui.text(value="4", label="Port height (m)")
     min_port_s_a = mo.ui.text(
         value="12", label="Minimum surface area of the port $(m^2)$"
     )
@@ -1214,11 +1216,6 @@ def _(mo):
     - Build your own reactor using our [bluemira-template-project](https://github.com/Fusion-Power-Plant-Framework/bluemira-template-project)
 
     """)
-
-
-@app.cell
-def _():
-    return
 
 
 if __name__ == "__main__":
