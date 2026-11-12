@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-present The Bluemira Team
+#
+# SPDX-License-Identifier: MIT
+
 from dataclasses import dataclass
 
 import numpy as np
@@ -383,3 +387,21 @@ class TFCoil_with_port(ComponentManager):
     def __init__(self, component_tree: ComponentT, port_face: BluemiraWire) -> None:
         self._component = component_tree
         self.port_face = port_face
+
+    def build_tf_coils_for_port(
+        params: dict, build_config: dict, coilset: CoilSet, plasma_lcfs: BluemiraWire
+    ) -> TFCoil_with_port:
+        """Build a TF coil from a set of parameters."""
+        tf_coil_designer = TFCoilDesigner(
+            params,
+            build_config,
+            lcfs=plasma_lcfs,
+            coilset=coilset,
+        )
+        tf_coil_parameterisation, up_face = tf_coil_designer.execute()
+
+        tf_coil_builder = TFCoilBuilder(
+            params,
+            tf_coil_parameterisation.create_shape(),
+        )
+        return TFCoil_with_port(tf_coil_builder.build(), up_face)

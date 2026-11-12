@@ -14,7 +14,9 @@ app = marimo.App(width="medium", auto_download=["html"])
 
 @app.cell
 def _():
-    # Copyright statement
+    # SPDX-FileCopyrightText: 2024-present The Bluemira Team
+    #
+    # SPDX-License-Identifier: MIT
     return
 
 
@@ -23,6 +25,13 @@ def _():
     import marimo as mo
 
     return (mo,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    #Bluemira Spherical Tokamak Tutorial
+    """)
 
 
 @app.cell(hide_code=True)
@@ -37,11 +46,16 @@ def _(mo):
     mo.md(r"""
         ##Bluemira
         `Bluemira` is an integrated inter-disciplinary design tool for future fusion reactors. It incorporates several modules, some of which rely on other codes, to carry out a range of typical conceptual fusion reactor design activities.
-
-
+        ---
+        /// details | Basically, `Bluemira` offers a large basis of reactor components and capabilities from which you can build upon into your own designs.
+        For example, we have
+        - a parametrised version of [EUDEMO](https://github.com/Fusion-Power-Plant-Framework/bluemira-eudemo)
+        - a [Spherical Tokamak example](https://github.com/Fusion-Power-Plant-Framework/bluemira-spherical-tokamak) based on [OpenSTEP](https://github.com/ukaea/OpenSTEP) data (which we're using today!)
+        ///
+        ---
         It is a 'medium fidelity' code, meaning it can build on lower fidelity codes like `PROCESS` and be used as parameterisations for higher fidelity codes, of which you can feed back changes and iterate designs.
-
-        `Bluemira` is capable of optimising and calculating various parts of fusion reactor and plant design, such as;
+        ---
+        /// details | `Bluemira` is capable of optimising and calculating various parts of fusion reactor and plant design, such as;
         - 🧲 placing and optimising Poloidal Field (PF) coils, including minimising the current
         - 🌡️ calculating heat loads of parts of the reactor
         - 💡 calculating the 'Balance of Plant' (BoP)
@@ -51,6 +65,7 @@ def _(mo):
             - radiation loads
             - photon loads
             - charged particle loads
+        ///
     """)
 
 
@@ -102,7 +117,7 @@ def _():
     bm_st = GithubFileSystem(
         org="Fusion-Power-Plant-Framework",
         repo="bluemira-spherical-tokamak",
-        sha="13e41d2",
+        sha="43c36a0",
     )
 
     # we download the design_materials.py script from bluemira by specifying a path to download from
@@ -887,9 +902,29 @@ def _(mo):
 @app.cell
 def _(mo):
     port_height = mo.ui.text(value="-4", label="Port height (m)")
+    min_port_s_a = mo.ui.text(
+        value="12", label="Minimum surface area of the port $(m^2)$"
+    )
+    gap_tf_port = mo.ui.text(
+        value="0.8", label="Gap between the TF coil and the port (m)"
+    )
+    port_outboard_inset = mo.ui.text(value="2", label="Port outboard inset (m)")
+    port_inboard_inset = mo.ui.text(value="4", label="Port intboard inset (m)")
 
-    mo.vstack([port_height])
-    return (port_height,)
+    mo.vstack([
+        port_height,
+        min_port_s_a,
+        gap_tf_port,
+        port_outboard_inset,
+        port_inboard_inset,
+    ])
+    return (
+        port_height,
+        min_port_s_a,
+        gap_tf_port,
+        port_outboard_inset,
+        port_inboard_inset,
+    )
 
 
 @app.cell(hide_code=True)
@@ -924,7 +959,7 @@ def _(local_indat_path, params, port_height):
             },
             "params": {
                 "min_port_surface_area": {
-                    "value": 12,
+                    "value": float(min_port_s_a.vlue),
                     "unit": "m^2",
                     "source": "Input",
                     "long_name": "Minimum surface area of the port",
@@ -936,19 +971,19 @@ def _(local_indat_path, params, port_height):
                     "long_name": "Minimum distance between the tf and the plasma",
                 },
                 "g_tf_port": {
-                    "value": 0.8,
+                    "value": float(gap_tf_port.value),
                     "unit": "m",
                     "source": "Input",
                     "long_name": "Gap between the TF coil (wp) and the port",
                 },
                 "port_ob_inset": {
-                    "value": 2,
+                    "value": float(port_outboard_inset.value),
                     "unit": "m",
                     "source": "Input",
                     "long_name": "Port outboard inset, inset from tf_r_max",
                 },
                 "port_ib_inset": {
-                    "value": 4,
+                    "value": float(port_inboard_inset.value),
                     "unit": "m",
                     "source": "Input",
                     "long_name": "Port inboard inset, inset from tf_r_start",
@@ -969,10 +1004,10 @@ def _(local_indat_path, params, port_height):
                     "value": 0.1,
                     "unit": "m",
                     "source": "Input",
-                    "long_name": "Major radius",
+                    "long_name": "Thickness of the port wall",
                 },
                 "z_height": {
-                    "value": int(port_height.value),
+                    "value": float(port_height.value),
                     "unit": "m",
                     "source": "Input",
                     "long_name": "Reference vertical coordinate",
@@ -1049,7 +1084,7 @@ def _(
     def build_port(reactor_config: ReactorConfig, up_silhouette: BluemiraWire) -> Port:
         """Build a port from a set of parameters."""
         port_builder = PortBuilder(reactor_config.params_for("port"), up_silhouette)
-        return Port(ort_builder.build())
+        return Port(port_builder.build())
 
     return Port, build_port
 
@@ -1061,64 +1096,19 @@ def _(mo):
     """)
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+        We need designers, builders and managers for TF coils that have been adapted to include allowing for a port in their placement in the reactor. Load this specialised TF coil below.
+    """)
+
+
 @app.cell
-def _(
-    BLUE_PALETTE,
-    BluemiraFace,
-    BluemiraWire,
-    Builder,
-    CoilSet,
-    Component,
-    ComponentManager,
-    ComponentT,
-    Designer,
-    GeomConstraintT,
-    GeomOptimisationProblem,
-    GeomOptimiserResult,
-    GeometryParameterisation,
-    Parameter,
-    ParameterFrame,
-    PhysicalComponent,
-    PictureFrame,
-    PlotOptions,
-    apply_component_display_options,
-    dataclass,
-    distance_to,
-    make_polygon,
-    np,
-    offset_wire,
-    plot_2d,
-    plt,
-    sweep_shape,
-):
+def _():
     TF_w_port_path = "github://examples/tf_coil_with_port.py"
     TF_w_port = bm_st.download(TF_w_port_path, "")
-    from tf_coil_with_port import TFCoil_with_port, TFCoilBuilder, TFCoilDesigner
 
-    return TFCoilBuilder, TFCoilDesigner, TFCoil_with_port
-
-
-@app.cell
-def _(BluemiraWire, CoilSet, TFCoilBuilder, TFCoilDesigner, TFCoil_with_port):
-    def build_tf_coils_for_port(
-        params: dict, build_config: dict, coilset: CoilSet, plasma_lcfs: BluemiraWire
-    ) -> TFCoil_with_port:
-        """Build a TF coil from a set of parameters."""
-        tf_coil_designer = TFCoilDesigner(
-            params,
-            build_config,
-            lcfs=plasma_lcfs,
-            coilset=coilset,
-        )
-        tf_coil_parameterisation, up_face = tf_coil_designer.execute()
-
-        tf_coil_builder = TFCoilBuilder(
-            params,
-            tf_coil_parameterisation.create_shape(),
-        )
-        return TFCoil_with_port(tf_coil_builder.build(), up_face)
-
-    return (build_tf_coils_for_port,)
+    return TFCoil_with_port
 
 
 @app.cell(hide_code=True)
@@ -1176,7 +1166,7 @@ def _(build_port, reactor_config_with_port, reactor_with_port):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-
+    Let's see a model of our reactor and see if it's fit for purpose.
     """)
 
 
@@ -1188,7 +1178,8 @@ def _(reactor_with_port, visualise_reactor):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### Back to the drawing board!
+    ### Task: Back to the drawing board!
+    It looks like the port is clashing with other parts of the reactor, adjust the parameters from earlier to see if you can make a port that fits!
     """)
 
 
@@ -1202,14 +1193,15 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ####If you'd like to learn more about `Bluemira`:
-    #### - head to our [GitHub repo](https://github.com/Fusion-Power-Plant-Framework/bluemira)
-    #### - read our [Nuclear Fusion paper](https://iopscience.iop.org/article/10.1088/1741-4326/aea584).
-
+    ####To learn more about `Bluemira`:
+    - head to our [GitHub repo](https://github.com/Fusion-Power-Plant-Framework/bluemira)
+    - read our [Nuclear Fusion paper](https://iopscience.iop.org/article/10.1088/1741-4326/aea584)
+    - This notebook uses our [Spherical Tokamak example](https://github.com/Fusion-Power-Plant-Framework/bluemira-spherical-tokamak).
+    ---
     ### Collaborate with us!
-    ####`Bluemira` is open source :)
-    #### Build your own reactor using our [bluemira-template-project](https://github.com/Fusion-Power-Plant-Framework/bluemira-template-project)
-    #### This notebook uses our [Spherical Tokamak example](https://github.com/Fusion-Power-Plant-Framework/bluemira-spherical-tokamak).
+    - `Bluemira` is open source :)
+    - Build your own reactor using our [bluemira-template-project](https://github.com/Fusion-Power-Plant-Framework/bluemira-template-project)
+
     """)
 
 
