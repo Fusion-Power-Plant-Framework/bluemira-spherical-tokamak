@@ -44,34 +44,40 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-        ###Bluemira
-        `Bluemira` is an integrated inter-disciplinary design tool for future fusion reactors. It incorporates several modules, some of which rely on other codes, to carry out a range of typical conceptual fusion reactor design activities.
-        ---
-        /// details | Basically, `Bluemira` offers a large basis of reactor components and capabilities from which you can build upon into your own designs.
-        For example, we have
-        - a parametrised version of [EUDEMO](https://github.com/Fusion-Power-Plant-Framework/bluemira-eudemo)
-        - a [Spherical Tokamak example](https://github.com/Fusion-Power-Plant-Framework/bluemira-spherical-tokamak) based on [OpenSTEP](https://github.com/ukaea/OpenSTEP) data (which we're using today!)
-        ///
-        ---
-        It is a 'medium fidelity' code, meaning it can build on lower fidelity codes like `PROCESS` and be used as parameterisations for higher fidelity codes, of which you can feed back changes and iterate designs.
-        ---
-        /// details | `Bluemira` is capable of optimising and calculating various parts of fusion reactor and plant design, such as;
-        - 🧲 placing and optimising Poloidal Field (PF) coils, including minimising the current
-        - 🌡️ calculating heat loads of parts of the reactor
-        - 💡 calculating the 'Balance of Plant' (BoP)
-        - 🧲 optimising Toroidal Field (TF) coils to minimise ripple effects in the magnetic field of the plasma
-        - 🪩 neutronics calculations, which helps us understand how long parts of the reactor will last before we need to replace them (e.g. blanket, divertor, magnets, first wall impacts etc.)
-            - neutron wall loading
-            - radiation loads
-            - photon loads
-            - charged particle loads
-        ///
-    """)
+    ###Bluemira
 
+    `Bluemira` is an integrated inter-disciplinary design tool for future fusion reactors. It incorporates several modules, some of which rely on other codes, to carry out a range of typical conceptual fusion reactor design activities.
 
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
+    `Bluemira` is open source! Your grandma could design a fusion reactor if she wanted to.
+
+    ---
+
+    /// details | Basically, `Bluemira` offers a large basis of reactor components and capabilities from which you can build upon into your own designs.
+    For example, we have
+    - a parametrised version of [EUDEMO](https://github.com/Fusion-Power-Plant-Framework/bluemira-eudemo)
+    - a [Spherical Tokamak example](https://github.com/Fusion-Power-Plant-Framework/bluemira-spherical-tokamak) based on [OpenSTEP](https://github.com/ukaea/OpenSTEP) data (which we're using today!)
+    ///
+
+    ---
+
+    It is a 'medium fidelity' code, meaning it can build on lower fidelity codes like `PROCESS` and be used as parameterisations for higher fidelity codes, of which you can feed back changes and iterate designs.
+
+    ---
+
+    /// details | `Bluemira` is capable of optimising and calculating various parts of fusion reactor and plant design, such as;
+    - 🧲 placing and optimising Poloidal Field (PF) coils, including minimising the current
+    - 🌡️ calculating heat loads of parts of the reactor
+    - 💡 calculating the 'Balance of Plant' (BoP)
+    - 🧲 optimising Toroidal Field (TF) coils to minimise ripple effects in the magnetic field of the plasma
+    - 🪩 neutronics calculations, which helps us understand how long parts of the reactor will last before we need to replace them (e.g. blanket, divertor, magnets, first wall impacts etc.)
+        - neutron wall loading
+        - radiation loads
+        - photon loads
+        - charged particle loads
+    ///
+
+    ---
+
     ### Learning objectives
 
     - How we can optimise a design
@@ -117,7 +123,7 @@ def _():
     bm_st = GithubFileSystem(
         org="Fusion-Power-Plant-Framework",
         repo="bluemira-spherical-tokamak",
-        sha="2e03604",
+        sha="73fd6ef",
     )
 
     # we download the design_materials.py script from bluemira by specifying a path to download from
@@ -218,22 +224,17 @@ def _(mo):
 def _(mo):
     mo.md(r"""
     ### The client
-    """)
 
+    ---
 
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
     <img style="float: right; margin: 10px" width="300" src="https://static0.srcdn.com/wordpress/wp-content/uploads/2025/02/christopher-lloyd-s-doc-brown-stares-at-the-camera-in-back-to-the-future.jpg?q=70&fit=crop&w=1568&h=1078&dpr=1" title="Universal Pictures">
 
     We've been approached by a client who needs us to help him **design a fusion reactor to power his time machine**. He seems a little chaotic but his enthusiasm is infectious and we agree to help him in a quest of scientific and engineering exploration.
 
     He has previously used nuclear fission, so we know his time travelling device works. However, he can't get his hands on any more Plutonium and would prefer a more powerful and safer device.
 
-    He has a couple of requirements,
-
-    1. 1.8 GW of fusion power
-    2. As small a device as we can manage
+    He has one main requirement:
+    1. As small a device as we can manage
 
     From our new fusion expertise, we know that a Spherical Tokamak will be our best bet at achieving a smaller machine.
     """)
@@ -242,7 +243,7 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ###Reactor 1
+    ###Reactor: version 1
     """)
 
 
@@ -253,7 +254,7 @@ def _(mo):
     """)
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
     from dataclasses import dataclass
 
@@ -360,6 +361,8 @@ def _():
 def _(mo):
     mo.md(r"""
     ####Parameters and Configuration
+
+    Here are a few parameters you will have learned about this week, run the next few cells (up until before the next section) to create and visualise your reactor. You can come back and change these parameters, and see how it affects your design!
     """)
 
 
@@ -740,7 +743,7 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    First we specify a Reactor object
+    First we specify a Reactor object of all the components we'd like in our device. s
     """)
 
 
@@ -769,6 +772,7 @@ def _(
     interpolate_bspline,
     radial_build,
 ):
+    # We define this function, as we'll may want to use this code again later...
     def build_reactor(reactor_config, ReactorClass, tf_coil_builder=build_tf_coils):
         reactor = ReactorClass(
             "Bluemira Spherical Tokamak Example",
@@ -830,6 +834,7 @@ def _(
     build_config,
     build_reactor,
 ):
+    # We load up our config, and use our build_reactor function!
     reactor_config = ReactorConfig(build_config, BluemiraSTParams)
     reactor = build_reactor(reactor_config, SimpleSTReactor)
     return (reactor,)
@@ -839,6 +844,8 @@ def _(
 def _(mo):
     mo.md(r"""
     #### Visualising
+
+    Let's take a look at our design!
     """)
 
 
@@ -876,7 +883,7 @@ def _(reactor, visualise_reactor):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### Reactor 2
+    ### Reactor: attempt 2
     """)
 
 
@@ -889,19 +896,16 @@ def _(mo):
     He needs a port in the tokamak to connect it to the various wires and cables in his car that acts as the vessel for time travel.
 
     Ideally, this port will be lower down so minimal amounts of cable are required to link everything up.
-    """)
 
+    ---
 
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    We'll need a new configuration dictionary to build this new device with a port.
+    Below are some more parameters for you to play with that link to defining the size and placement of our port.
     """)
 
 
 @app.cell
 def _(mo):
-    port_height = mo.ui.text(value="-4", label="Port height (m)")
+    port_height = mo.ui.text(value="-10", label="Port height (m)")
     min_port_s_a = mo.ui.text(
         value="12", label="Minimum surface area of the port $(m^2)$"
     )
