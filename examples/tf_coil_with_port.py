@@ -124,12 +124,13 @@ def upper_port_area_constraint(
 
     return min_port_surface_area - up_face.area, up_wire
 
-    def plasma_min_length_constraint(
-        geom: GeometryParameterisation, boundary: BluemiraWire, min_distance: float
-    ):
-        """A constraint to maintain a minimum distance between the TF coil and the plasma."""
-        shape = geom.create_shape()
-        return min_distance - distance_to(shape, boundary)[0]
+
+def plasma_min_length_constraint(
+    geom: GeometryParameterisation, boundary: BluemiraWire, min_distance: float
+):
+    """A constraint to maintain a minimum distance between the TF coil and the plasma."""
+    shape = geom.create_shape()
+    return min_distance - distance_to(shape, boundary)[0]
 
 
 class TFCoilDesigner(Designer[tuple[GeometryParameterisation, BluemiraWire]]):

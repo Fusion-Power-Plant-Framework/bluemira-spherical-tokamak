@@ -102,7 +102,7 @@ def _():
     bm_st = GithubFileSystem(
         org="Fusion-Power-Plant-Framework",
         repo="bluemira-spherical-tokamak",
-        sha="6f00c20",
+        sha="7de21ca",
     )
 
     # we download the design_materials.py script from bluemira by specifying a path to download from
