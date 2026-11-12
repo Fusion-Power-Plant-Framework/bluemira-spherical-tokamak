@@ -41,7 +41,7 @@ def _(mo):
 
         It is a 'medium fidelity' code, meaning it can build on lower fidelity codes like `PROCESS` and be used as parameterisations for higher fidelity codes, of which you can feed back changes and iterate designs.
 
-        `Bluemira` is capable of optimising and caluclating various parts of fusion reactor and plant design, such as;
+        `Bluemira` is capable of optimising and calculating various parts of fusion reactor and plant design, such as;
         - 🧲 placing and optimising Poloidal Field (PF) coils, including minimising the current
         - 🌡️ calculating heat loads of parts of the reactor
         - 💡 calculating the 'Balance of Plant' (BoP)
@@ -102,7 +102,7 @@ def _():
     bm_st = GithubFileSystem(
         org="Fusion-Power-Plant-Framework",
         repo="bluemira-spherical-tokamak",
-        sha="7de21ca",
+        sha="d37de29",
     )
 
     # we download the design_materials.py script from bluemira by specifying a path to download from
@@ -871,7 +871,7 @@ def _(mo):
     <img style="float: left; margin: 20px" width="400" src="https://images.squarespace-cdn.com/content/v1/51b3dc8ee4b051b96ceb10de/79d5a0c3-d9d1-4759-85d7-73cb009c7f63/Screen+Shot+2023-04-17+at+1.00.35+PM.jpg?format=2500w">
 
     The reactor is looking great, but in his haste, the client forgot to tell us another important requirement.
-    He needs a port in the tokamak to connect it the various wires and cables in his car that acts as the vessel for time travel.
+    He needs a port in the tokamak to connect it to the various wires and cables in his car that acts as the vessel for time travel.
 
     Ideally, this port will be lower down so minimal amounts of cable are required to link everything up.
     """)
@@ -1208,13 +1208,14 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ####If you'd like to learn more about `bluemira`:
+    ####If you'd like to learn more about `Bluemira`:
     #### - head to our [GitHub repo](https://github.com/Fusion-Power-Plant-Framework/bluemira)
     #### - read our [Nuclear Fusion paper](https://iopscience.iop.org/article/10.1088/1741-4326/aea584).
 
     ### Collaborate with us!
-    ####[bluemira-template-project](https://github.com/Fusion-Power-Plant-Framework/bluemira-template-project): A template for a new Bluemira reactor project
-    ####This notebook uses our [Spherical Tokamak example](https://github.com/Fusion-Power-Plant-Framework/bluemira-spherical-tokamak).
+    ####`Bluemira` is open source :)
+    #### Build your own reactor using our [bluemira-template-project](https://github.com/Fusion-Power-Plant-Framework/bluemira-template-project)
+    #### This notebook uses our [Spherical Tokamak example](https://github.com/Fusion-Power-Plant-Framework/bluemira-spherical-tokamak).
     """)
 
 
