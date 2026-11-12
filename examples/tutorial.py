@@ -1190,6 +1190,8 @@ def _(build_port, reactor_config_with_port, reactor_with_port):
 def _(mo):
     mo.md(r"""
     Let's see a model of our reactor and see if it's fit for purpose.
+
+    You can rotate, slice, change perspective, and even alter the appearance (see how shiny you can get it for fun) in this CAD viewer.
     """)
 
 
