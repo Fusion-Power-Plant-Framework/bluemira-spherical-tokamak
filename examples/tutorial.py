@@ -106,7 +106,7 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    #### Fetch relevant files
+    ### Fetch relevant files
     """)
 
 
@@ -123,7 +123,7 @@ def _():
     bm_st = GithubFileSystem(
         org="Fusion-Power-Plant-Framework",
         repo="bluemira-spherical-tokamak",
-        sha="cabb647",
+        sha="6d38bcb",
     )
 
     # we download the design_materials.py script from bluemira by specifying a path to download from
@@ -145,7 +145,7 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    #### Install Bluemira and Bluemira Spherical Tokamak Example
+    ### Install Bluemira and Bluemira Spherical Tokamak Example
     """)
 
 
@@ -197,7 +197,7 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    #### Establish materials cache
+    ### Establish materials cache
     """)
 
 
@@ -250,7 +250,7 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    #### Import modules we'll need
+    ### Import modules we'll need
     """)
 
 
@@ -360,7 +360,7 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ####Parameters and Configuration
+    ### Parameters and Configuration
 
     Here are a few parameters you will have learned about this week, run the next few cells (up until before the next section) to create and visualise your reactor. You can come back and change these parameters, and see how it affects your design!
     """)
@@ -736,7 +736,7 @@ def _(local_indat_path, params):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    #### Build the reactor
+    ### Build the reactor
     """)
 
 
@@ -843,7 +843,7 @@ def _(
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    #### Visualising
+    ### Visualising
 
     Let's take a look at our design!
     """)
@@ -1028,7 +1028,13 @@ def _(local_indat_path, params, port_height):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    #### Adding a port
+    ### Adding a port
+
+    We need to add;
+    - a special Port object
+    - parameters
+    - a builder class
+    - a function that puts it all together
     """)
 
 
@@ -1099,7 +1105,7 @@ def _(
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    #### Adjusting the TF coils
+    ### Adjusting the TF coils
     """)
 
 
@@ -1122,7 +1128,7 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    #### Building the second reactor
+    ### Building the second reactor
     """)
 
 
@@ -1146,6 +1152,13 @@ def _(BreedingBlanket, IS, Port, PFCoil, Plasma, Reactor, TFCoil):
         port: Port
 
     return (STReactorWithPort,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+        Now we can use our function to build the reactor with the added port.
+    """)
 
 
 @app.cell
@@ -1186,7 +1199,7 @@ def _(reactor_with_port, visualise_reactor):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    #### Task: Back to the drawing board!
+    ### Task: Back to the drawing board!
     It looks like the port is clashing with other parts of the reactor, adjust the parameters from earlier to see if you can make a port that fits!
     """)
 
