@@ -23,7 +23,7 @@ from bluemira_st.build_routines import (
     build_reference_equilibrium,
     build_tf_coils,
 )
-from bluemira_st.heat_loads.heat_flux_calculation import HeatFluxCalculation
+from bluemira_st.heat_loads.heat_flux_calculation import fw_shape, heat_flux_calculation
 from bluemira_st.inboard_shield.manager import IS
 from bluemira_st.params import BluemiraSTParams
 from bluemira_st.pf_coil.manager import PFCoil
@@ -41,7 +41,6 @@ class MyReactor(Reactor):
     # Models
     # equilibria: EquilibriumManager
     pf_coil: PFCoil
-    heat_flux: HeatFluxCalculation = HeatFluxCalculation()
 
 
 def main(build_config: str | Path | dict) -> MyReactor:
@@ -99,10 +98,8 @@ def main(build_config: str | Path | dict) -> MyReactor:
         ref_fbe, reactor.tf_coil, filename="exported_field_map.csv"
     )
 
-    reactor.heat_flux.fw_shape(reactor.blanket, reactor.inboard_shield)
-    reactor.heat_flux.heat_flux_calculation(
-        reactor.heat_flux.fw_shape(reactor.blanket, reactor.inboard_shield), ref_fbe
-    )
+    fw_shape_coords = fw_shape(reactor.blanket, reactor.inboard_shield)
+    heat_flux_calculation(fw_shape_coords, ref_fbe)
 
     reactor.save_cad(
         "xyz",
