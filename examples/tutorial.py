@@ -37,14 +37,14 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    #Introduction
+    ##Introduction
     """)
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-        ##Bluemira
+        ###Bluemira
         `Bluemira` is an integrated inter-disciplinary design tool for future fusion reactors. It incorporates several modules, some of which rely on other codes, to carry out a range of typical conceptual fusion reactor design activities.
         ---
         /// details | Basically, `Bluemira` offers a large basis of reactor components and capabilities from which you can build upon into your own designs.
@@ -72,7 +72,7 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## Learning objectives
+    ### Learning objectives
 
     - How we can optimise a design
     - Understand how Bluemira operates
@@ -82,7 +82,7 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    #Set-up
+    ##Set-up
     """)
 
 
@@ -100,7 +100,7 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### Fetch relevant files
+    #### Fetch relevant files
     """)
 
 
@@ -117,7 +117,7 @@ def _():
     bm_st = GithubFileSystem(
         org="Fusion-Power-Plant-Framework",
         repo="bluemira-spherical-tokamak",
-        sha="43c36a0",
+        sha="2e03604",
     )
 
     # we download the design_materials.py script from bluemira by specifying a path to download from
@@ -139,7 +139,7 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### Install Bluemira and Bluemira Spherical Tokamak Example
+    #### Install Bluemira and Bluemira Spherical Tokamak Example
     """)
 
 
@@ -191,7 +191,7 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### Establish materials cache
+    #### Establish materials cache
     """)
 
 
@@ -210,14 +210,14 @@ def _(local_designmat_path):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    #Scenario
+    ##Scenario
     """)
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## The client
+    ### The client
     """)
 
 
@@ -242,14 +242,14 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ##Reactor 1
+    ###Reactor 1
     """)
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### Import modules we'll need
+    #### Import modules we'll need
     """)
 
 
@@ -359,7 +359,7 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ###Parameters and Configuration
+    ####Parameters and Configuration
     """)
 
 
@@ -733,7 +733,7 @@ def _(local_indat_path, params):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### Build the reactor
+    #### Build the reactor
     """)
 
 
@@ -838,7 +838,7 @@ def _(
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### Visualising
+    #### Visualising
     """)
 
 
@@ -876,7 +876,7 @@ def _(reactor, visualise_reactor):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## Reactor 2
+    ### Reactor 2
     """)
 
 
@@ -1021,7 +1021,7 @@ def _(local_indat_path, params, port_height):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### Adding a port
+    #### Adding a port
     """)
 
 
@@ -1092,7 +1092,7 @@ def _(
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### Adjusting the TF coils
+    #### Adjusting the TF coils
     """)
 
 
@@ -1114,7 +1114,7 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### Building the second reactor
+    #### Building the second reactor
     """)
 
 
@@ -1178,7 +1178,7 @@ def _(reactor_with_port, visualise_reactor):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### Task: Back to the drawing board!
+    #### Task: Back to the drawing board!
     It looks like the port is clashing with other parts of the reactor, adjust the parameters from earlier to see if you can make a port that fits!
     """)
 
@@ -1187,19 +1187,9 @@ def _(mo):
 def _(mo):
     mo.md(r"""
     ## Find out more!
-    """)
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ####To learn more about `Bluemira`:
+    To learn more about `Bluemira`:
     - head to our [GitHub repo](https://github.com/Fusion-Power-Plant-Framework/bluemira)
     - read our [Nuclear Fusion paper](https://iopscience.iop.org/article/10.1088/1741-4326/aea584)
-    - This notebook uses our [Spherical Tokamak example](https://github.com/Fusion-Power-Plant-Framework/bluemira-spherical-tokamak).
-    ---
-    ### Collaborate with us!
-    - `Bluemira` is open source :)
     - Build your own reactor using our [bluemira-template-project](https://github.com/Fusion-Power-Plant-Framework/bluemira-template-project)
 
     """)
