@@ -37,6 +37,15 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+    This is an interactive tutorial. Make sure to click the  ▶️ icon on the top right of each cell. Practice with the "import marimo" cell above the title.
+
+    If you'd prefer a static run through, here is a [static version]() with designs and CAD viewers pre-loaded.
+    """)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
     ##Bluemira
 
     `Bluemira` is an integrated inter-disciplinary design tool for future fusion reactors. It incorporates several modules, some of which rely on other codes, to carry out a range of typical conceptual fusion reactor design activities. `Bluemira` is developed by the Power Plant Modelling and Integration (PPMI) group within Fusion Technology at UKAEA.
@@ -53,7 +62,7 @@ def _(mo):
 
     ---
 
-    It is a 'medium fidelity' code, meaning it can build on lower fidelity codes like `PROCESS` and be used as parameterisations for higher fidelity codes, of which you can feedback changes and iterate designs to meet your objectives. While `PROCESS` deals with global objectives such as minimising major radius, costs and maximising power output, `Bluemira` deals with more local objectives that concern the optimising the design and lifetime of individual components.
+    It is a 'medium fidelity' code, meaning it can build on lower fidelity codes like `PROCESS` and be used as parameterisations for higher fidelity codes, of which you can feedback changes and iterate designs to meet your objectives. While `PROCESS` deals with global objectives such as minimising major radius, costs and maximising power output, `Bluemira` deals with more local objectives like optimising the design and lifetime of individual components.
 
     ---
 
@@ -235,7 +244,8 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ###Reactor: version 1
+    ## Reactor: version 1
+    We'll start off with a default design based on OpenSTEP data.
     """)
 
 
@@ -355,8 +365,8 @@ def _(mo):
     ### Parameters and Configuration
 
     Here are a few parameters you will have learned about this week, run the next few cells (up until before the next section) to create and visualise your reactor.
-    You can come back and change these parameters, and see how it affects your design!
-    Hit the play icon to bring up boxes to change the value.
+    You can come back and change these parameters later!
+    Hit the play icon to bring up boxes to see the default values and alter them.
     """)
 
 
@@ -839,7 +849,7 @@ def _(mo):
     mo.md(r"""
     ### Visualising
 
-    Let's take a look at our design!
+    Let's take a look at our design! Go back and play with the parameters to see what different designs might look like.
     """)
 
 
@@ -878,6 +888,7 @@ def _(reactor, visualise_reactor):
 def _(mo):
     mo.md(r"""
     ### Reactor: attempt 2
+    Woops! He forgot something...
     """)
 
 
@@ -889,7 +900,7 @@ def _(mo):
     The reactor is looking great, but in his haste, the client forgot to tell us another important requirement.
     He needs a port in the tokamak to connect it to the various wires and cables in his car that acts as the vessel for time travel.
 
-    Ideally, this port will be lower down so minimal amounts of cable are required to link everything up.
+    He has quite a few things to connect, so we'll have a port between each TF coil.
     """)
 
 
@@ -1100,13 +1111,8 @@ def _(
 def _(mo):
     mo.md(r"""
     ### Adjusting the TF coils
-    """)
 
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-        We need designers, builders and managers for TF coils that have been adapted to include allowing for a port in their placement in the reactor. Load this specialised TF coil below.
+    We need designers, builders and managers for TF coils that have been adapted to include allowing for a port in their placement in the reactor. Load this specialised TF coil below.
     """)
 
 
@@ -1123,13 +1129,8 @@ def _():
 def _(mo):
     mo.md(r"""
     ### Building the second reactor
-    """)
 
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    Our reactor needs re-specifying that a port will be one of its components
+    Our reactor needs re-specifying that a port will be one of its components.
     """)
 
 
