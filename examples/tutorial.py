@@ -124,7 +124,7 @@ def _():
     bm_st = GithubFileSystem(
         org="Fusion-Power-Plant-Framework",
         repo="bluemira-spherical-tokamak",
-        sha="6792b06",
+        sha="d0a84e4",
     )
 
     # we download the design_materials.py script from bluemira by specifying a path to download from
@@ -921,7 +921,7 @@ def _(mo):
         value="0.8", label="Gap between the TF coil and the port (m)"
     )
     port_outboard_inset = mo.ui.text(value="2", label="Port outboard inset (m)")
-    port_inboard_inset = mo.ui.text(value="4", label="Port intboard inset (m)")
+    port_inboard_inset = mo.ui.text(value="4", label="Port inboard inset (m)")
 
     mo.vstack([
         port_height,
