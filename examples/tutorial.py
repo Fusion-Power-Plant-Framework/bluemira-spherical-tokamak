@@ -37,16 +37,9 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ##Introduction
-    """)
+    ##Bluemira
 
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ###Bluemira
-
-    `Bluemira` is an integrated inter-disciplinary design tool for future fusion reactors. It incorporates several modules, some of which rely on other codes, to carry out a range of typical conceptual fusion reactor design activities.
+    `Bluemira` is an integrated inter-disciplinary design tool for future fusion reactors. It incorporates several modules, some of which rely on other codes, to carry out a range of typical conceptual fusion reactor design activities. `Bluemira` is developed by the Power Plant Modelling and Integration (PPMI) group within Fusion Technology at UKAEA.
 
     `Bluemira` is open source! Your grandma could design a fusion reactor if she wanted to.
 
@@ -60,18 +53,17 @@ def _(mo):
 
     ---
 
-    It is a 'medium fidelity' code, meaning it can build on lower fidelity codes like `PROCESS` and be used as parameterisations for higher fidelity codes, of which you can feed back changes and iterate designs.
+    It is a 'medium fidelity' code, meaning it can build on lower fidelity codes like `PROCESS` and be used as parameterisations for higher fidelity codes, of which you can feedback changes and iterate designs to meet your objectives. While `PROCESS` deals with global objectives such as minimising major radius, costs and maximising power output, `Bluemira` deals with more local objectives that concern the optimising the design and lifetime of individual components.
 
     ---
 
     /// details | `Bluemira` is capable of optimising and calculating various parts of fusion reactor and plant design, such as;
-    - 🧲 placing and optimising Poloidal Field (PF) coils, including minimising the current
+    - 🧲 optimising the position and current of Poloidal Field (PF) coils to minimise local (per coil) and total (all coils) current
     - 🌡️ calculating heat loads of parts of the reactor
     - 💡 calculating the 'Balance of Plant' (BoP)
-    - 🧲 optimising Toroidal Field (TF) coils to minimise ripple effects in the magnetic field of the plasma
+    - 🧲 optimising the shape of Toroidal Field (TF) coils to minimise ripple and stored energy
     - 🪩 neutronics calculations, which helps us understand how long parts of the reactor will last before we need to replace them (e.g. blanket, divertor, magnets, first wall impacts etc.)
         - neutron wall loading
-        - radiation loads
         - photon loads
         - charged particle loads
     ///
@@ -1217,6 +1209,7 @@ def _(mo):
     - read our [Nuclear Fusion paper](https://iopscience.iop.org/article/10.1088/1741-4326/aea584)
     - Build your own reactor using our [bluemira-template-project](https://github.com/Fusion-Power-Plant-Framework/bluemira-template-project)
 
+    Come talk to us if you're interested for usecases in your area. :)
     """)
 
 
