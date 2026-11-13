@@ -124,7 +124,7 @@ def _():
     bm_st = GithubFileSystem(
         org="Fusion-Power-Plant-Framework",
         repo="bluemira-spherical-tokamak",
-        sha="d0a84e4",
+        sha="6792b06",
     )
 
     # we download the design_materials.py script from bluemira by specifying a path to download from
@@ -370,7 +370,7 @@ def _(mo):
     """)
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     major_radius = mo.ui.text(value="4.5", label="${R_0}$ (Major radius)")
     aspect_ratio = mo.ui.text(value="1.8", label="$A$ (Aspect ratio)")
@@ -911,7 +911,7 @@ def _(mo):
     """)
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     port_height = mo.ui.text(value="4", label="Port height (m)")
     min_port_s_a = mo.ui.text(
