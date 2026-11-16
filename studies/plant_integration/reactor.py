@@ -23,7 +23,15 @@ from bluemira_st.build_routines import (
     build_reference_equilibrium,
     build_tf_coils,
 )
-from bluemira_st.heat_loads.heat_flux_calculation import fw_shape, heat_flux_calculation
+from bluemira_st.heat_loads.heat_flux_calculation import (
+    export_heat_flux_to_csv,
+    fw_shape,
+    heat_flux_calculation,
+)
+from bluemira_st.heat_loads.radiation_calculation import (
+    export_radiation_loads_to_csv,
+    radiation_profile_calculation,
+)
 from bluemira_st.inboard_shield.manager import IS
 from bluemira_st.params import BluemiraSTParams
 from bluemira_st.pf_coil.manager import PFCoil
@@ -94,13 +102,18 @@ def main(build_config: str | Path | dict) -> MyReactor:
         mat_name="EUROFER_MAT",
         ref_fbe=ref_fbe,
     )
+    # magnetostatics calculation and export
     reactor.blanket.create_field_map(
         ref_fbe, reactor.tf_coil, filename="exported_field_map.csv"
     )
-
+    # heat loads calculation and export
     fw_shape_coords = fw_shape(reactor.blanket, reactor.inboard_shield)
-    heat_flux_calculation(fw_shape_coords, ref_fbe)
-
+    particle_flux_result = heat_flux_calculation(fw_shape_coords, ref_fbe)
+    export_heat_flux_to_csv(*particle_flux_result, filename="heat_flux_results.csv")
+    radiation_result = radiation_profile_calculation(ref_fbe, fw_shape_coords)
+    export_radiation_loads_to_csv(
+        radiation_result, filename="radiation_load_results.csv"
+    )
     reactor.save_cad(
         "xyz",
         n_sectors=12,
