@@ -1,10 +1,11 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 from bluemira.geometry.face import BluemiraFace
 from matplotlib.path import Path
 
 
-def extract_field_map(eq, tf_coil, stride=1):
+def extract_field_map(eq, tf_coil, stride=3):
     """
     Extract magnetic field grid, downsample if required, and flatten.
 
@@ -83,19 +84,19 @@ def mask_and_export(points, fields, polygon, filename=None):
 
     # Export
     if filename is not None:
-        out = np.column_stack([
-            data["R"],
-            data["Z"],
-            data["Br"],
-            data["Bz"],
-            data["Bp"],
-            data["Bt"],
-            data["Bt_helmholtz"],
-            data["Bmag"],
-        ])
+        columns = [
+            "R",
+            "Z",
+            "Br",
+            "Bz",
+            "Bp",
+            "Bt",
+            "Bt_helmholtz",
+            "Bmag",
+        ]
 
-        header = "R Z Br Bz Bp Bt Bt_helmholtz Bmag"
-        np.savetxt(filename, out, header=header)
+        df = pd.DataFrame({col: data[col] for col in columns})
+        df.to_csv(filename, index=False)
 
     return data
 
