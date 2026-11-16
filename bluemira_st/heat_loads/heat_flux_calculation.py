@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import pandas as pd
 from bluemira.geometry.coordinates import Coordinates
 from bluemira.geometry.tools import make_polygon
 from bluemira.geometry.wire import BluemiraWire
@@ -51,3 +52,13 @@ def heat_flux_calculation(fw_shape_coords, eq):
     solver.plot()
     plt.show()
     return x, z, hf
+
+
+def export_heat_flux_to_csv(x, z, hf, filename="heat_flux_results.csv"):
+    data = {
+        "x": x,
+        "z": z,
+        "heat_flux": hf,
+    }
+    df = pd.DataFrame(data)
+    df.to_csv(filename, index=False)
