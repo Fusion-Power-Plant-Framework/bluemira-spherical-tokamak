@@ -146,7 +146,9 @@ def radiation_profile_calculation(eq: Equilibrium, fw_shape_coords):
     return solver.solve(verbose=True)
 
 
-def export_radiation_loads_to_csv(radiation_result):
+def export_radiation_loads_to_csv(
+    radiation_result, filename="radiation_load_results.csv"
+):
 
     df = pd.DataFrame({
         "detector": radiation_result.detector_numbers,
@@ -158,4 +160,4 @@ def export_radiation_loads_to_csv(radiation_result):
         "detector_area_m2": radiation_result.detector_area,
     })
 
-    df.to_csv("first_wall_radiation_loads.csv", index=False)
+    df.to_csv(filename, index=False)
