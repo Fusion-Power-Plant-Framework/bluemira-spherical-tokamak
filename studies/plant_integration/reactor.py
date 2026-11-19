@@ -104,7 +104,7 @@ def main(build_config: str | Path | dict) -> MyReactor:
     )
     # magnetostatics calculation and export
     reactor.blanket.create_field_map(
-        ref_fbe, reactor.tf_coil, filename="exported_field_map.csv", show_plot=False
+        ref_fbe, reactor.tf_coil, filename="exported_field_map.csv"
     )
     # heat loads calculation and export
     fw_shape_coords = fw_shape(reactor.blanket, reactor.inboard_shield)
