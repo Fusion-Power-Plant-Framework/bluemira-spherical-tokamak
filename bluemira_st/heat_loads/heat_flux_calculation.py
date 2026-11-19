@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 import pandas as pd
 from bluemira.geometry.coordinates import Coordinates
 from bluemira.geometry.tools import make_polygon
@@ -34,6 +33,7 @@ def fw_shape(blanket, inboard_shield):
 
 
 def heat_flux_calculation(fw_shape_coords, eq):
+    show_plot = False
     params = {
         "P_sep_particle": 1.79999999999817703e02,  # PROCESS
         "f_p_sol_near": 0.65,
@@ -49,8 +49,7 @@ def heat_flux_calculation(fw_shape_coords, eq):
     solver = ChargedParticleSolver(params, eq, dx_mp=0.001)
 
     x, z, hf = solver.analyse(first_wall=fw_shape_coords)
-    solver.plot()
-    plt.show()
+    solver.plot(show=show_plot)
     return x, z, hf
 
 
