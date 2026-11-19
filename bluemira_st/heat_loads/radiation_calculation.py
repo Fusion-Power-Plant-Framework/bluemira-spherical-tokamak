@@ -18,7 +18,7 @@ from bluemira.radiation_transport.radiation_tools import (
 
 
 def radiation_profile_calculation(eq: Equilibrium, fw_shape_coords):
-
+    show_plot = False
     fw_shape = fw_shape_coords
 
     # double null parameters
@@ -86,8 +86,9 @@ def radiation_profile_calculation(eq: Equilibrium, fw_shape_coords):
     source.analyse(firstwall_geom=fw_shape)
 
     source.rad_map(fw_shape)
-    source.plot()
-    plt.show()
+    if show_plot is True:
+        source.plot()
+        plt.show()
 
     # Core and SOL source: coordinates and radiation values
     x_core = source.core_rad.x_tot
@@ -143,7 +144,7 @@ def radiation_profile_calculation(eq: Equilibrium, fw_shape_coords):
     # Calculate radiation of FW points
     solver = FirstWallRadiationSolver(source_func=func, firstwall_shape=fw_shape)
 
-    return solver.solve(verbose=True)
+    return solver.solve(verbose=False, plot=show_plot)
 
 
 def export_radiation_loads_to_csv(
