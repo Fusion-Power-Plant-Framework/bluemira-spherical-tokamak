@@ -23,15 +23,18 @@ from bluemira_st.build_routines import (
     build_reference_equilibrium,
     build_tf_coils,
 )
-from bluemira_st.heat_loads.heat_flux_calculation import (
-    export_heat_flux_to_csv,
+from bluemira_st.heat_loads.charged_particle_calculation import (
+    charged_particle_calculation,
+    export_charged_particle_to_csv,
     fw_shape,
-    heat_flux_calculation,
 )
+from bluemira_st.heat_loads.charged_particle_params import CHARGED_PARTICLE_PARAMS
 from bluemira_st.heat_loads.radiation_calculation import (
     export_radiation_loads_to_csv,
     radiation_profile_calculation,
 )
+from bluemira_st.heat_loads.radiation_config import RADIATION_CONFIG
+from bluemira_st.heat_loads.radiation_params import RADIATION_PARAMS
 from bluemira_st.inboard_shield.manager import IS
 from bluemira_st.params import BluemiraSTParams
 from bluemira_st.pf_coil.manager import PFCoil
@@ -108,9 +111,18 @@ def main(build_config: str | Path | dict) -> MyReactor:
     )
     # heat loads calculation and export
     fw_shape_coords = fw_shape(reactor.blanket, reactor.inboard_shield)
-    particle_flux_result = heat_flux_calculation(fw_shape_coords, ref_fbe)
-    export_heat_flux_to_csv(*particle_flux_result, filename="heat_flux_results.csv")
-    radiation_result = radiation_profile_calculation(ref_fbe, fw_shape_coords)
+    particle_flux_result = charged_particle_calculation(
+        eq=ref_fbe, fw_shape_coords=fw_shape_coords, params=CHARGED_PARTICLE_PARAMS
+    )
+    export_charged_particle_to_csv(
+        *particle_flux_result, filename="charged_particle_results.csv"
+    )
+    radiation_result = radiation_profile_calculation(
+        eq=ref_fbe,
+        fw_shape_coords=fw_shape_coords,
+        params=RADIATION_PARAMS,
+        config=RADIATION_CONFIG,
+    )
     export_radiation_loads_to_csv(
         radiation_result, filename="radiation_load_results.csv"
     )
