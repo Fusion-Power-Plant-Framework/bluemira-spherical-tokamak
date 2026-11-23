@@ -98,22 +98,21 @@ def radiation_profile_calculation(
     func = grid_interpolator(x_sol, z_sol, rad_sol_grid)
     # Calculate radiation of FW points
     solver = FirstWallRadiationSolver(source_func=func, firstwall_shape=fw_shape)
-
-    return solver.solve(verbose=False, plot=show_plot)
+    data = solver.solve(verbose=False, plot=show_plot)
+    return pd.DataFrame({
+        "R": [d.detector_center.x for d in solver.wall_detectors],
+        "Z": [d.detector_center.z for d in solver.wall_detectors],
+        "detector_number": data.detector_numbers,
+        "poloidal_distance": data.distance,
+        "power_density": data.power_density,
+        "power_density_stdev": data.power_density_stdev,
+        "detected_power": data.detected_power,
+        "detected_power_stdev": data.detected_power_stdev,
+        "detector_area": data.detector_area,
+    })
 
 
 def export_radiation_loads_to_csv(
     radiation_result, filename="radiation_load_results.csv"
 ):
-
-    df = pd.DataFrame({
-        "detector": radiation_result.detector_numbers,
-        "distance_m": radiation_result.distance,
-        "power_density_W_m2": radiation_result.power_density,
-        "power_density_stdev_W_m2": radiation_result.power_density_stdev,
-        "detected_power_W": radiation_result.detected_power,
-        "detected_power_stdev_W": radiation_result.detected_power_stdev,
-        "detector_area_m2": radiation_result.detector_area,
-    })
-
-    df.to_csv(filename, index=False)
+    radiation_result.to_csv(filename, index=False)
