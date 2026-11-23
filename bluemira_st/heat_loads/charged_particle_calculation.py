@@ -32,32 +32,23 @@ def fw_shape(blanket, inboard_shield):
     return fw_wire.discretise()
 
 
-def heat_flux_calculation(fw_shape_coords, eq):
+def charged_particle_calculation(
+    eq,
+    fw_shape_coords,
+    params: dict,
+):
     show_plot = False
-    params = {
-        "P_sep_particle": 1.79999999999817703e02,  # PROCESS
-        "f_p_sol_near": 0.65,
-        "fw_lambda_q_near_omp": 0.003,
-        "fw_lambda_q_far_omp": 0.1,
-        "fw_lambda_q_near_imp": 0.003,
-        "fw_lambda_q_far_imp": 0.1,
-        "f_lfs_lower_target": 0.9 * 0.5,
-        "f_hfs_lower_target": 0.1 * 0.5,
-        "f_lfs_upper_target": 0.9 * 0.5,
-        "f_hfs_upper_target": 0.1 * 0.5,
-    }
     solver = ChargedParticleSolver(params, eq, dx_mp=0.001)
-
     x, z, hf = solver.analyse(first_wall=fw_shape_coords)
     solver.plot(show=show_plot)
     return x, z, hf
 
 
-def export_heat_flux_to_csv(x, z, hf, filename="heat_flux_results.csv"):
+def export_charged_particle_to_csv(x, z, cpf, filename="charged_particle_results.csv"):
     data = {
         "x": x,
         "z": z,
-        "heat_flux": hf,
+        "charged_particle_flux": cpf,
     }
     df = pd.DataFrame(data)
     df.to_csv(filename, index=False)
