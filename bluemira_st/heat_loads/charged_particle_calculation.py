@@ -14,12 +14,12 @@ def fw_shape(blanket, inboard_shield):
 
     # FROM INTERACTIVE SESSION
     points1 = Coordinates([
-        blanket_wire[0].start_point(),
-        inboard_wire[0].start_point(),
+        inboard_wire[0].end_point(),
+        blanket_wire[3].start_point(),
     ])
     points2 = Coordinates([
-        inboard_wire[0].end_point(),
-        blanket_wire[2].start_point(),
+        blanket_wire[3].end_point(),
+        inboard_wire[0].start_point(),
     ])
     upper_wire = make_polygon(points1)
     lower_wire = make_polygon(points2)
