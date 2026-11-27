@@ -91,20 +91,29 @@ class ISBuilder(Builder):
         })
 
         shield_wire_outer = make_polygon(shield_wire_coords, label="Shield wire outer")
+
+        if shield_wire_outer.end_point()[2] < shield_wire_outer.start_point()[2]:
+            shield_wire_outer = make_polygon([
+                shield_wire_outer.end_point(),
+                shield_wire_outer.start_point(),
+            ])
         shield_wire_outer.translate((
             (-x_point_coords[0][0] + radial_shield_position),
             0,
             0,
         ))
-        shield_wire_inner = shield_wire_outer.deepcopy()
+        # shield_wire_inner = shield_wire_outer.deepcopy()
+        shield_wire_inner = make_polygon([
+            shield_wire_outer.end_point(),
+            shield_wire_outer.start_point(),
+        ])
         shield_wire_inner.translate((-self.params.tk_sh_in.value, 0, 0))
-
         shield_top_cap_wire = make_polygon(
-            [(shield_wire_outer.start_point(), shield_wire_inner.start_point())],
+            [(shield_wire_outer.end_point(), shield_wire_inner.start_point())],
             label="Shield top cap wire",
         )
         shield_bottom_cap_wire = make_polygon(
-            [(shield_wire_outer.end_point(), shield_wire_inner.end_point())],
+            [(shield_wire_inner.end_point(), shield_wire_outer.start_point())],
             label="Shield bottom cap wire",
         )
         shield_loop = BluemiraWire(
