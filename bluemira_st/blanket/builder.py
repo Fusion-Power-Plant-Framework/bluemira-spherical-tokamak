@@ -72,6 +72,18 @@ class BBBuilder(Builder):
             closed=False,
             label="Blanket inner surface wire",
         )
+        blanket_inner_end = blanket_inner_surface_wire.end_point()[2]
+        blanket_inner_start = blanket_inner_surface_wire.start_point()[2]
+        if blanket_inner_end > blanket_inner_start:
+            blanket_inner_surface.reverse()
+            blanket_inner_surface_wire = interpolate_bspline(
+                Coordinates({
+                    "x": blanket_inner_surface.x,
+                    "z": blanket_inner_surface.z,
+                }),
+                closed=False,
+                label="Blanket inner surface wire",
+            )
         # copy blanket inner surface wire and split in the same way as inner surface wire
         blanket_outer_surface_wire = interpolate_bspline(
             Coordinates({
@@ -84,13 +96,12 @@ class BBBuilder(Builder):
 
         # translate outer blanket segments by tk_bb in x-direction
         blanket_outer_surface_wire.translate((self.params.tk_bb_ob.value, 0, 0))
-
         # create wires to join blanket end points
         upper_cap_wire = make_polygon(
             [
                 (
-                    blanket_inner_surface_wire.end_point(),
-                    blanket_outer_surface_wire.start_point(),
+                    blanket_outer_surface_wire.end_point(),
+                    blanket_inner_surface_wire.start_point(),
                 )
             ],
             label="Upper cap wire",
@@ -98,8 +109,8 @@ class BBBuilder(Builder):
         lower_cap_wire = make_polygon(
             [
                 (
-                    blanket_inner_surface_wire.start_point(),
-                    blanket_outer_surface_wire.end_point(),
+                    blanket_inner_surface_wire.end_point(),
+                    blanket_outer_surface_wire.start_point(),
                 )
             ],
             label="Lower cap wire",
@@ -108,9 +119,9 @@ class BBBuilder(Builder):
         blanket_loop = BluemiraWire(
             [
                 blanket_inner_surface_wire,
-                upper_cap_wire,
-                blanket_outer_surface_wire,
                 lower_cap_wire,
+                blanket_outer_surface_wire,
+                upper_cap_wire,
             ],
             label="Blanket loop",
         )
