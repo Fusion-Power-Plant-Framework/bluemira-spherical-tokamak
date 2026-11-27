@@ -11,8 +11,8 @@ def fw_shape(blanket, inboard_shield):
     # import fw faces (no real fw defined yet)
     blanket_wire = blanket.xz_face().edges
     inboard_wire = inboard_shield.xz_face().edges
-
-    # FROM INTERACTIVE SESSION
+    # Points for placeholder upper and lower caps
+    # required as no divertors in current build
     points1 = Coordinates([
         inboard_wire[0].end_point(),
         blanket_wire[3].start_point(),
